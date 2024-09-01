@@ -99,11 +99,17 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     drb (2.2.1)
+    dry-cli (1.1.0)
     erubi (1.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
+    inertia_rails (3.2.0)
+      railties (>= 5)
+    inertia_rails-contrib (0.2.1)
+      inertia_rails
+      railties (>= 6.0.0)
     io-console (0.7.2)
     irb (1.14.0)
       rdoc (>= 4.0.0)
@@ -160,6 +166,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.7)
+    rack-proxy (0.7.7)
+      rack
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -260,6 +268,13 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     useragent (0.16.10)
+    vite_rails (3.0.17)
+      railties (>= 5.1, < 8)
+      vite_ruby (~> 3.0, >= 3.2.2)
+    vite_ruby (3.8.0)
+      dry-cli (>= 0.7, < 2)
+      rack-proxy (~> 0.6, >= 0.6.1)
+      zeitwerk (~> 2.2)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -295,6 +310,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  inertia_rails-contrib (~> 0.2.1)
   jbuilder
   puma (>= 5.0)
   rails (~> 7.2.1)
@@ -302,6 +318,7 @@ DEPENDENCIES
   selenium-webdriver
   sqlite3 (>= 1.4)
   tzinfo-data
+  vite_rails (~> 3.0)
   web-console
 
 BUNDLED WITH
