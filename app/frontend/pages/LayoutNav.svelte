@@ -10,16 +10,21 @@ router.on("success", (event) => {
 })
 </script>
 
-<main class="container h-svh">
-  <header class="flex justify-between bg-slate-900 px-4 py-4 text-white">
-    <div>
-      <NavLink href="/dashboard" active={page.startsWith("/dashboard/") || page === "/dashboard"}>Dashboard</NavLink>
-    </div>
-    <div>
-      <NavLink href="/items" active={page.startsWith("/items/") || page === "/items"}>Items</NavLink>
-      <NavLink href="/customers" active={page.startsWith("/customers/") || page === "/customers"}>Customers</NavLink>
-      <NavLink href="/invoices" active={page.startsWith("/invoices/") || page === "/invoices"}>Invoices</NavLink>
+<main class="flex min-h-svh flex-col">
+  <header class=" bg-slate-900 px-4 py-4 text-white">
+    <div class="container flex justify-between">
+      <div>
+        <NavLink href="/dashboard" active={page.startsWith("/dashboard/") || page === "/dashboard"}>Mustika Bumi Saga</NavLink>
+      </div>
+      <div>
+        <NavLink href="/items" active={page.startsWith("/items/") || page === "/items"}>Items</NavLink>
+        <NavLink href="/customers" active={page.startsWith("/customers/") || page === "/customers"}>Customers</NavLink>
+        <NavLink href="/invoices" active={page.startsWith("/invoices/") || page === "/invoices"}>Invoices</NavLink>
+      </div>
     </div>
   </header>
-  <slot />
+  <div class="grow">
+    <slot />
+  </div>
+  <footer class="flex justify-center bg-slate-900 p-4 text-white">Mustika Bumi Saga</footer>
 </main>
