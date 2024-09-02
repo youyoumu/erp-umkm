@@ -23,7 +23,7 @@ router.on("success", (event) => {
       </div>
     </div>
   </header>
-  <div class="grow">
+  <div class="container grow">
     <slot />
   </div>
   <footer class="flex justify-center bg-slate-900 p-4 text-white">Mustika Bumi Saga</footer>
