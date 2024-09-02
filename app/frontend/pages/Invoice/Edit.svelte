@@ -1,38 +1,38 @@
 <script>
-  import { Link } from '@inertiajs/svelte'
-  import Form from './Form.svelte'
+import { Link } from "@inertiajs/svelte"
+import Form from "./Form.svelte"
 
-  export let invoice
+export let invoice
 
-  const handleSubmit = (e) => {
-    const { form } = e.detail
-    form.transform((data) => ({ invoice: data }))
-    form.patch(`/invoices/${invoice.id}`)
-  }
+const handleSubmit = (e) => {
+  const { form } = e.detail
+  form.transform((data) => ({ invoice: data }))
+  form.patch(`/invoices/${invoice.id}`)
+}
 </script>
 
 <svelte:head>
   <title>Editing invoice</title>
 </svelte:head>
 
-<div class="mx-auto md:w-2/3 w-full px-8 pt-8">
-  <h1 class="font-bold text-4xl">Editing invoice</h1>
+<div class="mx-auto w-full px-8 pt-8 md:w-2/3">
+  <h1 class="text-4xl font-bold">Editing invoice</h1>
 
   <Form
-    {invoice}
+    invoice={invoice}
     submitText="Update invoice"
     on:submit={handleSubmit}
   />
 
   <Link
     href={`/invoices/${invoice.id}`}
-    class="mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"
+    class="mt-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium"
   >
     Show this invoice
   </Link>
   <Link
     href="/invoices"
-    class="ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"
+    class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium"
   >
     Back to invoices
   </Link>

@@ -2,6 +2,16 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/eslint-plugin-tailwindcss": "^3.17.0",
+    "eslint": "^9.9.1",
+    "eslint-plugin-svelte": "^2.43.0",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.6",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "svelte": "^4.2.19",
     "vite": "^5.4.2",
     "vite-plugin-ruby": "^5.0.0"
   },
@@ -12,8 +22,13 @@
     "@tailwindcss/forms": "^0.5.8",
     "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
     "postcss": "^8.4.42",
-    "svelte": "^4.2.19",
     "tailwindcss": "^3.4.10"
+  },
+  "scripts": {
+    "lint": "eslint ./app",
+    "lint:debug": "eslint ./app --debug",
+    "lint:fix": "eslint ./app --fix"
   }
 }

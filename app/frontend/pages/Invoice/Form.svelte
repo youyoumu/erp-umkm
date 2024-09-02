@@ -1,16 +1,16 @@
 <script>
-  import { useForm } from '@inertiajs/svelte'
-  import { createEventDispatcher } from 'svelte'
+import { useForm } from "@inertiajs/svelte"
+import { createEventDispatcher } from "svelte"
 
-  const dispatch = createEventDispatcher()
+const dispatch = createEventDispatcher()
 
-  export let invoice
-  export let submitText
+export let invoice
+export let submitText
 
-  const form = useForm({
-    date: invoice.date || '',
-    code: invoice.code || '',
-  })
+const form = useForm({
+  date: invoice.date || "",
+  code: invoice.code || "",
+})
 </script>
 
 <form
@@ -24,10 +24,10 @@
       name="date"
       id="date"
       bind:value={$form.date}
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.date}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.date.join(', ')}
       </div>
     {/if}
@@ -40,20 +40,20 @@
       name="code"
       id="code"
       bind:value={$form.code}
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.code}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.code.join(', ')}
       </div>
     {/if}
   </div>
 
- <div class="inline">
+  <div class="inline">
     <button
       type="submit"
       disabled={$form.processing}
-      class="rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer"
+      class="inline-block cursor-pointer rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
     >
       {submitText}
     </button>

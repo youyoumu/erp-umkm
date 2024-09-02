@@ -1,22 +1,22 @@
 <script>
-  export let customer
+export let customer
 </script>
 
 <div>
   <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
+    <strong class="mb-1 block font-medium">Name:</strong>
     {customer.name}
   </p>
   <p class="my-5">
-    <strong class="block font-medium mb-1">Notes:</strong>
+    <strong class="mb-1 block font-medium">Notes:</strong>
     {customer.notes}
   </p>
   <p class="my-5">
-    <strong class="block font-medium mb-1">Address:</strong>
+    <strong class="mb-1 block font-medium">Address:</strong>
     {customer.address}
   </p>
   <p class="my-5">
-    <strong class="block font-medium mb-1">Contact:</strong>
+    <strong class="mb-1 block font-medium">Contact:</strong>
     {customer.contact}
   </p>
 </div>

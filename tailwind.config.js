@@ -1,18 +1,17 @@
-/** @type {import('tailwindcss').Config} */
+import forms from "@tailwindcss/forms"
+import typography from "@tailwindcss/typography"
+import containerQueries from "@tailwindcss/container-queries"
 
-module.exports = {
+export default {
   content: [
-    './public/*.html',
-    './app/helpers/**/*.rb',
-    './app/frontend/**/*.{js,ts,jsx,tsx,vue,svelte}',
-    './app/views/**/*.{erb,haml,html,slim}'
+    "./public/*.html",
+    "./app/helpers/**/*.rb",
+    "./app/frontend/**/*.{js,ts,jsx,tsx,vue,svelte}",
+    "./app/views/**/*.{erb,haml,html,slim}",
+    "./src/**/*.{html,js,svelte,ts}",
   ],
   theme: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
-  ]
+  plugins: [forms, typography, containerQueries],
 }

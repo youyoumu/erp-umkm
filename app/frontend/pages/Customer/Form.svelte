@@ -1,18 +1,18 @@
 <script>
-  import { useForm } from '@inertiajs/svelte'
-  import { createEventDispatcher } from 'svelte'
+import { useForm } from "@inertiajs/svelte"
+import { createEventDispatcher } from "svelte"
 
-  const dispatch = createEventDispatcher()
+const dispatch = createEventDispatcher()
 
-  export let customer
-  export let submitText
+export let customer
+export let submitText
 
-  const form = useForm({
-    name: customer.name || '',
-    notes: customer.notes || '',
-    address: customer.address || '',
-    contact: customer.contact || '',
-  })
+const form = useForm({
+  name: customer.name || "",
+  notes: customer.notes || "",
+  address: customer.address || "",
+  contact: customer.contact || "",
+})
 </script>
 
 <form
@@ -26,10 +26,10 @@
       name="name"
       id="name"
       bind:value={$form.name}
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.name}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.name.join(', ')}
       </div>
     {/if}
@@ -42,10 +42,10 @@
       id="note"
       bind:value={$form.notes}
       rows="4"
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.notes}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.notes.join(', ')}
       </div>
     {/if}
@@ -58,10 +58,10 @@
       name="address"
       id="address"
       bind:value={$form.address}
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.address}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.address.join(', ')}
       </div>
     {/if}
@@ -74,20 +74,20 @@
       name="contact"
       id="contact"
       bind:value={$form.contact}
-      class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
+      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
     />
     {#if $form.errors.contact}
-      <div class="text-red-500 px-3 py-2 font-medium">
+      <div class="px-3 py-2 font-medium text-red-500">
         {$form.errors.contact.join(', ')}
       </div>
     {/if}
   </div>
 
- <div class="inline">
+  <div class="inline">
     <button
       type="submit"
       disabled={$form.processing}
-      class="rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer"
+      class="inline-block cursor-pointer rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
     >
       {submitText}
     </button>
