@@ -1,3 +1,7 @@
+<script context="module">
+export { default as layout } from "../LayoutNav.svelte"
+</script>
+
 <script>
 import { Link } from "@inertiajs/svelte"
 import Invoice from "./Invoice.svelte"

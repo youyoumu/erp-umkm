@@ -1,7 +1,9 @@
+<script context="module">
+export { default as layout } from "../LayoutNav.svelte"
+</script>
+
 <script>
 import { Button } from "$lib/components/ui/button"
 </script>
 
-<main class="container h-svh bg-slate-100">
-  <Button>Default</Button>
-</main>
+<div>dasboard</div>
