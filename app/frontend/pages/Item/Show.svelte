@@ -17,7 +17,7 @@ const onDestroy = (e) => {
 </script>
 
 <svelte:head>
-  <title>Item #{item.id}</title>
+  <title>Barang #{item.id}</title>
 </svelte:head>
 
 <div class="mx-auto w-full px-8 pt-8 md:w-2/3">
@@ -28,7 +28,7 @@ const onDestroy = (e) => {
       </p>
     {/if}
 
-    <h1 class="mb-4 text-4xl font-bold">Item #{item.id}</h1>
+    <h1 class="mb-4 text-4xl font-bold">Barang #{item.id}</h1>
 
     <div class="flex flex-col gap-1">
       <ItemDetail label="Nama" value={item.name} />
@@ -43,16 +43,16 @@ const onDestroy = (e) => {
       <div class="min-h-32 rounded-sm border border-slate-300">{item.notes}</div>
     </div>
 
-    <Link href={`/items/${item.id}/edit`} class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Edit this item</Link>
-    <Link href="/items" class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Back to items</Link>
+    <Link href={`/items/${item.id}/edit`} class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Edit</Link>
+    <Link href="/items" class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Kembali</Link>
     <div class="ml-2 inline-block">
       <button
         use:inertia={{ href: `/items/${item.id}`, method: 'delete' }}
         on:click={onDestroy}
         type="button"
-        class="mt-2 rounded-lg bg-gray-100 px-5 py-3 font-medium"
+        class="mt-2 rounded-lg bg-red-400 px-5 py-3 font-medium text-white"
       >
-        Destroy this item
+        Hapus
       </button>
     </div>
   </div>
