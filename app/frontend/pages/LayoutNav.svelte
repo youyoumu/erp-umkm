@@ -17,9 +17,9 @@ router.on("success", (event) => {
         <NavLink href="/dashboard" active={page.startsWith("/dashboard/") || page === "/dashboard"}>Mustika Bumi Saga</NavLink>
       </div>
       <div>
-        <NavLink href="/items" active={page.startsWith("/items/") || page === "/items"}>Items</NavLink>
-        <NavLink href="/customers" active={page.startsWith("/customers/") || page === "/customers"}>Customers</NavLink>
-        <NavLink href="/invoices" active={page.startsWith("/invoices/") || page === "/invoices"}>Invoices</NavLink>
+        <NavLink href="/items" active={page.startsWith("/items/") || page === "/items"}>Barang</NavLink>
+        <NavLink href="/customers" active={page.startsWith("/customers/") || page === "/customers"}>Pembeli</NavLink>
+        <NavLink href="/invoices" active={page.startsWith("/invoices/") || page === "/invoices"}>Nota</NavLink>
       </div>
     </div>
   </header>
