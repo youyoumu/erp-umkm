@@ -1,6 +1,11 @@
+<script context="module">
+export { default as layout } from "../LayoutNav.svelte"
+</script>
+
 <script>
 import { Link } from "@inertiajs/svelte"
 import Form from "./Form.svelte"
+import Button from "$lib/components/ui/button/button.svelte"
 
 export let item
 
@@ -12,24 +17,11 @@ const handleSubmit = (e) => {
 </script>
 
 <svelte:head>
-  <title>Editing item</title>
+  <title>Edit Barang</title>
 </svelte:head>
 
-<div class="mx-auto w-full px-8 pt-8 md:w-2/3">
-  <h1 class="text-4xl font-bold">Editing item</h1>
-
+<div class="mx-auto max-w-screen-sm p-8">
+  <h1 class="text-4xl font-bold">Edit Barang</h1>
   <Form item={item} submitText="Update item" on:submit={handleSubmit} />
-
-  <Link
-    href={`/items/${item.id}`}
-    class="mt-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium"
-  >
-    Show this item
-  </Link>
-  <Link
-    href="/items"
-    class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium"
-  >
-    Back to items
-  </Link>
+  <Link href={`/items/${item.id}`}><Button>Lihat Barang</Button></Link>
 </div>
