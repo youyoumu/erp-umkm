@@ -6,6 +6,16 @@ import { Input } from "$lib/components/ui/input"
 import Label from "$lib/components/ui/label/label.svelte"
 import Button from "$lib/components/ui/button/button.svelte"
 
+import CalendarIcon from "lucide-svelte/icons/calendar"
+import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
+import { cn } from "$lib/utils.js"
+import { Calendar } from "$lib/components/ui/calendar"
+import * as Popover from "$lib/components/ui/popover"
+
+const df = new DateFormatter("en-US", {
+  dateStyle: "long",
+})
+
 const dispatch = createEventDispatcher()
 export let invoice
 export let submitText
@@ -23,7 +33,28 @@ function addItem() {
 }
 </script>
 
-<form class="contents" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+  <div class="flex justify-end">
+    <Popover.Root openFocus>
+      <Popover.Trigger asChild let:builder>
+        <Button
+          variant="outline"
+          class={cn(
+            "w-[280px] justify-start text-left font-normal",
+            !$form.date && "text-muted-foreground"
+          )}
+          builders={[builder]}
+        >
+          <CalendarIcon class="mr-2 h-4 w-4" />
+          {$form.date ? df.format($form.date.toDate(getLocalTimeZone())) : "Select a date"}
+        </Button>
+      </Popover.Trigger>
+      <Popover.Content class="w-auto p-0">
+        <Calendar bind:value={$form.date} initialFocus />
+      </Popover.Content>
+    </Popover.Root>
+  </div>
+
   <div class="flex flex-col gap-4 py-4">
     {#each $form.items as item, i (i)}
       {#if $form.items[i]}
@@ -53,22 +84,6 @@ function addItem() {
   <Button on:click={addItem}>Tambah Barang</Button>
 
   <div class="my-5">
-    <label for="date">Date</label>
-    <input
-      type="datetime-local"
-      name="date"
-      id="date"
-      bind:value={$form.date}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.date}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.date.join(', ')}
-      </div>
-    {/if}
-  </div>
-
-  <div class="my-5">
     <label for="code">Code</label>
     <input
       type="text"
@@ -94,7 +109,8 @@ function addItem() {
     </button>
   </div>
 
-  <div class="p-8 text-xs">{JSON.stringify($form.items)}</div>
+  <div class="text-xs">{JSON.stringify($form.items)}</div>
+  <div class="text-xs">{JSON.stringify($form.date)}</div>
 </form>
 
 <style>
