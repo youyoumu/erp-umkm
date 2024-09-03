@@ -26,7 +26,7 @@ const form = useForm({
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
   <FormField>
     <Label for="name">Nama Barang</Label>
-    <Input id="name" bind:value={$form.name} />
+    <Input id="name" bind:value={$form.name} placeholder="Masukkan Nama Barang" />
     <Errors errors={$form.errors.name} />
   </FormField>
 
@@ -62,7 +62,7 @@ const form = useForm({
 
   <FormField>
     <Label for="notes">Catatan</Label>
-    <Textarea id="notes" bind:value={$form.notes} />
+    <Textarea id="notes" bind:value={$form.notes} placeholder="Tempat simpan, ketentuan, dll" />
     <Errors errors={$form.errors.notes} />
   </FormField>
 

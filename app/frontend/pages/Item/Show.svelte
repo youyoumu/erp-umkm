@@ -3,16 +3,17 @@ export { default as layout } from "../LayoutNav.svelte"
 </script>
 
 <script>
-import { inertia, Link } from "@inertiajs/svelte"
+import * as AlertDialog from "$lib/components/ui/alert-dialog"
+import { inertia, router } from "@inertiajs/svelte"
 import ItemDetail from "./components/ItemDetail.svelte"
+import Button from "$lib/components/ui/button/button.svelte"
 
 export let item
 export let flash
+console.log(item)
 
 const onDestroy = (e) => {
-  if (!confirm("Are you sure you want to delete this item?")) {
-    e.preventDefault()
-  }
+  router.delete(`/items/${item.id}`)
 }
 </script>
 
@@ -20,7 +21,7 @@ const onDestroy = (e) => {
   <title>Barang #{item.id}</title>
 </svelte:head>
 
-<div class="mx-auto w-full px-8 pt-8 md:w-2/3">
+<div class="mx-auto max-w-screen-sm p-8">
   <div class="mx-auto">
     {#if flash.notice}
       <p class="mb-5 inline-block rounded-lg bg-green-50 px-3 py-2 font-medium text-green-500">
@@ -40,20 +41,26 @@ const onDestroy = (e) => {
     </div>
     <div class="my-4">
       <div class="mb-2 font-bold">Catatan:</div>
-      <div class="min-h-32 rounded-sm border border-slate-300">{item.notes}</div>
+      <div class="min-h-32 rounded-sm border border-slate-300 p-2">{item.notes}</div>
     </div>
 
-    <Link href={`/items/${item.id}/edit`} class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Edit</Link>
-    <Link href="/items" class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Kembali</Link>
-    <div class="ml-2 inline-block">
-      <button
-        use:inertia={{ href: `/items/${item.id}`, method: 'delete' }}
-        on:click={onDestroy}
-        type="button"
-        class="mt-2 rounded-lg bg-red-400 px-5 py-3 font-medium text-white"
-      >
-        Hapus
-      </button>
+    <div class="flex gap-2">
+      <Button href={`/items/${item.id}/edit`} variant="secondary">Edit</Button>
+      <AlertDialog.Root>
+        <AlertDialog.Trigger><Button variant="destructive">Hapus</Button></AlertDialog.Trigger>
+        <AlertDialog.Content>
+          <AlertDialog.Header>
+            <AlertDialog.Title>Apakah kamu yakin ingin menghapus barang ini?</AlertDialog.Title>
+            <AlertDialog.Description>
+              <!-- This action cannot be undone. This will permanently delete your account and remove your data from our servers. -->
+            </AlertDialog.Description>
+          </AlertDialog.Header>
+          <AlertDialog.Footer>
+            <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
+            <AlertDialog.Action on:click={onDestroy} class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </div>
   </div>
 </div>
