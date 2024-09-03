@@ -41,7 +41,28 @@ class InvoicesController < ApplicationController
 
   # POST /invoices
   def create
-    @invoice = Invoice.new(invoice_params)
+    item_ids = invoice_params[:items].map do |item|
+      item[:id]
+    end
+    @items = Item.where(id: item_ids)
+
+    begin
+      date = Time.parse(invoice_params[:date])
+    rescue ArgumentError
+      date = Time.now
+    end
+
+    items_snapshot_ids = []
+    @items.each do |item|
+      item_snapshot = item.dup
+      item_snapshot.is_snapshot = true
+      item_snapshot.save
+      items_snapshot_ids.push(item_snapshot.id)
+    end
+
+    @items_snapshot = Item.where(id: items_snapshot_ids)
+    @invoice = Invoice.new(date: date)
+    @invoice.items << @items_snapshot
 
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
@@ -74,7 +95,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :code)
+    params.require(:invoice).permit(:date, items: [:id])
   end
 
   def serialize_invoice(invoice)

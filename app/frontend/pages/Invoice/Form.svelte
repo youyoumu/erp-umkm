@@ -25,13 +25,15 @@ const formattedItems = items.map((item) => ({ ...item, label: item.name, value: 
 
 const form = useForm({
   date: invoice.date || "",
-  code: invoice.code || "",
   items: invoice.items || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
 })
 
 function addItem() {
   $form.items = [...$form.items, { ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }]
 }
+
+let value
+$: if (value) $form.date = value.toString()
 </script>
 
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
@@ -42,16 +44,16 @@ function addItem() {
           variant="outline"
           class={cn(
             "w-[280px] justify-start text-left font-normal",
-            !$form.date && "text-muted-foreground"
+            !value && "text-muted-foreground"
           )}
           builders={[builder]}
         >
           <CalendarIcon class="mr-2 h-4 w-4" />
-          {$form.date ? df.format($form.date.toDate(getLocalTimeZone())) : "Select a date"}
+          {value ? df.format(value.toDate(getLocalTimeZone())) : "Select a date"}
         </Button>
       </Popover.Trigger>
       <Popover.Content class="w-auto p-0">
-        <Calendar bind:value={$form.date} initialFocus />
+        <Calendar bind:value={value} initialFocus />
       </Popover.Content>
     </Popover.Root>
   </div>
@@ -109,6 +111,7 @@ function addItem() {
 
   <div class="text-xs">{JSON.stringify($form.items)}</div>
   <div class="text-xs">{JSON.stringify($form.date)}</div>
+  <div class="text-xs">{JSON.stringify(value)}</div>
 </form>
 
 <style>
