@@ -1,9 +1,14 @@
 <script>
 import { useForm } from "@inertiajs/svelte"
 import { createEventDispatcher } from "svelte"
+import { Input } from "$lib/components/ui/input"
+import Label from "$lib/components/ui/label/label.svelte"
+import Errors from "$lib/components/Errors.svelte"
+import FormField from "$lib/components/FormField.svelte"
+import Button from "$lib/components/ui/button/button.svelte"
+import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 const dispatch = createEventDispatcher()
-
 export let item
 export let submitText
 
@@ -18,129 +23,48 @@ const form = useForm({
 })
 </script>
 
-<form
-  class="contents"
-  on:submit|preventDefault={dispatch('submit', { form: $form })}
->
-  <div class="my-5">
-    <label for="name">Name</label>
-    <input
-      type="text"
-      name="name"
-      id="name"
-      bind:value={$form.name}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.name}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.name.join(', ')}
-      </div>
-    {/if}
-  </div>
+<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+  <FormField>
+    <Label for="name">Nama Barang</Label>
+    <Input id="name" bind:value={$form.name} />
+    <Errors errors={$form.errors.name} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="note">Notes</label>
-    <textarea
-      name="note"
-      id="note"
-      bind:value={$form.notes}
-      rows="4"
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.notes}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.notes.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="cost_price">Harga Modal</Label>
+    <Input id="cost_price" bind:value={$form.cost_price} type="number" />
+    <Errors errors={$form.errors.cost_price} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="cost_price">Cost price</label>
-    <input
-      type="number"
-      name="cost_price"
-      id="cost_price"
-      bind:value={$form.cost_price}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.cost_price}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.cost_price.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="selling_price">Harga Jual</Label>
+    <Input id="selling_price" bind:value={$form.selling_price} type="number" />
+    <Errors errors={$form.errors.selling_price} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="selling_price">Selling price</label>
-    <input
-      type="number"
-      name="selling_price"
-      id="selling_price"
-      bind:value={$form.selling_price}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.selling_price}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.selling_price.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="stock">Stok</Label>
+    <Input id="stock" bind:value={$form.stock} />
+    <Errors errors={$form.errors.stock} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="stock">Stock</label>
-    <input
-      type="text"
-      name="stock"
-      id="stock"
-      bind:value={$form.stock}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.stock}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.stock.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="code">Kode Barang</Label>
+    <Input id="code" bind:value={$form.code} />
+    <Errors errors={$form.errors.code} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="code">Code</label>
-    <input
-      type="text"
-      name="code"
-      id="code"
-      bind:value={$form.code}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.code}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.code.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="category">Kategori</Label>
+    <Input id="category" bind:value={$form.category} />
+    <Errors errors={$form.errors.category} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="category">Category</label>
-    <input
-      type="text"
-      name="category"
-      id="category"
-      bind:value={$form.category}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.category}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.category.join(', ')}
-      </div>
-    {/if}
-  </div>
+  <FormField>
+    <Label for="notes">Catatan</Label>
+    <Textarea id="notes" bind:value={$form.notes} />
+    <Errors errors={$form.errors.notes} />
+  </FormField>
 
-  <div class="inline">
-    <button
-      type="submit"
-      disabled={$form.processing}
-      class="inline-block cursor-pointer rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
-    >
-      {submitText}
-    </button>
-  </div>
+  <Button type="submit" disabled={$form.processing}>{submitText}</Button>
 </form>
