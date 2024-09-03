@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
 
   # GET /items
   def index
-    @items = Item.all
+    @items = Item.all.where(is_snapshot: false || nil)
     render inertia: "Item/Index", props: {
       items: @items.map do |item|
         serialize_item(item)
