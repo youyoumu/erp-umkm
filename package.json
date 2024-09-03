@@ -29,6 +29,7 @@
     "lucide-svelte": "^0.438.0",
     "path": "^0.12.7",
     "postcss": "^8.4.42",
+    "svelte-select": "^5.8.3",
     "sveltekit-superforms": "^2.17.0",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
