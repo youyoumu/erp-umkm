@@ -1,12 +1,12 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: %i[ show edit update destroy ]
+  before_action :set_invoice, only: %i[show edit update destroy]
 
   inertia_share flash: -> { flash.to_hash }
 
   # GET /invoices
   def index
     @invoices = Invoice.all
-    render inertia: 'Invoice/Index', props: {
+    render inertia: "Invoice/Index", props: {
       invoices: @invoices.map do |invoice|
         serialize_invoice(invoice)
       end
@@ -15,22 +15,26 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1
   def show
-    render inertia: 'Invoice/Show', props: {
+    render inertia: "Invoice/Show", props: {
       invoice: serialize_invoice(@invoice)
     }
   end
 
   # GET /invoices/new
   def new
+    @items = Item.all
     @invoice = Invoice.new
-    render inertia: 'Invoice/New', props: {
-      invoice: serialize_invoice(@invoice)
+    render inertia: "Invoice/New", props: {
+      invoice: serialize_invoice(@invoice),
+      items: @items.map do |item|
+        serialize_item(item)
+      end
     }
   end
 
   # GET /invoices/1/edit
   def edit
-    render inertia: 'Invoice/Edit', props: {
+    render inertia: "Invoice/Edit", props: {
       invoice: serialize_invoice(@invoice)
     }
   end
@@ -42,7 +46,7 @@ class InvoicesController < ApplicationController
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
     else
-      redirect_to new_invoice_url, inertia: { errors: @invoice.errors }
+      redirect_to new_invoice_url, inertia: {errors: @invoice.errors}
     end
   end
 
@@ -51,7 +55,7 @@ class InvoicesController < ApplicationController
     if @invoice.update(invoice_params)
       redirect_to @invoice, notice: "Invoice was successfully updated."
     else
-      redirect_to edit_invoice_url(@invoice), inertia: { errors: @invoice.errors }
+      redirect_to edit_invoice_url(@invoice), inertia: {errors: @invoice.errors}
     end
   end
 
@@ -62,19 +66,26 @@ class InvoicesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_invoice
-      @invoice = Invoice.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def invoice_params
-      params.require(:invoice).permit(:date, :code)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_invoice
+    @invoice = Invoice.find(params[:id])
+  end
 
-    def serialize_invoice(invoice)
-      invoice.as_json(only: [
-        :id, :date, :code
-      ])
-    end
+  # Only allow a list of trusted parameters through.
+  def invoice_params
+    params.require(:invoice).permit(:date, :code)
+  end
+
+  def serialize_invoice(invoice)
+    invoice.as_json(only: [
+      :id, :date, :code
+    ])
+  end
+
+  def serialize_item(item)
+    item.as_json(only: [
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category
+    ])
+  end
 end
