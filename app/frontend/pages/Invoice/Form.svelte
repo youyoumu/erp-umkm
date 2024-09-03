@@ -5,6 +5,7 @@ import Select from "svelte-select/Select.svelte"
 import { Input } from "$lib/components/ui/input"
 import Label from "$lib/components/ui/label/label.svelte"
 import Button from "$lib/components/ui/button/button.svelte"
+import * as AlertDialog from "$lib/components/ui/alert-dialog"
 
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
@@ -81,32 +82,29 @@ function addItem() {
     {/each}
   </div>
 
-  <Button on:click={addItem}>Tambah Barang</Button>
+  <div class="flex gap-2">
+    <Button on:click={addItem} variant="secondary">Tambah Barang</Button>
 
-  <div class="my-5">
-    <label for="code">Code</label>
-    <input
-      type="text"
-      name="code"
-      id="code"
-      bind:value={$form.code}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.code}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.code.join(', ')}
-      </div>
-    {/if}
-  </div>
-
-  <div class="inline">
-    <button
-      type="submit"
-      disabled={$form.processing}
-      class="inline-block cursor-pointer rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
-    >
-      {submitText}
-    </button>
+    <AlertDialog.Root>
+      <AlertDialog.Trigger><Button>{submitText}</Button></AlertDialog.Trigger>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Apakah kamu yakin ingin membuat nota ini?</AlertDialog.Title>
+          <AlertDialog.Description>
+            <!-- This action cannot be undone. This will permanently delete your account
+            and remove your data from our servers. -->
+          </AlertDialog.Description>
+        </AlertDialog.Header>
+        <AlertDialog.Footer>
+          <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
+          <AlertDialog.Action
+            ><button type="submit" disabled={$form.processing} on:click={dispatch('submit', { form: $form })}>
+              {submitText}
+            </button></AlertDialog.Action
+          >
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   </div>
 
   <div class="text-xs">{JSON.stringify($form.items)}</div>

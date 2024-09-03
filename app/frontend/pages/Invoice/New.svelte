@@ -21,5 +21,5 @@ const handleSubmit = (e) => {
 
 <div class="mx-auto p-8">
   <h1 class="text-4xl font-bold">Nota Baru</h1>
-  <Form items={items} invoice={invoice} submitText="Create invoice" on:submit={handleSubmit} />
+  <Form items={items} invoice={invoice} submitText="Buat Nota" on:submit={handleSubmit} />
 </div>
