@@ -9,7 +9,7 @@ import * as AlertDialog from "$lib/components/ui/alert-dialog"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 import CalendarIcon from "lucide-svelte/icons/calendar"
-import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
+import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
 import { cn } from "$lib/utils.js"
 import { Calendar } from "$lib/components/ui/calendar"
 import * as Popover from "$lib/components/ui/popover"
@@ -42,7 +42,7 @@ function handleSelectCustomer(e) {
   $form.address = address
 }
 
-let value
+let value = now()
 $: if (value) $form.date = value.toString()
 </script>
 
@@ -101,7 +101,7 @@ $: if (value) $form.date = value.toString()
             {#if i === 0}
               <Label for={`quantity-${i}`}>Jumlah Barang</Label>
             {/if}
-            <Input type="number" id={`quantity-${i}`} bind:value={$form.items[i].quantity} min="0" />
+            <Input type="number" id={`quantity-${i}`} bind:value={$form.items[i].quantity} min="0" on:focus={(e) => { e.target.select()}} />
           </div>
           <div class="flex max-w-32 flex-col items-center justify-center gap-2">
             {#if i === 0}

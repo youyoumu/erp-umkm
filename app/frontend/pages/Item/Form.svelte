@@ -34,13 +34,13 @@ const form = useForm({
 
   <FormField>
     <Label for="cost_price">Harga Modal</Label>
-    <Input id="cost_price" bind:value={$form.cost_price} type="number" />
+    <Input id="cost_price" bind:value={$form.cost_price} type="number" on:focus={(e) => { e.target.select()}} />
     <Errors errors={$form.errors.cost_price} />
   </FormField>
 
   <FormField>
     <Label for="selling_price">Harga Jual</Label>
-    <Input id="selling_price" bind:value={$form.selling_price} type="number" />
+    <Input id="selling_price" bind:value={$form.selling_price} type="number" on:focus={(e) => { e.target.select()}} />
     <Errors errors={$form.errors.selling_price} />
   </FormField>
 
