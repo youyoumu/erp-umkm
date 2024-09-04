@@ -122,7 +122,7 @@ class InvoicesController < ApplicationController
 
   def serialize_item(item)
     item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity, :quantity_unit
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity, :quantity_unit, :tag
     ])
   end
 end

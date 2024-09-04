@@ -20,6 +20,7 @@ const form = useForm({
   stock: item.stock || "",
   code: item.code || "",
   category: item.category || "",
+  tag: item.tag || "",
 })
 </script>
 
@@ -58,6 +59,12 @@ const form = useForm({
     <Label for="category">Kategori</Label>
     <Input id="category" bind:value={$form.category} />
     <Errors errors={$form.errors.category} />
+  </FormField>
+
+  <FormField>
+    <Label for="tag">Tag</Label>
+    <Input id="tag" bind:value={$form.tag} />
+    <Errors errors={$form.errors.tag} />
   </FormField>
 
   <FormField>

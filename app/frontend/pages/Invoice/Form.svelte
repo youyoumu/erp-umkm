@@ -22,7 +22,7 @@ const dispatch = createEventDispatcher()
 export let invoice
 export let submitText
 export let items
-const formattedItems = items.map((item) => ({ ...item, label: item.name, value: item.id, quantity: 0 }))
+const formattedItems = items.map((item) => ({ ...item, label: `${item.name} - ${item.tag}`, value: item.id, quantity: 0 }))
 
 const form = useForm({
   date: invoice.date || "",

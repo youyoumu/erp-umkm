@@ -38,6 +38,7 @@ const onDestroy = (e) => {
       <ItemDetail label="Stok" value={item.stock} />
       <ItemDetail label="Kode Barang" value={item.code} />
       <ItemDetail label="Kategori" value={item.category} />
+      <ItemDetail label="Tag" value={item.tag} />
     </div>
     <div class="my-4">
       <div class="mb-2 font-bold">Catatan:</div>

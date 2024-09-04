@@ -11,6 +11,7 @@ class CreateItems < ActiveRecord::Migration[7.2]
       t.boolean :is_snapshot
       t.float :quantity
       t.string :quantity_unit
+      t.string :tag
 
       t.timestamps
     end

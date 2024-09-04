@@ -1,5 +1,7 @@
 class Item < ApplicationRecord
   attribute :quantity, :float, default: 0
+  attribute :tag, :string, default: ""
+
   validates :name, presence: {message: "Nama barang harus diisi"}
   validates :cost_price, numericality: {message: "Harga modal harus berupa angka"}
   attribute :cost_price, :decimal, default: 0
