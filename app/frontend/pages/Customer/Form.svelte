@@ -1,9 +1,14 @@
 <script>
 import { useForm } from "@inertiajs/svelte"
 import { createEventDispatcher } from "svelte"
+import { Input } from "$lib/components/ui/input"
+import Label from "$lib/components/ui/label/label.svelte"
+import Errors from "$lib/components/Errors.svelte"
+import FormField from "$lib/components/FormField.svelte"
+import Button from "$lib/components/ui/button/button.svelte"
+import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 const dispatch = createEventDispatcher()
-
 export let customer
 export let submitText
 
@@ -15,81 +20,27 @@ const form = useForm({
 })
 </script>
 
-<form
-  class="contents"
-  on:submit|preventDefault={dispatch('submit', { form: $form })}
->
-  <div class="my-5">
-    <label for="name">Name</label>
-    <input
-      type="text"
-      name="name"
-      id="name"
-      bind:value={$form.name}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.name}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.name.join(', ')}
-      </div>
-    {/if}
-  </div>
+<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+  <FormField>
+    <Label for="name">Nama Pembeli</Label>
+    <Input id="name" bind:value={$form.name} placeholder="Masukkan Nama Pembeli" />
+    <Errors errors={$form.errors.name} />
+  </FormField>
+  <FormField>
+    <Label for="contact">Kontak</Label>
+    <Input id="contact" bind:value={$form.contact} />
+    <Errors errors={$form.errors.contact} />
+  </FormField>
+  <FormField>
+    <Label for="address">Alamat</Label>
+    <Textarea id="address" bind:value={$form.address} />
+    <Errors errors={$form.errors.address} />
+  </FormField>
+  <FormField>
+    <Label for="notes">Catatan</Label>
+    <Textarea id="notes" bind:value={$form.notes} placeholder="Kerabat, tukang, relasi, dll" />
+    <Errors errors={$form.errors.notes} />
+  </FormField>
 
-  <div class="my-5">
-    <label for="note">Notes</label>
-    <textarea
-      name="note"
-      id="note"
-      bind:value={$form.notes}
-      rows="4"
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.notes}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.notes.join(', ')}
-      </div>
-    {/if}
-  </div>
-
-  <div class="my-5">
-    <label for="address">Address</label>
-    <input
-      type="text"
-      name="address"
-      id="address"
-      bind:value={$form.address}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.address}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.address.join(', ')}
-      </div>
-    {/if}
-  </div>
-
-  <div class="my-5">
-    <label for="contact">Contact</label>
-    <input
-      type="text"
-      name="contact"
-      id="contact"
-      bind:value={$form.contact}
-      class="mt-2 block w-full rounded-md border border-gray-400 px-3 py-2 shadow outline-none"
-    />
-    {#if $form.errors.contact}
-      <div class="px-3 py-2 font-medium text-red-500">
-        {$form.errors.contact.join(', ')}
-      </div>
-    {/if}
-  </div>
-
-  <div class="inline">
-    <button
-      type="submit"
-      disabled={$form.processing}
-      class="inline-block cursor-pointer rounded-lg bg-blue-600 px-5 py-3 font-medium text-white"
-    >
-      {submitText}
-    </button>
-  </div>
+  <Button type="submit" disabled={$form.processing}>{submitText}</Button>
 </form>
