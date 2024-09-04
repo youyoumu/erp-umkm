@@ -27,6 +27,7 @@ const formattedItems = items.map((item) => ({ ...item, label: `${item.name} - ${
 const formattedCustomers = customers.map((customer) => ({ ...customer, label: customer.name, value: customer.id }))
 const form = useForm({
   date: invoice.date || "",
+  code: invoice.code || "",
   address: invoice.address || "",
   customer: invoice.customer || { ...formattedCustomers[0], label: "", value: "", id: 0 },
   items: invoice.items || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
@@ -47,15 +48,15 @@ $: if (value) $form.date = value.toString()
 
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
   <div class="flex justify-between gap-4">
-    <div class="flex flex-col items-center gap-2">
-      <div class="flex w-full max-w-96 grow items-center gap-2">
+    <div class="flex w-96 flex-col items-center gap-2">
+      <div class="items-tart flex w-full flex-col justify-between gap-2">
         <Label for="address">Tanggal</Label>
         <Popover.Root openFocus>
           <Popover.Trigger asChild let:builder>
             <Button
               variant="outline"
               class={cn(
-                "w-[280px] justify-start text-left font-normal",
+                "w-full justify-start text-left font-normal",
                 !value && "text-muted-foreground"
               )}
               builders={[builder]}
@@ -69,14 +70,19 @@ $: if (value) $form.date = value.toString()
           </Popover.Content>
         </Popover.Root>
       </div>
-      <div class="flex w-full max-w-96 grow items-center justify-between gap-2">
+      <div class="flex w-full flex-col items-start justify-between gap-2">
+        <Label for="code">Kode Nota</Label>
+        <Input id="code" bind:value={$form.code} />
+      </div>
+      <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="customer">Pembeli</Label>
         <Select items={formattedCustomers} bind:value={$form.customer} class="svelte-select" on:select={handleSelectCustomer} />
       </div>
     </div>
 
     <div class="flex grow flex-col items-center gap-2">
-      <Textarea id="address" bind:value={$form.address} placeholder="Alamat Nota" class="h-full" />
+      <Label for="address">Alamat</Label>
+      <Textarea id="address" bind:value={$form.address} placeholder="Masukkan Alamat" class="h-full" />
     </div>
   </div>
 

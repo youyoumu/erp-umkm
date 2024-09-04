@@ -53,10 +53,16 @@ class InvoicesController < ApplicationController
     rescue ArgumentError
       date = Time.now
     end
-    code = "INV-#{Time.now.strftime("%Y%m%d%H%M%S%L")}"
+
+    code = invoice_params[:code]
+    if code.blank?
+      code = "INV-#{Time.now.strftime("%Y%m%d%H%M%S%L")}"
+    end
+
     address = invoice_params[:address]
 
     customer_id = invoice_params[:customer][:id]
+    customer_id ||= 0
     @customer = Customer.where(id: customer_id)[0]
 
     items_detail = invoice_params[:items].map do |item|
@@ -78,8 +84,6 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(date: date, code: code, address: address)
     @invoice.items << @items_snapshot
     @invoice.customer = @customer
-
-    debugger
 
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
@@ -121,7 +125,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :address, customer: {}, items: [:id, :quantity, :quantity_unit]).with_defaults(customer: {id: 0})
+    params.require(:invoice).permit(:date, :address, :code, customer: {}, items: [:id, :quantity, :quantity_unit])
   end
 
   def serialize_invoice(invoice)
