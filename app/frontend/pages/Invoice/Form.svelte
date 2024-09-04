@@ -118,10 +118,6 @@ $: if (value) $form.date = value.toString()
       </AlertDialog.Content>
     </AlertDialog.Root>
   </div>
-
-  <div class="text-xs">{JSON.stringify($form.items)}</div>
-  <div class="text-xs">{JSON.stringify($form.date)}</div>
-  <div class="text-xs">{JSON.stringify(value)}</div>
 </form>
 
 <style>
