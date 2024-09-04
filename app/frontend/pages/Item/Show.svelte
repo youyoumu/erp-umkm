@@ -36,6 +36,7 @@ const onDestroy = (e) => {
       <ItemDetail label="Harga Modal" value={item.cost_price} />
       <ItemDetail label="Harga Jual" value={item.selling_price} />
       <ItemDetail label="Stok" value={item.stock} />
+      <ItemDetail label="Satuan" value={item.quantity_unit} />
       <ItemDetail label="Kode Barang" value={item.code} />
       <ItemDetail label="Kategori" value={item.category} />
       <ItemDetail label="Tag" value={item.tag} />

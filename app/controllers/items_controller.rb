@@ -70,12 +70,12 @@ class ItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag)
+    params.require(:item).permit(:name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag, :quantity_unit)
   end
 
   def serialize_item(item)
     item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag, :quantity_unit
     ])
   end
 end

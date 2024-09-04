@@ -21,6 +21,7 @@ const form = useForm({
   code: item.code || "",
   category: item.category || "",
   tag: item.tag || "",
+  quantity_unit: item.quantity_unit || "",
 })
 </script>
 
@@ -47,6 +48,12 @@ const form = useForm({
     <Label for="stock">Stok</Label>
     <Input id="stock" bind:value={$form.stock} />
     <Errors errors={$form.errors.stock} />
+  </FormField>
+
+  <FormField>
+    <Label for="quantity_unit">Satuan</Label>
+    <Input id="quantity_unit" bind:value={$form.quantity_unit} />
+    <Errors errors={$form.errors.quantity_unit} />
   </FormField>
 
   <FormField>
