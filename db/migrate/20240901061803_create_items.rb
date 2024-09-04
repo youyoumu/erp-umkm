@@ -10,6 +10,7 @@ class CreateItems < ActiveRecord::Migration[7.2]
       t.string :category
       t.boolean :is_snapshot
       t.float :quantity
+      t.string :quantity_unit
 
       t.timestamps
     end

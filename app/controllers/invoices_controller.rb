@@ -52,7 +52,7 @@ class InvoicesController < ApplicationController
     code = "INV-#{date.strftime("%Y%m%d%H%M%S%L")}"
 
     items_detail = invoice_params[:items].map do |item|
-      {id: item[:id], quantity: item[:quantity]}
+      {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit]}
     end
     @items = Item.where(id: items_detail.map { |item| item[:id] })
 
@@ -61,6 +61,7 @@ class InvoicesController < ApplicationController
       item_snapshot = item.dup
       item_snapshot.is_snapshot = true
       item_snapshot.quantity = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity]
+      item_snapshot.quantity_unit = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity_unit]
       item_snapshot.save
       item_snapshot_ids << item_snapshot.id
     end
@@ -100,7 +101,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, items: [:id, :quantity])
+    params.require(:invoice).permit(:date, items: [:id, :quantity, :quantity_unit])
   end
 
   def serialize_invoice(invoice)
@@ -111,7 +112,7 @@ class InvoicesController < ApplicationController
 
   def serialize_item(item)
     item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity, :quantity_unit
     ])
   end
 end

@@ -68,8 +68,8 @@ $: if (value) $form.date = value.toString()
             <Input type="number" id={`quantity-${i}`} bind:value={$form.items[i].quantity} min="0" />
           </div>
           <div class="flex flex-col items-center justify-center gap-2">
-            <Label for={`quantity-type-${i}`}>Satuan</Label>
-            <Input id={`quantity-type-${i}`} bind:value={$form.items[i].quantityType} />
+            <Label for={`quantity-unit-${i}`}>Satuan</Label>
+            <Input id={`quantity-unit-${i}`} bind:value={$form.items[i].quantity_unit} />
           </div>
           <div class="flex flex-col items-center justify-center gap-2">
             <Label>Harga Satuan</Label>

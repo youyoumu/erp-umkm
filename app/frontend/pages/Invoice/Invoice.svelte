@@ -8,7 +8,7 @@ export let items
 console.log(items)
 
 let gridContainer
-const columnDefs = [{ field: "name" }, { field: "quantity" }, { field: "selling_price" }, { field: "total" }]
+const columnDefs = [{ field: "name" }, { field: "quantity" }, { field: "quantity_unit" }, { field: "selling_price" }, { field: "total" }]
 const gridOptions = {
   columnDefs: columnDefs,
   rowData: items.map((item) => {

@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_01_090601) do
     t.string "category"
     t.boolean "is_snapshot"
     t.float "quantity"
+    t.string "quantity_unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
