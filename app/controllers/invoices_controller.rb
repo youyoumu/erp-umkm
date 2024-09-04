@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: %i[show edit update destroy]
+  before_action :set_invoice, only: %i[show edit update destroy print]
 
   inertia_share flash: -> { flash.to_hash }
 
@@ -91,6 +91,15 @@ class InvoicesController < ApplicationController
   def destroy
     @invoice.destroy!
     redirect_to invoices_url, notice: "Invoice was successfully destroyed."
+  end
+
+  def print
+    render inertia: "Invoice/Print", props: {
+      invoice: serialize_invoice(@invoice),
+      items: @invoice.items.map do |item|
+        serialize_item(item)
+      end
+    }
   end
 
   private

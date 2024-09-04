@@ -5,6 +5,7 @@ export { default as layout } from "../LayoutNav.svelte"
 <script>
 import { inertia, Link } from "@inertiajs/svelte"
 import Invoice from "./Invoice.svelte"
+import { Printer } from "lucide-svelte"
 
 export let invoice
 export let items
@@ -21,12 +22,18 @@ const onDestroy = (e) => {
   <title>Nota #{invoice.id}</title>
 </svelte:head>
 
-<div class="flex size-full flex-col items-center py-8">
+<div class="relative flex size-full flex-col items-center py-8">
   {#if flash.notice}
     <p class="mb-5 inline-block rounded-lg bg-green-50 px-3 py-2 font-medium text-green-500">
       {flash.notice}
     </p>
   {/if}
+
+  <a
+    href={`/invoices/${invoice.id}/print`}
+    target="_blank"
+    class="absolute right-0 top-8 cursor-pointer rounded-full border border-slate-300 bg-slate-200 p-2 shadow-sm"><Printer /></a
+  >
 
   <h1 class="mb-4 text-4xl font-bold">Nota #{invoice.id}</h1>
   <Invoice invoice={invoice} items={items} />
