@@ -46,7 +46,7 @@ const onDestroy = (e) => {
     </div>
 
     <div class="flex gap-2">
-      <Button href={`/items/${item.id}/edit`} variant="secondary">Edit</Button>
+      <a href={`/items/${item.id}/edit`} use:inertia><Button variant="secondary">Edit</Button></a>
       <AlertDialog.Root>
         <AlertDialog.Trigger><Button variant="destructive">Hapus</Button></AlertDialog.Trigger>
         <AlertDialog.Content>
