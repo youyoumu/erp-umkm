@@ -20,14 +20,14 @@ const onDestroy = (e) => {
   <title>Invoices</title>
 </svelte:head>
 
-<div class="mx-auto w-full px-8 pt-8 md:w-2/3">
+<div class="w-full p-8">
   {#if flash.notice}
     <p class="mb-5 inline-block rounded-lg bg-green-50 px-3 py-2 font-medium text-green-500">
       {flash.notice}
     </p>
   {/if}
 
-  <div class="flex items-center justify-between">
+  <div class="mb-8 flex items-center justify-between">
     <h1 class="text-4xl font-bold">Invoices</h1>
     <Link href="/invoices/new" class="block rounded-lg bg-blue-600 px-5 py-3 font-medium text-white">New invoice</Link>
   </div>

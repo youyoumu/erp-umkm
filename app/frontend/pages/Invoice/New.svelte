@@ -20,6 +20,6 @@ const handleSubmit = (e) => {
 </svelte:head>
 
 <div class="mx-auto p-8">
-  <h1 class="text-4xl font-bold">Nota Baru</h1>
+  <h1 class="mb-4 text-4xl font-bold">Nota Baru</h1>
   <Form items={items} invoice={invoice} submitText="Buat Nota" on:submit={handleSubmit} />
 </div>

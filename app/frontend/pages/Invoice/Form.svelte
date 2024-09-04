@@ -6,6 +6,7 @@ import { Input } from "$lib/components/ui/input"
 import Label from "$lib/components/ui/label/label.svelte"
 import Button from "$lib/components/ui/button/button.svelte"
 import * as AlertDialog from "$lib/components/ui/alert-dialog"
+import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
@@ -25,6 +26,7 @@ const formattedItems = items.map((item) => ({ ...item, label: item.name, value: 
 
 const form = useForm({
   date: invoice.date || "",
+  address: invoice.address || "",
   items: invoice.items || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
 })
 
@@ -37,25 +39,33 @@ $: if (value) $form.date = value.toString()
 </script>
 
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
-  <div class="flex justify-end">
-    <Popover.Root openFocus>
-      <Popover.Trigger asChild let:builder>
-        <Button
-          variant="outline"
-          class={cn(
-            "w-[280px] justify-start text-left font-normal",
-            !value && "text-muted-foreground"
-          )}
-          builders={[builder]}
-        >
-          <CalendarIcon class="mr-2 h-4 w-4" />
-          {value ? df.format(value.toDate(getLocalTimeZone())) : "Select a date"}
-        </Button>
-      </Popover.Trigger>
-      <Popover.Content class="w-auto p-0">
-        <Calendar bind:value={value} initialFocus />
-      </Popover.Content>
-    </Popover.Root>
+  <div class="flex justify-between gap-4">
+    <div class="flex flex-col items-center gap-2">
+      <Label for="address">Tanggal</Label>
+      <Popover.Root openFocus>
+        <Popover.Trigger asChild let:builder>
+          <Button
+            variant="outline"
+            class={cn(
+              "w-[280px] justify-start text-left font-normal",
+              !value && "text-muted-foreground"
+            )}
+            builders={[builder]}
+          >
+            <CalendarIcon class="mr-2 h-4 w-4" />
+            {value ? df.format(value.toDate(getLocalTimeZone())) : "Select a date"}
+          </Button>
+        </Popover.Trigger>
+        <Popover.Content class="w-auto p-0">
+          <Calendar bind:value={value} initialFocus />
+        </Popover.Content>
+      </Popover.Root>
+    </div>
+
+    <div class="flex grow flex-col items-center gap-2">
+      <Label for="address">Alamat</Label>
+      <Textarea id="address" bind:value={$form.address} />
+    </div>
   </div>
 
   <div class="flex flex-col gap-4 py-4">
@@ -84,7 +94,7 @@ $: if (value) $form.date = value.toString()
     {/each}
   </div>
 
-  <div class="flex gap-2">
+  <div class="flex justify-end gap-4">
     <Button on:click={addItem} variant="secondary">Tambah Barang</Button>
 
     <AlertDialog.Root>

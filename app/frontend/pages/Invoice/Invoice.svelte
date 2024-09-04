@@ -27,5 +27,6 @@ onMount(() => {
 <div class="mb-8 flex gap-4">
   <div>Date: {invoice.date}</div>
   <div>Code: {invoice.code}</div>
+  <div>Address: {invoice.address}</div>
 </div>
 <div id="datagrid" class="ag-theme-alpine size-full" bind:this={gridContainer}></div>

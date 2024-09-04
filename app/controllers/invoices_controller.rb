@@ -50,6 +50,7 @@ class InvoicesController < ApplicationController
       date = Time.now
     end
     code = "INV-#{date.strftime("%Y%m%d%H%M%S%L")}"
+    address = invoice_params[:address]
 
     items_detail = invoice_params[:items].map do |item|
       {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit]}
@@ -67,7 +68,7 @@ class InvoicesController < ApplicationController
     end
 
     @items_snapshot = Item.where(id: item_snapshot_ids)
-    @invoice = Invoice.new(date: date, code: code)
+    @invoice = Invoice.new(date: date, code: code, address: address)
     @invoice.items << @items_snapshot
 
     if @invoice.save
@@ -101,7 +102,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, items: [:id, :quantity, :quantity_unit])
+    params.require(:invoice).permit(:date, :address, items: [:id, :quantity, :quantity_unit])
   end
 
   def serialize_invoice(invoice)
