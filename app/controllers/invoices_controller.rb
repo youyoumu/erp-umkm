@@ -41,27 +41,29 @@ class InvoicesController < ApplicationController
 
   # POST /invoices
   def create
-    item_ids = invoice_params[:items].map do |item|
-      item[:id]
-    end
-    @items = Item.where(id: item_ids)
-
     begin
       date = Time.parse(invoice_params[:date])
     rescue ArgumentError
       date = Time.now
     end
+    code = "INV-#{date.strftime("%Y%m%d%H%M%S%L")}"
 
-    items_snapshot_ids = []
+    items_detail = invoice_params[:items].map do |item|
+      {id: item[:id], quantity: item[:quantity]}
+    end
+    @items = Item.where(id: items_detail.map { |item| item[:id] })
+
+    item_snapshot_ids = []
     @items.each do |item|
       item_snapshot = item.dup
       item_snapshot.is_snapshot = true
+      item_snapshot.quantity = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity]
       item_snapshot.save
-      items_snapshot_ids.push(item_snapshot.id)
+      item_snapshot_ids << item_snapshot.id
     end
 
-    @items_snapshot = Item.where(id: items_snapshot_ids)
-    @invoice = Invoice.new(date: date)
+    @items_snapshot = Item.where(id: item_snapshot_ids)
+    @invoice = Invoice.new(date: date, code: code)
     @invoice.items << @items_snapshot
 
     if @invoice.save
@@ -95,7 +97,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, items: [:id])
+    params.require(:invoice).permit(:date, items: [:id, :quantity])
   end
 
   def serialize_invoice(invoice)
