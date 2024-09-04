@@ -25,7 +25,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/new
   def new
-    @items = Item.all
+    @items = Item.all.where(is_snapshot: false || nil)
     @invoice = Invoice.new
     render inertia: "Invoice/New", props: {
       invoice: serialize_invoice(@invoice),
