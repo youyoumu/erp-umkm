@@ -10,7 +10,7 @@ router.on("success", (event) => {
 })
 </script>
 
-<main class="flex min-h-svh flex-col">
+<main class="flex h-svh min-h-svh flex-col">
   <header class=" bg-slate-900 px-4 py-4 text-white">
     <div class="container flex justify-between">
       <div>

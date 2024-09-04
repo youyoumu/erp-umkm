@@ -1,21 +1,22 @@
 <script>
 import { onMount } from "svelte"
 import { createGrid } from "ag-grid-community"
-import "ag-grid-community/styles/ag-grid.css" // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-alpine.css" // Optional theme CSS
+import "ag-grid-community/styles/ag-grid.css"
+import "ag-grid-community/styles/ag-theme-alpine.css"
 export let invoice
 export let items
+console.log(items)
 
 let gridContainer
-const columnDefs = [{ field: "make" }, { field: "model" }, { field: "price" }]
-const rowData = [
-  { make: "Toyota", model: "Celica", price: 35000 },
-  { make: "Ford", model: "Mondeo", price: 32000 },
-  { make: "Porsche", model: "Boxter", price: 72000 },
-]
+const columnDefs = [{ field: "name" }, { field: "quantity" }, { field: "selling_price" }, { field: "total" }]
 const gridOptions = {
   columnDefs: columnDefs,
-  rowData: rowData,
+  rowData: items.map((item) => {
+    return {
+      ...item,
+      total: item.quantity * item.selling_price,
+    }
+  }),
 }
 
 onMount(() => {
@@ -23,15 +24,8 @@ onMount(() => {
 })
 </script>
 
-<div>
-  <p class="my-5">
-    <strong class="mb-1 block font-medium">Date:</strong>
-    {invoice.date}
-  </p>
-  <p class="my-5">
-    <strong class="mb-1 block font-medium">Code:</strong>
-    {invoice.code}
-  </p>
+<div class="mb-8 flex gap-4">
+  <div>Date: {invoice.date}</div>
+  <div>Code: {invoice.code}</div>
 </div>
-
-<div id="datagrid" class="ag-theme-alpine" style="height: 600px; width:500px;" bind:this={gridContainer}></div>
+<div id="datagrid" class="ag-theme-alpine size-full" bind:this={gridContainer}></div>
