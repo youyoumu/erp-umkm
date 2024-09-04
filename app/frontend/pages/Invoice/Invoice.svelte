@@ -10,10 +10,10 @@ console.log(items)
 let gridContainer
 const columnDefs = [
   { field: "name", flex: 1, headerName: "Nama Barang" },
-  { field: "quantity", headerName: "Jumlah Barang" },
-  { field: "quantity_unit", headerName: "Satuan" },
-  { field: "selling_price", headerName: "Harga Satuan" },
-  { field: "total" },
+  { field: "quantity", width: 140, headerName: "Jumlah Barang" },
+  { field: "quantity_unit", width: 100, headerName: "Satuan" },
+  { field: "selling_price", width: 130, headerName: "Harga Satuan" },
+  { field: "total", width: 130 },
 ]
 const gridOptions = {
   columnDefs: columnDefs,
@@ -24,6 +24,8 @@ const gridOptions = {
     }
   }),
 }
+
+const total = items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
 
 onMount(() => {
   new createGrid(gridContainer, gridOptions)
@@ -38,3 +40,7 @@ onMount(() => {
   <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
 </div>
 <div id="datagrid" class="ag-theme-alpine h-full w-full" bind:this={gridContainer}></div>
+<div class="flex w-full justify-between border-b-2 border-slate-300 p-4 text-lg">
+  <div class="font-bold">Total:</div>
+  <div class="font-bold">{total}</div>
+</div>
