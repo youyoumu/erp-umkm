@@ -26,11 +26,15 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   def new
     @items = Item.all.where(is_snapshot: false || nil)
+    @customers = Customer.all
     @invoice = Invoice.new
     render inertia: "Invoice/New", props: {
       invoice: serialize_invoice(@invoice),
       items: @items.map do |item|
         serialize_item(item)
+      end,
+      customers: @customers.map do |customer|
+        serialize_customer(customer)
       end
     }
   end
@@ -51,6 +55,9 @@ class InvoicesController < ApplicationController
     end
     code = "INV-#{Time.now.strftime("%Y%m%d%H%M%S%L")}"
     address = invoice_params[:address]
+
+    customer_id = invoice_params[:customer][:id]
+    @customer = Customer.find(customer_id)
 
     items_detail = invoice_params[:items].map do |item|
       {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit]}
@@ -111,7 +118,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :address, items: [:id, :quantity, :quantity_unit])
+    params.require(:invoice).permit(:date, :address, customer: {}, items: [:id, :quantity, :quantity_unit])
   end
 
   def serialize_invoice(invoice)
@@ -123,6 +130,12 @@ class InvoicesController < ApplicationController
   def serialize_item(item)
     item.as_json(only: [
       :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity, :quantity_unit, :tag
+    ])
+  end
+
+  def serialize_customer(customer)
+    customer.as_json(only: [
+      :id, :name, :notes, :address, :contact
     ])
   end
 end
