@@ -22,6 +22,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.8",
     "@tailwindcss/typography": "^0.5.15",
+    "ag-grid-community": "^32.1.0",
     "autoprefixer": "^10.4.20",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",

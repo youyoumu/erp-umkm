@@ -16,7 +16,10 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   def show
     render inertia: "Invoice/Show", props: {
-      invoice: serialize_invoice(@invoice)
+      invoice: serialize_invoice(@invoice),
+      items: @invoice.items.map do |item|
+        serialize_item(item)
+      end
     }
   end
 
@@ -102,13 +105,13 @@ class InvoicesController < ApplicationController
 
   def serialize_invoice(invoice)
     invoice.as_json(only: [
-      :id, :date, :code
+      :id, :date, :code, :address
     ])
   end
 
   def serialize_item(item)
     item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity
     ])
   end
 end
