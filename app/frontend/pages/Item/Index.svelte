@@ -4,6 +4,7 @@ export { default as layout } from "../LayoutNav.svelte"
 
 <script>
 import { Link, inertia } from "@inertiajs/svelte"
+import Button from "$lib/components/ui/button/button.svelte"
 
 export let items
 export let flash
@@ -28,7 +29,7 @@ const onDestroy = (e) => {
 
   <div class="mb-8 flex items-center justify-between">
     <h1 class="text-4xl font-bold">Daftar Barang</h1>
-    <Link href="/items/new" class="block rounded-lg bg-blue-600 px-5 py-3 font-medium text-white">Barang Baru</Link>
+    <a href="/items/new" use:inertia><Button>Barang Baru</Button></a>
   </div>
 
   <div class="min-w-full">

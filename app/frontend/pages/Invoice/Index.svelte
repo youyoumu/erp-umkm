@@ -3,9 +3,8 @@ export { default as layout } from "../LayoutNav.svelte"
 </script>
 
 <script>
-import { Link } from "@inertiajs/svelte"
-import Invoice from "./Invoice.svelte"
-
+import { Link, inertia } from "@inertiajs/svelte"
+import Button from "$lib/components/ui/button/button.svelte"
 export let invoices
 export let flash
 
@@ -28,8 +27,8 @@ const onDestroy = (e) => {
   {/if}
 
   <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-4xl font-bold">Invoices</h1>
-    <Link href="/invoices/new" class="block rounded-lg bg-blue-600 px-5 py-3 font-medium text-white">New invoice</Link>
+    <h1 class="text-4xl font-bold">Daftar Nota</h1>
+    <a href="/invoices/new" use:inertia><Button>Nota Baru</Button></a>
   </div>
 
   <div class="min-w-full">
