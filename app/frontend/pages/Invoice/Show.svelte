@@ -18,7 +18,7 @@ const onDestroy = (e) => {
 </script>
 
 <svelte:head>
-  <title>Invoice #{invoice.id}</title>
+  <title>Nota #{invoice.id}</title>
 </svelte:head>
 
 <div class="flex size-full flex-col items-center py-8">
@@ -28,7 +28,7 @@ const onDestroy = (e) => {
     </p>
   {/if}
 
-  <h1 class="mb-4 text-4xl font-bold">Invoice #{invoice.id}</h1>
+  <h1 class="mb-4 text-4xl font-bold">Nota #{invoice.id}</h1>
   <Invoice invoice={invoice} items={items} />
 
   <!-- 

@@ -49,7 +49,7 @@ class InvoicesController < ApplicationController
     rescue ArgumentError
       date = Time.now
     end
-    code = "INV-#{date.strftime("%Y%m%d%H%M%S%L")}"
+    code = "INV-#{Time.now.strftime("%Y%m%d%H%M%S%L")}"
     address = invoice_params[:address]
 
     items_detail = invoice_params[:items].map do |item|

@@ -8,7 +8,13 @@ export let items
 console.log(items)
 
 let gridContainer
-const columnDefs = [{ field: "name" }, { field: "quantity" }, { field: "quantity_unit" }, { field: "selling_price" }, { field: "total" }]
+const columnDefs = [
+  { field: "name", flex: 1, headerName: "Nama Barang" },
+  { field: "quantity", headerName: "Jumlah Barang" },
+  { field: "quantity_unit", headerName: "Satuan" },
+  { field: "selling_price", headerName: "Harga Satuan" },
+  { field: "total" },
+]
 const gridOptions = {
   columnDefs: columnDefs,
   rowData: items.map((item) => {
@@ -24,9 +30,11 @@ onMount(() => {
 })
 </script>
 
-<div class="mb-8 flex gap-4">
-  <div>Date: {invoice.date}</div>
-  <div>Code: {invoice.code}</div>
-  <div>Address: {invoice.address}</div>
+<div class="col mb-8">
+  <div class="mb-4 flex gap-4">
+    <div><span class="font-bold">Tanggal:</span> {invoice.date}</div>
+    <div><span class="font-bold">Kode Nota:</span> {invoice.code}</div>
+  </div>
+  <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
 </div>
-<div id="datagrid" class="ag-theme-alpine size-full" bind:this={gridContainer}></div>
+<div id="datagrid" class="ag-theme-alpine h-full w-full" bind:this={gridContainer}></div>
