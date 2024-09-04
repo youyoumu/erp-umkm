@@ -8,6 +8,8 @@ class CreateItems < ActiveRecord::Migration[7.2]
       t.string :stock
       t.string :code
       t.string :category
+      t.boolean :is_snapshot
+      t.float :quantity
 
       t.timestamps
     end

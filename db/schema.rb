@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_03_055917) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_01_090601) do
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.text "notes"
@@ -20,18 +20,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_055917) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "invoice_items", force: :cascade do |t|
+    t.integer "invoice_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.index ["item_id"], name: "index_invoice_items_on_item_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.datetime "date"
     t.string "code"
+    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "address"
-  end
-
-  create_table "invoices_items", id: false, force: :cascade do |t|
-    t.integer "invoice_id", null: false
-    t.integer "item_id", null: false
-    t.float "quantity"
   end
 
   create_table "items", force: :cascade do |t|
@@ -42,8 +45,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_055917) do
     t.string "stock"
     t.string "code"
     t.string "category"
+    t.boolean "is_snapshot"
+    t.float "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_snapshot"
   end
+
+  add_foreign_key "invoice_items", "invoices"
+  add_foreign_key "invoice_items", "items"
 end

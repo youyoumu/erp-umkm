@@ -3,6 +3,7 @@ class CreateInvoices < ActiveRecord::Migration[7.2]
     create_table :invoices do |t|
       t.datetime :date
       t.string :code
+      t.string :address
 
       t.timestamps
     end
