@@ -57,7 +57,7 @@ class InvoicesController < ApplicationController
     address = invoice_params[:address]
 
     customer_id = invoice_params[:customer][:id]
-    @customer = Customer.find(customer_id)
+    @customer = Customer.where(id: customer_id)[0]
 
     items_detail = invoice_params[:items].map do |item|
       {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit]}
@@ -77,6 +77,9 @@ class InvoicesController < ApplicationController
     @items_snapshot = Item.where(id: item_snapshot_ids)
     @invoice = Invoice.new(date: date, code: code, address: address)
     @invoice.items << @items_snapshot
+    @invoice.customer = @customer
+
+    debugger
 
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
@@ -118,7 +121,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :address, customer: {}, items: [:id, :quantity, :quantity_unit])
+    params.require(:invoice).permit(:date, :address, customer: {}, items: [:id, :quantity, :quantity_unit]).with_defaults(customer: {id: 0})
   end
 
   def serialize_invoice(invoice)

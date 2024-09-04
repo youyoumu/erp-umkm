@@ -4,6 +4,7 @@ class CreateInvoices < ActiveRecord::Migration[7.2]
       t.datetime :date
       t.string :code
       t.string :address
+      t.integer :customer_id
 
       t.timestamps
     end

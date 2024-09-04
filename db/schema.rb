@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_01_090601) do
     t.datetime "date"
     t.string "code"
     t.string "address"
+    t.integer "customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
