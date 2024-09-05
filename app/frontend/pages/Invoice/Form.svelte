@@ -23,7 +23,10 @@ export let invoice
 export let submitText
 export let items
 export let customers
-const formattedItems = items.map((item) => ({ ...item, label: `${item.name} - ${item.tag}`, value: item.id, quantity: 0 }))
+const formattedItems = items.map((item) => {
+  const tag = item.tag === "" ? "" : `#${item.tag}`
+  return { ...item, label: `${item.name} ${tag}`, value: item.id, quantity: 0 }
+})
 const formattedCustomers = customers.map((customer) => ({ ...customer, label: customer.name, value: customer.id }))
 const form = useForm({
   date: invoice.date || "",
