@@ -4,6 +4,7 @@ import { createGrid } from "ag-grid-community"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import { cn } from "$lib/utils"
+import dayjs from "dayjs"
 export let invoice
 export let items
 console.log(items)
@@ -40,7 +41,7 @@ onMount(() => {
 
 <div class="mb-4 w-full p-4">
   <div class="mb-4 flex gap-4">
-    <div><span class="font-bold">Tanggal:</span> {invoice.date}</div>
+    <div><span class="font-bold">Tanggal:</span> {dayjs(invoice.date).format("DD MMMM YYYY")}</div>
     <div><span class="font-bold">Kode Nota:</span> {invoice.code}</div>
   </div>
   <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
