@@ -44,6 +44,7 @@ function handleSelectCustomer(e) {
 
 let value = now()
 $: if (value) $form.date = value.toString()
+$: $form.items = $form.items.filter((item) => item != undefined)
 </script>
 
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
