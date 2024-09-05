@@ -66,7 +66,7 @@ class InvoicesController < ApplicationController
     @customer = Customer.where(id: customer_id)[0]
 
     items_detail = invoice_params[:items].map do |item|
-      {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit]}
+      {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit], selling_price: item[:selling_price]}
     end
     @items = Item.where(id: items_detail.map { |item| item[:id] })
 
@@ -76,6 +76,7 @@ class InvoicesController < ApplicationController
       item_snapshot.is_snapshot = true
       item_snapshot.quantity = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity]
       item_snapshot.quantity_unit = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity_unit]
+      item_snapshot.selling_price = items_detail.find { |item_detail| item_detail[:id] == item.id }[:selling_price]
       item_snapshot.save
       item_snapshot_ids << item_snapshot.id
     end
@@ -125,7 +126,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :address, :code, customer: {}, items: [:id, :quantity, :quantity_unit])
+    params.require(:invoice).permit(:date, :address, :code, customer: {}, items: [:id, :quantity, :quantity_unit, :selling_price])
   end
 
   def serialize_invoice(invoice)

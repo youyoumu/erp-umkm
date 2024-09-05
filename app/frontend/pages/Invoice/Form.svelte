@@ -113,7 +113,7 @@ $: if (value) $form.date = value.toString()
             {#if i === 0}
               <Label>Harga Satuan</Label>
             {/if}
-            <Input value={$form.items[i].selling_price} disabled class="disabled:opacity-100" />
+            <Input bind:value={$form.items[i].selling_price} />
           </div>
           <div class="flex max-w-32 flex-col items-center justify-center gap-2">
             {#if i === 0}
