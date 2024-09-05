@@ -10,7 +10,7 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
-import { cn } from "$lib/utils.js"
+import { cn, formatIDR } from "$lib/utils.js"
 import { Calendar } from "$lib/components/ui/calendar"
 import * as Popover from "$lib/components/ui/popover"
 
@@ -43,6 +43,7 @@ function handleSelectCustomer(e) {
 }
 
 let value = now()
+$: grandTotal = $form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
 $: if (value) $form.date = value.toString()
 $: $form.items = $form.items.filter((item) => item != undefined)
 </script>
@@ -120,12 +121,14 @@ $: $form.items = $form.items.filter((item) => item != undefined)
             {#if i === 0}
               <Label>Total</Label>
             {/if}
-            <Input value={$form.items[i].quantity * $form.items[i].selling_price} disabled class="disabled:opacity-100" />
+            <Input value={formatIDR($form.items[i].quantity * $form.items[i].selling_price)} disabled class="disabled:opacity-100" />
           </div>
         </div>
       {/if}
     {/each}
   </div>
+
+  <div class="flex justify-end font-bold"><div>Total: {formatIDR(grandTotal)}</div></div>
 
   <div class="flex justify-end gap-4">
     <Button on:click={addItem} variant="secondary">Tambah Barang</Button>
