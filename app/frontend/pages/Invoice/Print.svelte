@@ -14,23 +14,23 @@ onMount(() => {
 })
 </script>
 
-<main class="flex h-[528px] w-[912px] flex-col border border-dashed border-red-400 px-[48px] text-xs font-medium print:border-0">
+<main class="mt-8 flex h-[528px] w-[912px] flex-col border border-dashed border-red-400 px-[48px] text-sm print:border-0">
   <div class="flex grow flex-col border-x border-dashed border-red-400 bg-white p-4 print:border-x-0">
     <div>Mustika Bumi Saga</div>
     <div>Jalan Saga, Bunar, Balaraja. Hp. 08211181289</div>
-    <div class="mb-2 flex justify-center border-b border-black text-lg">NOTA</div>
+    <div class="mb-2 flex justify-center border-b border-black text-lg">INVOICE</div>
     <div class="mb-1">KEPADA Yth:</div>
     <div class="mb-4 flex justify-between gap-4 ps-4">
-      <div class="h-12 w-full border-r border-black pe-4">
+      <div class="w-full border-e border-black pe-4">
         <div class="mb-1 underline">{customer ? customer.name : ""}</div>
         <div>{invoice.address}</div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex w-[410px] flex-col">
         <div class="mb-1 flex justify-between">
-          <div>Kode Nota:</div>
+          <div>Kode Invoice:</div>
           <div>{invoice.code}</div>
         </div>
-        <div class="flex w-56 justify-between">
+        <div class="flex justify-between">
           <div>Tanggal:</div>
           <div>{dayjs(invoice.date).format("DD MMMM YYYY")}</div>
         </div>
@@ -40,10 +40,10 @@ onMount(() => {
       <table class="w-full table-fixed border-collapse border border-black">
         <tr>
           <th class="border border-black">Nama Barang</th>
-          <th class="w-14 border border-black">Jumlah</th>
-          <th class="w-[52px] border border-black">Satuan</th>
-          <th class="w-24 border border-black">Harga Satuan</th>
-          <th class="w-28 border border-black">Total</th>
+          <th class="w-[60px] border border-black ps-1">Jumlah</th>
+          <th class="w-[60px] border border-black">Satuan</th>
+          <th class="w-28 border border-black">Harga Satuan</th>
+          <th class="w-32 border border-black">Total</th>
         </tr>
         {#each items as item (item.id)}
           <tr>
