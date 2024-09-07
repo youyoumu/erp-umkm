@@ -5,6 +5,7 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import { cn } from "$lib/utils"
 import dayjs from "dayjs"
+import { formatIDR } from "$lib/utils"
 export let invoice
 export let items
 console.log(items)
@@ -25,13 +26,14 @@ const gridOptions = {
   rowData: items.map((item) => {
     return {
       ...item,
-      total: item.quantity * item.selling_price,
+      total: formatIDR(item.quantity * item.selling_price),
+      selling_price: formatIDR(item.selling_price),
     }
   }),
   domLayout: isPrint ? "print" : "",
 }
 
-const total = items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
+const total = formatIDR(items.reduce((total, item) => total + item.selling_price * item.quantity, 0))
 
 onMount(() => {
   new createGrid(gridContainer, gridOptions)
