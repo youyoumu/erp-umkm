@@ -17,6 +17,7 @@ class InvoicesController < ApplicationController
   def show
     render inertia: "Invoice/Show", props: {
       invoice: serialize_invoice(@invoice),
+      customer: serialize_customer(@invoice.customer),
       items: @invoice.items.map do |item|
         serialize_item(item)
       end
@@ -111,6 +112,7 @@ class InvoicesController < ApplicationController
   def print
     render inertia: "Invoice/Print", props: {
       invoice: serialize_invoice(@invoice),
+      customer: serialize_customer(@invoice.customer),
       items: @invoice.items.map do |item|
         serialize_item(item)
       end
