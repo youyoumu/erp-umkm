@@ -5,6 +5,6 @@ export let invoice
 export let items
 </script>
 
-<main class="flex h-svh min-h-svh flex-col p-4">
+<main class="flex h-[528px] w-[816px] flex-col border p-4">
   <Invoice invoice={invoice} items={items} />
 </main>

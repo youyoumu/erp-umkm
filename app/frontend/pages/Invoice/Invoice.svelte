@@ -30,7 +30,7 @@ const gridOptions = {
       selling_price: formatIDR(item.selling_price),
     }
   }),
-  domLayout: isPrint ? "print" : "",
+  domLayout: "autoHeight",
 }
 
 const total = formatIDR(items.reduce((total, item) => total + item.selling_price * item.quantity, 0))
@@ -49,7 +49,7 @@ onMount(() => {
   <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
 </div>
 
-<div id="datagrid" class={cn("ag-theme-alpine w-full justify-center", isPrint ? "flex" : "h-full")} bind:this={gridContainer}></div>
+<div id="datagrid" class={cn("ag-theme-alpine w-full justify-center")} bind:this={gridContainer}></div>
 
 <div class="flex w-full justify-between p-4 text-lg">
   <div class="font-bold">Total:</div>
