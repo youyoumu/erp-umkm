@@ -1,13 +1,17 @@
 <script>
-import Invoice from "./Invoice.svelte"
 import { formatIDR } from "$lib/utils"
 import dayjs from "dayjs"
+import { onMount } from "svelte"
 
 export let invoice
 export let items // max 11 items
 export let customer
 
 const grandTotal = items.reduce((acc, item) => acc + item.selling_price * item.quantity, 0)
+
+onMount(() => {
+  window.print()
+})
 </script>
 
 <main class="flex h-[528px] w-[912px] flex-col border border-dashed border-red-400 px-[48px] text-xs font-medium print:border-0">
@@ -47,7 +51,7 @@ const grandTotal = items.reduce((acc, item) => acc + item.selling_price * item.q
             <td class="border border-black ps-1">{item.quantity}</td>
             <td class="border border-black ps-1">{item.quantity_unit}</td>
             <td class="border border-black ps-1">{formatIDR(item.selling_price)}</td>
-            <td class="border border-black ps-1">{formatIDR(item.selling_price * item.quantity_unit)}</td>
+            <td class="border border-black ps-1">{formatIDR(item.selling_price * item.quantity)}</td>
           </tr>
         {/each}
         <tr
