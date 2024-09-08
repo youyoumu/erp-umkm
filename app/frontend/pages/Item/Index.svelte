@@ -12,15 +12,10 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import { formatIDR } from "$lib/utils"
 import dayjs from "dayjs"
+import Input from "$lib/components/ui/input/input.svelte"
 
 export let items
 export let flash
-
-const onDestroy = (e) => {
-  if (!confirm("Are you sure you want to delete this item?")) {
-    e.preventDefault()
-  }
-}
 
 let gridContainer
 const columnDefs = [
@@ -42,9 +37,14 @@ const gridOptions = {
   }),
 }
 
+let gridApi
 onMount(() => {
-  new createGrid(gridContainer, gridOptions)
+  gridApi = createGrid(gridContainer, gridOptions)
 })
+
+function handleSearch(e) {
+  gridApi.setGridOption("quickFilterText", e.target.value)
+}
 </script>
 
 <svelte:head>
@@ -62,6 +62,6 @@ onMount(() => {
     <h1 class="text-4xl font-bold">Daftar Barang</h1>
     <a href="/items/new" use:inertia><Button>Barang Baru</Button></a>
   </div>
-
+  <Input on:input={handleSearch} placeholder="Cari Barang" class="mb-4" />
   <div id="datagrid" class={cn("ag-theme-alpine h-[60svh] w-full")} bind:this={gridContainer}></div>
 </div>
