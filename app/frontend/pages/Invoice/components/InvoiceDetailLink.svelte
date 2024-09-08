@@ -4,6 +4,6 @@ export let invoice
 </script>
 
 <a href="/invoices/{invoice.id}" class="flex size-full items-center gap-2" target="_blank">
-  <div>{invoice.code}</div>
+  <div class="truncate">{invoice.code}</div>
   <ExternalLink opacity="0.25" size="20" />
 </a>
