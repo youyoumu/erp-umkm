@@ -3,8 +3,15 @@ export { default as layout } from "../LayoutNav.svelte"
 </script>
 
 <script>
+import { cn } from "$lib/utils"
 import { Link, inertia } from "@inertiajs/svelte"
 import Button from "$lib/components/ui/button/button.svelte"
+import { onMount } from "svelte"
+import { createGrid } from "ag-grid-community"
+import "ag-grid-community/styles/ag-grid.css"
+import "ag-grid-community/styles/ag-theme-alpine.css"
+import { formatIDR } from "$lib/utils"
+import dayjs from "dayjs"
 
 export let items
 export let flash
@@ -14,13 +21,37 @@ const onDestroy = (e) => {
     e.preventDefault()
   }
 }
+
+let gridContainer
+const columnDefs = [
+  { field: "name", flex: 1, headerName: "Nama Barang" },
+  { field: "stock", headerName: "Stok", width: 85 },
+
+  { field: "quantity_unit", width: 85, headerName: "Satuan" },
+  { field: "selling_price", width: 125, headerName: "Harga Satuan", wrapHeaderText: true },
+  { field: "updated_at", width: 115, headerName: "Terakhir Diubah Pada", wrapHeaderText: true },
+]
+const gridOptions = {
+  columnDefs: columnDefs,
+  rowData: items.map((item) => {
+    return {
+      ...item,
+      selling_price: formatIDR(item.selling_price),
+      updated_at: dayjs(item.updated_at).format("DD/MMM/YY"),
+    }
+  }),
+}
+
+onMount(() => {
+  new createGrid(gridContainer, gridOptions)
+})
 </script>
 
 <svelte:head>
   <title>Items</title>
 </svelte:head>
 
-<div class="w-full p-8">
+<div class="size-full p-8">
   {#if flash.notice}
     <p class="mb-5 inline-block rounded-lg bg-green-50 px-3 py-2 font-medium text-green-500">
       {flash.notice}
@@ -32,11 +63,5 @@ const onDestroy = (e) => {
     <a href="/items/new" use:inertia><Button>Barang Baru</Button></a>
   </div>
 
-  <div class="min-w-full">
-    {#each items as item (item.id)}
-      <div class="flex justify-between">
-        <a href={`/items/${item.id}`} class="text-blue-500 underline" use:inertia>{item.name}</a>
-      </div>
-    {/each}
-  </div>
+  <div id="datagrid" class={cn("ag-theme-alpine h-[60svh] w-full")} bind:this={gridContainer}></div>
 </div>

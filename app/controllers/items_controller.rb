@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
 
   def serialize_item(item)
     item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag, :quantity_unit
+      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :tag, :quantity_unit, :updated_at
     ])
   end
 end
