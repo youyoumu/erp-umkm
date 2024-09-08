@@ -8,7 +8,7 @@ import Button from "$lib/components/ui/button/button.svelte"
 import { onMount } from "svelte"
 import { createGrid } from "ag-grid-community"
 import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
+import "ag-grid-community/styles/ag-theme-quartz.css"
 import { formatIDR, cn } from "$lib/utils"
 import dayjs from "dayjs"
 import Input from "$lib/components/ui/input/input.svelte"
@@ -92,5 +92,5 @@ function handleSearch(e) {
   </div>
 
   <Input on:input={handleSearch} placeholder="Cari Nota" class="mb-4" />
-  <div id="datagrid" class={cn("ag-theme-alpine h-[60svh] w-full")} bind:this={gridContainer}></div>
+  <div id="datagrid" class={cn("ag-theme-quartz h-[60svh] w-full")} bind:this={gridContainer}></div>
 </div>

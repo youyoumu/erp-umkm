@@ -2,7 +2,7 @@
 import { onMount } from "svelte"
 import { createGrid } from "ag-grid-community"
 import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
+import "ag-grid-community/styles/ag-theme-quartz.css"
 import { cn } from "$lib/utils"
 import dayjs from "dayjs"
 import { formatIDR } from "$lib/utils"
@@ -48,7 +48,7 @@ onMount(() => {
   <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
 </div>
 
-<div id="datagrid" class={cn("ag-theme-alpine w-full justify-center")} bind:this={gridContainer}></div>
+<div id="datagrid" class={cn("ag-theme-quartz w-full justify-center")} bind:this={gridContainer}></div>
 
 <div class="flex w-full justify-between p-4 text-lg">
   <div class="font-bold">Total:</div>
