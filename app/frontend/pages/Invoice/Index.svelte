@@ -14,6 +14,7 @@ import dayjs from "dayjs"
 import Input from "$lib/components/ui/input/input.svelte"
 import { cellRendererFactory } from "$lib/cellRendererFactory"
 import InvoiceDetailLink from "./components/InvoiceDetailLink.svelte"
+import CustomerDetailLink from "./components/CustomerDetailLink.svelte"
 
 export let invoices
 export let flash
@@ -35,15 +36,31 @@ const columnDefs = [
       })
     }),
   },
+  {
+    field: "customer",
+    headerName: "Pembeli",
+    width: 160,
+    cellRenderer: cellRendererFactory((c, p) => {
+      new CustomerDetailLink({
+        target: c.eGui,
+        props: {
+          customer: p.data.customer,
+        },
+      })
+    }),
+  },
+  { field: "total", headerName: "Total", width: 135 },
   { field: "date", headerName: "Tanggal", width: 115 },
-  { field: "address", headerName: "Alamat", width: 320 },
+  { field: "address", headerName: "Alamat", width: 240 },
 ]
 const gridOptions = {
   columnDefs: columnDefs,
   rowData: invoices.map((invoice) => {
+    const total = invoice.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
     return {
       ...invoice,
       date: dayjs(invoice.date).format("DD/MMM/YY"),
+      total: formatIDR(total),
     }
   }),
 }
@@ -74,6 +91,6 @@ function handleSearch(e) {
     <a href="/invoices/new" use:inertia><Button>Nota Baru</Button></a>
   </div>
 
-  <Input on:input={handleSearch} placeholder="Cari Barang" class="mb-4" />
+  <Input on:input={handleSearch} placeholder="Cari Nota" class="mb-4" />
   <div id="datagrid" class={cn("ag-theme-alpine h-[60svh] w-full")} bind:this={gridContainer}></div>
 </div>
