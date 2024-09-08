@@ -8,7 +8,6 @@ import dayjs from "dayjs"
 import { formatIDR } from "$lib/utils"
 export let invoice
 export let items
-console.log(items)
 
 // path /print
 const isPrint = window.location.pathname.endsWith("/print")

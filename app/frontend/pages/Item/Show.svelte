@@ -10,7 +10,6 @@ import Button from "$lib/components/ui/button/button.svelte"
 
 export let item
 export let flash
-console.log(item)
 
 const onDestroy = (e) => {
   router.delete(`/items/${item.id}`)

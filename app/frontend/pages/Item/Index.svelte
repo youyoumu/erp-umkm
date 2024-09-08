@@ -24,7 +24,6 @@ const columnDefs = [
   {
     field: "name",
     cellRenderer: cellRendererFactory((c, p) => {
-      console.log(p)
       new ItemDetailLink({
         target: c.eGui,
         props: {

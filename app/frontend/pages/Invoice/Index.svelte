@@ -5,8 +5,6 @@ export { default as layout } from "../LayoutNav.svelte"
 <script>
 import { Link, inertia } from "@inertiajs/svelte"
 import Button from "$lib/components/ui/button/button.svelte"
-export let invoices
-export let flash
 import { onMount } from "svelte"
 import { createGrid } from "ag-grid-community"
 import "ag-grid-community/styles/ag-grid.css"
@@ -17,6 +15,11 @@ import Input from "$lib/components/ui/input/input.svelte"
 import { cellRendererFactory } from "$lib/cellRendererFactory"
 import InvoiceDetailLink from "./components/InvoiceDetailLink.svelte"
 
+export let invoices
+export let flash
+
+console.log(invoices)
+
 let gridContainer
 const columnDefs = [
   {
@@ -24,7 +27,6 @@ const columnDefs = [
     headerName: "Kode Nota",
     flex: 1,
     cellRenderer: cellRendererFactory((c, p) => {
-      console.log(p)
       new InvoiceDetailLink({
         target: c.eGui,
         props: {

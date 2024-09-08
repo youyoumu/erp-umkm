@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices
   def index
-    @invoices = Invoice.all
+    @invoices = Invoice.all.includes(:customer, :items)
     render inertia: "Invoice/Index", props: {
       invoices: @invoices.map do |invoice|
         serialize_invoice(invoice)
@@ -134,7 +134,12 @@ class InvoicesController < ApplicationController
   def serialize_invoice(invoice)
     invoice.as_json(only: [
       :id, :date, :code, :address
-    ])
+    ]).merge(
+      customer: serialize_customer(invoice.customer),
+      items: invoice.items.map do |item|
+        serialize_item(item)
+      end
+    )
   end
 
   def serialize_item(item)
