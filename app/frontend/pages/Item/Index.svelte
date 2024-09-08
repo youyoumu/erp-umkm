@@ -13,13 +13,29 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 import { formatIDR } from "$lib/utils"
 import dayjs from "dayjs"
 import Input from "$lib/components/ui/input/input.svelte"
+import { cellRendererFactory } from "$lib/cellRendererFactory"
+import ItemDetailLink from "./components/ItemDetailLink.svelte"
 
 export let items
 export let flash
 
 let gridContainer
 const columnDefs = [
-  { field: "name", flex: 1, headerName: "Nama Barang" },
+  {
+    field: "name",
+    cellRenderer: cellRendererFactory((c, p) => {
+      console.log(p)
+      new ItemDetailLink({
+        target: c.eGui,
+        props: {
+          item: p.data,
+        },
+      })
+    }),
+    headerName: "Nama Barang",
+    flex: 1,
+    width: 70,
+  },
   { field: "stock", headerName: "Stok", width: 85 },
 
   { field: "quantity_unit", width: 85, headerName: "Satuan" },
