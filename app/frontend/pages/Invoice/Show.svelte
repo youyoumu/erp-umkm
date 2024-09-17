@@ -3,18 +3,18 @@ export { default as layout } from "../LayoutNav.svelte"
 </script>
 
 <script>
-import { inertia, Link } from "@inertiajs/svelte"
+import { inertia, router } from "@inertiajs/svelte"
 import Invoice from "./Invoice.svelte"
 import { Printer } from "lucide-svelte"
+import Button from "$lib/components/ui/button/button.svelte"
+import * as AlertDialog from "$lib/components/ui/alert-dialog"
 
 export let invoice
 export let items
 export let flash
 
 const onDestroy = (e) => {
-  if (!confirm("Are you sure you want to delete this invoice?")) {
-    e.preventDefault()
-  }
+  router.delete(`/invoices/${invoice.id}`)
 }
 </script>
 
@@ -35,22 +35,24 @@ const onDestroy = (e) => {
     class="absolute right-0 top-8 cursor-pointer rounded-full border border-slate-300 bg-slate-200 p-2 shadow-sm"><Printer /></a
   >
 
-  <h1 class="mb-4 text-4xl font-bold">Nota #{invoice.id}</h1>
+  <div class="mb-4 flex w-full items-center gap-4">
+    <h1 class="text-4xl font-bold">Nota #{invoice.id}</h1>
+    <a href={`/invoices/${invoice.id}/edit`} use:inertia>
+      <Button variant="secondary">Edit Nota</Button>
+    </a>
+    <AlertDialog.Root>
+      <AlertDialog.Trigger><Button variant="destructive">Hapus Nota</Button></AlertDialog.Trigger>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Apakah kamu yakin ingin menghapus nota ini?</AlertDialog.Title>
+          <AlertDialog.Description></AlertDialog.Description>
+        </AlertDialog.Header>
+        <AlertDialog.Footer>
+          <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
+          <AlertDialog.Action on:click={onDestroy} class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  </div>
   <Invoice invoice={invoice} items={items} />
-
-  <!-- 
-  <Link href={`/invoices/${invoice.id}/edit`} class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">
-    Edit this invoice
-  </Link>
-  <Link href="/invoices" class="ml-2 inline-block rounded-lg bg-gray-100 px-5 py-3 font-medium">Back to invoices</Link>
-  <div class="ml-2 inline-block">
-    <button
-      use:inertia={{ href: `/invoices/${invoice.id}`, method: 'delete' }}
-      on:click={onDestroy}
-      type="button"
-      class="mt-2 rounded-lg bg-gray-100 px-5 py-3 font-medium"
-    >
-      Destroy this invoice
-    </button>
-  </div> -->
 </div>
