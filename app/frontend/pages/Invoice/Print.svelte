@@ -10,7 +10,7 @@ export let customer
 const grandTotal = items.reduce((acc, item) => acc + item.selling_price * item.quantity, 0)
 
 onMount(() => {
-  window.print()
+  // window.print()
 })
 </script>
 

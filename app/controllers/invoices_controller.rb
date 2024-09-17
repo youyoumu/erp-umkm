@@ -64,7 +64,7 @@ class InvoicesController < ApplicationController
 
     customer_id = invoice_params[:customer][:id]
     customer_id ||= 0
-    @customer = Customer.where(id: customer_id)[0]
+    @customer = Customer.find_by(id: customer_id)
 
     items_detail = invoice_params[:items].map do |item|
       {id: item[:id], quantity: item[:quantity], quantity_unit: item[:quantity_unit], selling_price: item[:selling_price]}
@@ -128,7 +128,7 @@ class InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:date, :address, :code, customer: {}, items: [:id, :quantity, :quantity_unit, :selling_price])
+    params.require(:invoice).permit(:date, :address, :code, customer: [:id], items: [:id, :quantity, :quantity_unit, :selling_price])
   end
 
   def serialize_invoice(invoice)
