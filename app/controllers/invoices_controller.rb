@@ -1,5 +1,7 @@
+require "grover"
+
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: %i[show edit update destroy print]
+  before_action :set_invoice, only: %i[show edit update destroy print download_invoice display_invoice]
 
   inertia_share flash: -> { flash.to_hash }
 
@@ -116,6 +118,23 @@ class InvoicesController < ApplicationController
       items: @invoice.items.map do |item|
         serialize_item(item)
       end
+    }
+  end
+
+  def download_invoice
+    id = @invoice.id
+    grover = Grover.new("http://#{request.host_with_port}/invoices/#{id}/print", format: "A4")
+    pdf = grover.to_pdf
+
+    send_data pdf,
+      filename: "#{@invoice.code}.pdf",
+      type: "application/pdf"
+  end
+
+  def display_invoice
+    render inertia: "Invoice/DisplayInvoice", props: {
+      invoice_id: @invoice.id,
+      host_with_port: request.host_with_port
     }
   end
 

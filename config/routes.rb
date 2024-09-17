@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :invoices do
     member do
       get "print"
+      get "download_invoice"
+      get "display_invoice"
     end
   end
   resources :customers
