@@ -44,6 +44,9 @@ onMount(() => {
   <div class="mb-4 flex gap-4">
     <div><span class="font-bold">Tanggal:</span> {dayjs(invoice.date).format("DD MMMM YYYY")}</div>
     <div><span class="font-bold">Kode Nota:</span> {invoice.code}</div>
+    {#if invoice.customer}
+      <div><span class="font-bold">Pembeli:</span> {invoice.customer.name}</div>
+    {/if}
   </div>
   <div><span class="font-bold">Alamat:</span> {invoice.address}</div>
 </div>
