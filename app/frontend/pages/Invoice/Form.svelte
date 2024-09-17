@@ -1,28 +1,29 @@
 <script>
-import { useForm } from "@inertiajs/svelte"
-import { createEventDispatcher } from "svelte"
-import Select from "svelte-select/Select.svelte"
+import * as AlertDialog from "$lib/components/ui/alert-dialog"
+import Button from "$lib/components/ui/button/button.svelte"
+import { Calendar } from "$lib/components/ui/calendar"
 import { Input } from "$lib/components/ui/input"
 import Label from "$lib/components/ui/label/label.svelte"
-import Button from "$lib/components/ui/button/button.svelte"
-import * as AlertDialog from "$lib/components/ui/alert-dialog"
-import Textarea from "$lib/components/ui/textarea/textarea.svelte"
-
-import CalendarIcon from "lucide-svelte/icons/calendar"
-import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
-import { cn, formatIDR } from "$lib/utils.js"
-import { Calendar } from "$lib/components/ui/calendar"
 import * as Popover from "$lib/components/ui/popover"
+import Textarea from "$lib/components/ui/textarea/textarea.svelte"
+import { cn, formatIDR } from "$lib/utils.js"
 
-const df = new DateFormatter("en-US", {
-  dateStyle: "long",
-})
+import { useForm } from "@inertiajs/svelte"
+import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
+import CalendarIcon from "lucide-svelte/icons/calendar"
+import { createEventDispatcher } from "svelte"
+import Select from "svelte-select/Select.svelte"
 
-const dispatch = createEventDispatcher()
 export let invoice
 export let submitText
 export let items
 export let customers
+
+const df = new DateFormatter("en-US", {
+  dateStyle: "long",
+})
+const dispatch = createEventDispatcher()
+
 const formattedItems = items.map((item) => {
   const tag = item.tag === "" ? "" : `#${item.tag}`
   return { ...item, label: `${item.name} ${tag}`, value: item.id, quantity: 0 }
@@ -43,6 +44,10 @@ function addItem() {
 function handleSelectCustomer(e) {
   const address = e.detail.address
   $form.address = address
+}
+
+if (window.location.pathname === "/invoices/new") {
+  addItem()
 }
 
 let value = now()
