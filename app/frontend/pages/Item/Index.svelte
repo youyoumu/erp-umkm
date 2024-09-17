@@ -39,7 +39,7 @@ const columnDefs = [
 
   { field: "quantity_unit", width: 85, headerName: "Satuan" },
   { field: "selling_price", width: 125, headerName: "Harga Satuan", wrapHeaderText: true },
-  { field: "updated_at", width: 115, headerName: "Terakhir Diubah Pada", wrapHeaderText: true },
+  { field: "updated_at", width: 115, headerName: "Terakhir Diubah", wrapHeaderText: true },
 ]
 const gridOptions = {
   columnDefs: columnDefs,

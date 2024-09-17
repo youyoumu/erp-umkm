@@ -51,6 +51,9 @@ const columnDefs = [
     getQuickFilterText: (params) => {
       return params.data.customer.name
     },
+    valueGetter: (params) => {
+      return params.data.customer.name
+    },
   },
   { field: "total", headerName: "Total", width: 135 },
   { field: "date", headerName: "Tanggal", width: 115 },
