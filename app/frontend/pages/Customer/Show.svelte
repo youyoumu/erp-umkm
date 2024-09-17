@@ -17,7 +17,7 @@ const onDestroy = (e) => {
 </script>
 
 <svelte:head>
-  <title>Customer #{customer.id}</title>
+  <title>Pembeli #{customer.id}</title>
 </svelte:head>
 
 <div class="mx-auto max-w-screen-sm p-8">
