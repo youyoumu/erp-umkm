@@ -108,7 +108,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    grover (1.1.10)
+    grover (1.1.11)
       combine_pdf (~> 1.0)
       nokogiri (~> 1.0)
     i18n (1.14.5)
