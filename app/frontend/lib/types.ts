@@ -1,4 +1,4 @@
-export interface Invoice {
+export type Invoice = {
   id: number
   date: string
   code: string
@@ -7,7 +7,7 @@ export interface Invoice {
   items: Item[]
 }
 
-export interface Customer {
+export type Customer = {
   id: number
   name: string
   notes: string
@@ -15,7 +15,7 @@ export interface Customer {
   contact: string
 }
 
-export interface Item {
+export type Item = {
   id: number
   name: string
   notes: string

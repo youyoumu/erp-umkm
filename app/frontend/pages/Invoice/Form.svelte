@@ -8,16 +8,19 @@ import * as Popover from "$lib/components/ui/popover"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 import { cn, formatIDR } from "$lib/utils.js"
 
+import type { Customer, Invoice, Item } from "$lib/types"
 import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { createEventDispatcher } from "svelte"
-import Select from "svelte-select/Select.svelte"
+import Select from "svelte-select"
 
-export let invoice
-export let submitText
-export let items
-export let customers
+type ItemWithLabel = Item & { label: string }
+type InvoiceWithItemLabel = Invoice & { items: ItemWithLabel[] }
+export let invoice: InvoiceWithItemLabel
+export let submitText: string
+export let items: ItemWithLabel[]
+export let customers: Customer[]
 
 const df = new DateFormatter("en-US", {
   dateStyle: "long",
@@ -41,7 +44,7 @@ function addItem() {
   $form.items = [...$form.items, { ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }]
 }
 
-function handleSelectCustomer(e) {
+function handleSelectCustomer(e: Event & { detail: { address: string } }) {
   const address = e.detail.address
   $form.address = address
 }
@@ -49,14 +52,15 @@ function handleSelectCustomer(e) {
 if (window.location.pathname === "/invoices/new") {
   addItem()
 }
-
-let value = now()
+let value = now(getLocalTimeZone())
 $: grandTotal = $form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
 $: if (value) $form.date = value.toString()
-$: $form.items = $form.items.filter((item) => item != undefined)
+$: $form.items = $form.items.filter((item: ItemWithLabel) => item != undefined)
 </script>
 
-<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={() => {
+  dispatch('submit', { form: $form })
+}}>
   <div class="flex justify-between gap-4">
     <div class="flex w-96 flex-col items-center gap-2">
       <div class="items-tart flex w-full flex-col justify-between gap-2">
@@ -72,7 +76,7 @@ $: $form.items = $form.items.filter((item) => item != undefined)
               builders={[builder]}
             >
               <CalendarIcon class="mr-2 h-4 w-4" />
-              {value ? df.format(value.toDate(getLocalTimeZone())) : "Select a date"}
+              {value ? df.format(value.toDate()) : "Select a date"}
             </Button>
           </Popover.Trigger>
           <Popover.Content class="w-auto p-0">
@@ -86,7 +90,7 @@ $: $form.items = $form.items.filter((item) => item != undefined)
       </div>
       <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="customer">Pembeli</Label>
-        <Select items={formattedCustomers} bind:value={$form.customer} class="svelte-select" on:select={handleSelectCustomer} />
+        <Select items={formattedCustomers} bind:value={$form.customer} class="svelte-select" on:change={handleSelectCustomer} />
       </div>
     </div>
 
@@ -111,7 +115,13 @@ $: $form.items = $form.items.filter((item) => item != undefined)
             {#if i === 0}
               <Label for={`quantity-${i}`}>Jumlah Barang</Label>
             {/if}
-            <Input type="number" id={`quantity-${i}`} bind:value={$form.items[i].quantity} min="0" on:focus={(e) => { e.target.select()}} />
+            <Input
+              type="number"
+              id={`quantity-${i}`}
+              bind:value={$form.items[i].quantity}
+              min="0"
+              on:focus={(e) => { e.currentTarget.select()}}
+            />
           </div>
           <div class="flex max-w-32 flex-col items-center justify-center gap-2">
             {#if i === 0}
@@ -154,7 +164,13 @@ $: $form.items = $form.items.filter((item) => item != undefined)
         <AlertDialog.Footer>
           <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
           <AlertDialog.Action
-            ><button type="submit" disabled={$form.processing} on:click={dispatch('submit', { form: $form })}>
+            ><button
+              type="submit"
+              disabled={$form.processing}
+              on:click={() => {
+              dispatch('submit', { form: $form })
+            }}
+            >
               {submitText}
             </button></AlertDialog.Action
           >
