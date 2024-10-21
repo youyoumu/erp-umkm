@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
 	import { Popover as PopoverPrimitive } from "bits-ui";
 	import { cn, flyAndScale } from "$lib/utils.js";
-	let className = undefined;
-	export let transition = flyAndScale;
-	export let transitionConfig = undefined;
+
+	type $$Props = PopoverPrimitive.ContentProps;
+	let className: $$Props["class"] = undefined;
+	export let transition: $$Props["transition"] = flyAndScale;
+	export let transitionConfig: $$Props["transitionConfig"] = undefined;
 	export { className as class };
 </script>
 

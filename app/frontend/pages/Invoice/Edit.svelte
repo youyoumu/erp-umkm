@@ -1,8 +1,9 @@
 <script lang="ts">
 import { Link } from "@inertiajs/svelte"
+import type { Invoice } from "../../lib/types"
 import Form from "./Form.svelte"
 
-export let invoice
+export let invoice: Invoice
 
 const handleSubmit = (e) => {
   const { form } = e.detail

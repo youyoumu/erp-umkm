@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import { cn } from "$lib/utils.js";
-	export let date;
-	let className = undefined;
+
+	type $$Props = CalendarPrimitive.CellProps;
+
+	export let date: $$Props["date"];
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

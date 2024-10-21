@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "paths": {
-      "$lib": ["./app/frontend/lib"],
-      "$lib/*": ["./app/frontend/lib/*"]
-    }
-  }
-}

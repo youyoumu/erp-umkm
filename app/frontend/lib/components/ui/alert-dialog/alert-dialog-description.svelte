@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
 	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
 	import { cn } from "$lib/utils.js";
-	let className = undefined;
+
+	type $$Props = AlertDialogPrimitive.DescriptionProps;
+
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

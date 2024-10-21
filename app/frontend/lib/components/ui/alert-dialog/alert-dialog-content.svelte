@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
 	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
 	import * as AlertDialog from "./index.js";
 	import { cn, flyAndScale } from "$lib/utils.js";
-	export let transition = flyAndScale;
-	export let transitionConfig = undefined;
-	let className = undefined;
+
+	type $$Props = AlertDialogPrimitive.ContentProps;
+
+	export let transition: $$Props["transition"] = flyAndScale;
+	export let transitionConfig: $$Props["transitionConfig"] = undefined;
+
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

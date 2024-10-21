@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
 	import { cn } from "$lib/utils.js";
-	export let date;
-	export let month;
-	let className = undefined;
+
+	type $$Props = CalendarPrimitive.DayProps;
+	type $$Events = CalendarPrimitive.DayEvents;
+
+	export let date: $$Props["date"];
+	export let month: $$Props["month"];
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

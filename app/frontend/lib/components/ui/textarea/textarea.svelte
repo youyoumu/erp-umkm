@@ -1,9 +1,18 @@
-<script>
+<script lang="ts">
+	import type { HTMLTextareaAttributes } from "svelte/elements";
+	import type { TextareaEvents } from "./index.js";
 	import { cn } from "$lib/utils.js";
-	let className = undefined;
-	export let value = undefined;
+
+	type $$Props = HTMLTextareaAttributes;
+	type $$Events = TextareaEvents;
+
+	let className: $$Props["class"] = undefined;
+	export let value: $$Props["value"] = undefined;
 	export { className as class };
-	export let readonly = undefined;
+
+	// Workaround for https://github.com/sveltejs/svelte/issues/9305
+	// Fixed in Svelte 5, but not backported to 4.x.
+	export let readonly: $$Props["readonly"] = undefined;
 </script>
 
 <textarea

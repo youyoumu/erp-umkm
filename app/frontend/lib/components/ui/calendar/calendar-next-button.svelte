@@ -1,9 +1,13 @@
-<script>
+<script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import ChevronRight from "lucide-svelte/icons/chevron-right";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
 	import { cn } from "$lib/utils.js";
-	let className = undefined;
+
+	type $$Props = CalendarPrimitive.NextButtonProps;
+	type $$Events = CalendarPrimitive.NextButtonEvents;
+
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

@@ -1,11 +1,17 @@
-<script>
+<script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import * as Calendar from "./index.js";
 	import { cn } from "$lib/utils.js";
-	export let value = undefined;
-	export let placeholder = undefined;
-	export let weekdayFormat = "short";
-	let className = undefined;
+
+	type $$Props = CalendarPrimitive.Props;
+
+	type $$Events = CalendarPrimitive.Events;
+
+	export let value: $$Props["value"] = undefined;
+	export let placeholder: $$Props["placeholder"] = undefined;
+	export let weekdayFormat: $$Props["weekdayFormat"] = "short";
+
+	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 

@@ -17,7 +17,11 @@
     "moduleDetection": "force",
     "outDir": "./dist",
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "$lib": ["./app/frontend/lib"],
+      "$lib/*": ["./app/frontend/lib/*"]
+    }
   },
   "include": ["app/frontend/**/*.ts", "app/frontend/**/*.js", "app/frontend/**/*.svelte"],
   "exclude": ["./dist"]

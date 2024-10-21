@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import * as AlertDialog from "$lib/components/ui/alert-dialog"
 import Button from "$lib/components/ui/button/button.svelte"
 import { Calendar } from "$lib/components/ui/calendar"
