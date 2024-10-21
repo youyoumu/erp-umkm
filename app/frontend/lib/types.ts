@@ -29,5 +29,5 @@ export type Item = {
   tag: string
 }
 
-export type ItemWithLabel = Item & { label: string }
-export type InvoiceWithItemLabel = Invoice & { items: ItemWithLabel[] }
+export type ItemWithLabelValue = Item & { label: string; value: string }
+export type InvoiceWithItemLabelValue = Omit<Invoice, "items"> & { items: ItemWithLabelValue[] }

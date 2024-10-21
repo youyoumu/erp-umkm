@@ -8,22 +8,33 @@ import * as Popover from "$lib/components/ui/popover"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 import { cn, formatIDR } from "$lib/utils.js"
 
-import type { Customer, InvoiceWithItemLabel, ItemWithLabel } from "$lib/types"
+import type { Customer, InvoiceWithItemLabelValue, ItemWithLabelValue } from "$lib/types"
+import type { InertiaForm } from "@inertiajs/svelte"
 import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { createEventDispatcher } from "svelte"
 import Select from "svelte-select"
 
-export let invoice: InvoiceWithItemLabel
+export let invoice: InvoiceWithItemLabelValue
 export let submitText: string
-export let items: ItemWithLabel[]
+export let items: ItemWithLabelValue[]
 export let customers: Customer[]
 
 const df = new DateFormatter("en-US", {
   dateStyle: "long",
 })
-const dispatch = createEventDispatcher()
+const dispatch = createEventDispatcher<{
+  submit: {
+    form: InertiaForm<{
+      date: string
+      code: string
+      address: string
+      customer: Customer
+      items: ItemWithLabelValue[]
+    }>
+  }
+}>()
 
 const formattedItems = items.map((item) => {
   const tag = item.tag === "" ? "" : `#${item.tag}`
@@ -53,7 +64,7 @@ if (window.location.pathname === "/invoices/new") {
 let value = now(getLocalTimeZone())
 $: grandTotal = $form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
 $: if (value) $form.date = value.toString()
-$: $form.items = $form.items.filter((item: ItemWithLabel) => item != undefined)
+$: $form.items = $form.items.filter((item: ItemWithLabelValue) => item != undefined)
 </script>
 
 <form class="flex flex-col gap-4 py-4" on:submit|preventDefault={() => {

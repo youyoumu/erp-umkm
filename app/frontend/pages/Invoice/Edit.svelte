@@ -1,13 +1,16 @@
 <script lang="ts">
+import type { InertiaForm } from "@inertiajs/svelte"
 import { Link } from "@inertiajs/svelte"
-import type { Customer, InvoiceWithItemLabel, ItemWithLabel } from "../../lib/types"
+import type { Customer, InvoiceWithItemLabelValue, ItemWithLabelValue } from "../../lib/types"
 import Form from "./Form.svelte"
 
-export let invoice: InvoiceWithItemLabel
-export let items: ItemWithLabel[]
+export let invoice: InvoiceWithItemLabelValue
+export let items: ItemWithLabelValue[]
 export let customers: Customer[]
 
-const handleSubmit = (e) => {
+const handleSubmit = (
+  e: CustomEvent<{ form: InertiaForm<{ date: string; code: string; address: string; customer: Customer; items: ItemWithLabelValue[] }> }>,
+) => {
   const { form } = e.detail
   form.transform((data) => ({ invoice: data }))
   form.patch(`/invoices/${invoice.id}`)
