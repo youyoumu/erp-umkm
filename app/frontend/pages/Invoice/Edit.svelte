@@ -1,5 +1,4 @@
 <script lang="ts">
-// @ts-ignore
 import { Link } from "@inertiajs/svelte"
 import Form from "./Form.svelte"
 
