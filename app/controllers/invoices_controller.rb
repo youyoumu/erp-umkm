@@ -44,8 +44,16 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
+    @items = Item.all.where(is_snapshot: false || nil)
+    @customers = Customer.all
     render inertia: "Invoice/Edit", props: {
-      invoice: serialize_invoice(@invoice)
+      invoice: serialize_invoice(@invoice),
+      items: @items.map do |item|
+        serialize_item(item)
+      end,
+      customers: @customers.map do |customer|
+        serialize_customer(customer)
+      end
     }
   end
 

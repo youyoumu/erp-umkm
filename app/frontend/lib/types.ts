@@ -28,3 +28,6 @@ export type Item = {
   quantity_unit: string
   tag: string
 }
+
+export type ItemWithLabel = Item & { label: string }
+export type InvoiceWithItemLabel = Invoice & { items: ItemWithLabel[] }

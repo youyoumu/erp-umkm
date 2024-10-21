@@ -8,15 +8,13 @@ import * as Popover from "$lib/components/ui/popover"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 import { cn, formatIDR } from "$lib/utils.js"
 
-import type { Customer, Invoice, Item } from "$lib/types"
+import type { Customer, InvoiceWithItemLabel, ItemWithLabel } from "$lib/types"
 import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
 import CalendarIcon from "lucide-svelte/icons/calendar"
 import { createEventDispatcher } from "svelte"
 import Select from "svelte-select"
 
-type ItemWithLabel = Item & { label: string }
-type InvoiceWithItemLabel = Invoice & { items: ItemWithLabel[] }
 export let invoice: InvoiceWithItemLabel
 export let submitText: string
 export let items: ItemWithLabel[]
