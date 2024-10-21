@@ -6,19 +6,20 @@ import { Input } from "$lib/components/ui/input"
 import Label from "$lib/components/ui/label/label.svelte"
 import * as Popover from "$lib/components/ui/popover"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
-import { cn, formatIDR } from "$lib/utils.js"
+import CalendarIcon from "lucide-svelte/icons/calendar"
+import Select from "svelte-select"
 
-import type { Customer, InvoiceWithItemLabelValue, ItemWithLabelValue } from "$lib/types"
+import type { Customer, Invoice, Item, ItemWithLabelValue } from "$lib/types"
+import { cn, formatIDR } from "$lib/utils.js"
 import type { InertiaForm } from "@inertiajs/svelte"
 import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
-import CalendarIcon from "lucide-svelte/icons/calendar"
+import { create } from "mutative"
 import { createEventDispatcher } from "svelte"
-import Select from "svelte-select"
 
-export let invoice: InvoiceWithItemLabelValue
+export let invoice: Invoice
 export let submitText: string
-export let items: ItemWithLabelValue[]
+export let items: Item[]
 export let customers: Customer[]
 
 const df = new DateFormatter("en-US", {
@@ -36,17 +37,31 @@ const dispatch = createEventDispatcher<{
   }
 }>()
 
+const formattedInvoiceItems = create(invoice.items, (draft) => {
+  draft.map((item) => {
+    return { ...item, label: "", value: "" }
+  })
+}) as ItemWithLabelValue[]
+
 const formattedItems = items.map((item) => {
   const tag = item.tag === "" ? "" : `#${item.tag}`
   return { ...item, label: `${item.name} ${tag}`, value: item.id, quantity: 0 }
 })
+
 const formattedCustomers = customers.map((customer) => ({ ...customer, label: customer.name, value: customer.id }))
-const form = useForm({
+
+const form = useForm<{
+  date: string
+  code: string
+  address: string
+  customer: Customer
+  items: ItemWithLabelValue[]
+}>({
   date: invoice.date || "",
   code: invoice.code || "",
   address: invoice.address || "",
   customer: invoice.customer || { ...formattedCustomers[0], label: "", value: "", id: 0 },
-  items: invoice.items || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
+  items: formattedInvoiceItems || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
 })
 
 function addItem() {

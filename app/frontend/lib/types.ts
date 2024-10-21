@@ -30,4 +30,6 @@ export type Item = {
 }
 
 export type ItemWithLabelValue = Item & { label: string; value: string }
-export type InvoiceWithItemLabelValue = Omit<Invoice, "items"> & { items: ItemWithLabelValue[] }
+export type InvoiceWithItemLabelValue = Modify<Invoice, { items: ItemWithLabelValue[] }>
+
+type Modify<T, R> = Omit<T, keyof R> & R

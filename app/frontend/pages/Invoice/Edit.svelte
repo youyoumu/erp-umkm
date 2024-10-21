@@ -1,11 +1,11 @@
 <script lang="ts">
 import type { InertiaForm } from "@inertiajs/svelte"
 import { Link } from "@inertiajs/svelte"
-import type { Customer, InvoiceWithItemLabelValue, ItemWithLabelValue } from "../../lib/types"
+import type { Customer, Invoice, InvoiceWithItemLabelValue, Item, ItemWithLabelValue } from "../../lib/types"
 import Form from "./Form.svelte"
 
-export let invoice: InvoiceWithItemLabelValue
-export let items: ItemWithLabelValue[]
+export let invoice: Invoice
+export let items: Item[]
 export let customers: Customer[]
 
 const handleSubmit = (
