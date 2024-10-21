@@ -39,7 +39,7 @@ const dispatch = createEventDispatcher<{
 
 const formattedInvoiceItems = create(invoice.items, (draft) => {
   draft.map((item) => {
-    return { ...item, label: "", value: "" }
+    return { ...item, label: item.name, value: item.id }
   })
 }) as ItemWithLabelValue[]
 
@@ -60,12 +60,12 @@ const form = useForm<{
   date: invoice.date || "",
   code: invoice.code || "",
   address: invoice.address || "",
-  customer: invoice.customer || { ...formattedCustomers[0], label: "", value: "", id: 0 },
-  items: formattedInvoiceItems || [{ ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }],
+  customer: invoice.customer || { ...formattedCustomers[0], label: "", value: 0, id: 0 },
+  items: formattedInvoiceItems || [{ ...formattedItems[0], label: "", value: 0, id: 0, selling_price: 0 }],
 })
 
 function addItem() {
-  $form.items = [...$form.items, { ...formattedItems[0], label: "", value: "", id: 0, selling_price: 0 }]
+  $form.items = [...$form.items, { ...formattedItems[0], label: "", value: 0, id: 0, selling_price: 0 }]
 }
 
 function handleSelectCustomer(e: Event & { detail: { address: string } }) {
