@@ -14,7 +14,6 @@ import { cn, formatIDR } from "$lib/utils.js"
 import type { InertiaForm } from "@inertiajs/svelte"
 import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
-import { create } from "mutative"
 import { createEventDispatcher } from "svelte"
 
 export let invoice: Invoice
@@ -37,16 +36,20 @@ const dispatch = createEventDispatcher<{
   }
 }>()
 
-const formattedInvoiceItems = create(invoice.items, (draft) => {
-  draft.map((item) => {
-    return { ...item, label: item.name, value: item.id }
-  })
-}) as ItemWithLabelValue[]
-
-const formattedItems = items.map((item) => {
+const formattedInvoiceItems = invoice.items.map((item) => {
   const tag = item.tag === "" ? "" : `#${item.tag}`
-  return { ...item, label: `${item.name} ${tag}`, value: item.id, quantity: 0 }
+  return { ...item, label: `${item.name}* ${tag}`, value: item.id }
 })
+
+const formattedInvoiceCustomer = invoice.customer ? { ...invoice.customer, label: invoice.customer.name, value: invoice.customer.id } : null
+
+const formattedItems = [
+  ...items.map((item) => {
+    const tag = item.tag === "" ? "" : `#${item.tag}`
+    return { ...item, label: `${item.name} ${tag}`, value: item.id, quantity: 0 }
+  }),
+  ...formattedInvoiceItems,
+]
 
 const formattedCustomers = customers.map((customer) => ({ ...customer, label: customer.name, value: customer.id }))
 
@@ -60,8 +63,8 @@ const form = useForm<{
   date: invoice.date || "",
   code: invoice.code || "",
   address: invoice.address || "",
-  customer: invoice.customer || { ...formattedCustomers[0], label: "", value: 0, id: 0 },
-  items: formattedInvoiceItems || [{ ...formattedItems[0], label: "", value: 0, id: 0, selling_price: 0 }],
+  customer: formattedInvoiceCustomer || { ...formattedCustomers[0], label: "", value: 0, id: 0 },
+  items: formattedInvoiceItems,
 })
 
 function addItem() {
@@ -76,6 +79,7 @@ function handleSelectCustomer(e: Event & { detail: { address: string } }) {
 if (window.location.pathname === "/invoices/new") {
   addItem()
 }
+
 let value = now(getLocalTimeZone())
 $: grandTotal = $form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
 $: if (value) $form.date = value.toString()
