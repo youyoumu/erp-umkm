@@ -15,7 +15,11 @@
     "checkJs": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "$lib": ["./app/frontend/lib"],
+      "$lib/*": ["./app/frontend/lib/*"]
+    }
   },
   "include": [
     "app/frontend/**/*.ts",
