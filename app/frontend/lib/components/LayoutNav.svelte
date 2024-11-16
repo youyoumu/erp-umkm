@@ -1,17 +1,9 @@
 <script>
-  import { router } from '@inertiajs/svelte'
-  import NavLink from './NavLink.svelte'
+  import { page } from "@inertiajs/svelte";
+  import NavLink from "./NavLink.svelte";
 
-  let { children } = $props()
-  let page = $state(window.location.pathname)
-  // window.addEventListener('popstate', () => {
-  //   page = window.location.pathname
-  // })
-  // router.on('success', (event) => {
-  //   page = event.detail.page.url
-  // })
-
-  // $inspect(page)
+  let { children } = $props();
+  const url = $derived($page.url);
 </script>
 
 <main class="flex h-svh min-h-svh flex-col items-center">
@@ -20,24 +12,23 @@
       <div>
         <NavLink
           href="/dashboard"
-          active={page.startsWith('/dashboard/') || page === '/dashboard'}
+          active={url.startsWith("/dashboard/") || url === "/dashboard"}
           >Mustika Bumi Saga</NavLink
         >
       </div>
       <div>
         <NavLink
           href="/items"
-          active={page.startsWith('/items/') || page === '/items'}
-          >Barang</NavLink
+          active={url.startsWith("/items/") || url === "/items"}>Barang</NavLink
         >
         <NavLink
           href="/customers"
-          active={page.startsWith('/customers/') || page === '/customers'}
+          active={url.startsWith("/customers/") || url === "/customers"}
           >Pembeli</NavLink
         >
         <NavLink
           href="/invoices"
-          active={page.startsWith('/invoices/') || page === '/invoices'}
+          active={url.startsWith("/invoices/") || url === "/invoices"}
           >Nota</NavLink
         >
       </div>
