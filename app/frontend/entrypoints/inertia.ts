@@ -1,5 +1,5 @@
-import { createInertiaApp, type ResolvedComponent } from "@inertiajs/svelte";
-import { mount } from "svelte";
+import { createInertiaApp, type ResolvedComponent } from '@inertiajs/svelte'
+import { mount } from 'svelte'
 
 createInertiaApp({
   // Set default page title
@@ -13,10 +13,10 @@ createInertiaApp({
   // progress: false,
 
   resolve: (name) => {
-    const pages = import.meta.glob<ResolvedComponent>("../pages/**/*.svelte", {
+    const pages = import.meta.glob<ResolvedComponent>('../pages/**/*.svelte', {
       eager: true,
-    });
-    return pages[`../pages/${name}.svelte`];
+    })
+    return pages[`../pages/${name}.svelte`]
 
     // To use a default layout, import the Layout component
     // and use the following lines.
@@ -27,6 +27,6 @@ createInertiaApp({
   },
 
   setup({ el, App, props }) {
-    mount(App, { target: el!, props });
+    mount(App, { target: el!, props })
   },
-});
+})
