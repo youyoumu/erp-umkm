@@ -1,3 +1,4 @@
+import LayoutNav from '$lib/components/LayoutNav.svelte'
 import { createInertiaApp, type ResolvedComponent } from '@inertiajs/svelte'
 import { mount } from 'svelte'
 
@@ -12,11 +13,13 @@ createInertiaApp({
   // see https://inertia-rails.netlify.app/guide/progress-indicators
   // progress: false,
 
+  // @ts-ignore https://github.com/inertiajs/inertia/issues/1770
   resolve: (name) => {
     const pages = import.meta.glob<ResolvedComponent>('../pages/**/*.svelte', {
       eager: true,
     })
-    return pages[`../pages/${name}.svelte`]
+    const page = pages[`../pages/${name}.svelte`]
+    return { default: page.default, layout: page.layout || LayoutNav }
 
     // To use a default layout, import the Layout component
     // and use the following lines.

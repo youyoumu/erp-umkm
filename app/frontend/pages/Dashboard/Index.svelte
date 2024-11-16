@@ -1,9 +1,5 @@
-<script module>
-  export { default as layout } from '../../lib/components/LayoutNav.svelte'
-</script>
-
 <script>
-  import { Construction } from 'lucide-svelte'
+  import { Construction } from "lucide-svelte";
 </script>
 
 <div class="flex size-full flex-col items-center justify-center">
