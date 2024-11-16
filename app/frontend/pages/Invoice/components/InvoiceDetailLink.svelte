@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import { ExternalLink } from "lucide-svelte"
-export let invoice
+  let { invoice } = $props();
 </script>
 
 <a href="/invoices/{invoice.id}" class="flex size-full items-center gap-2" target="_blank">

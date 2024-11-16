@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
 import { useForm } from "@inertiajs/svelte"
 import { createEventDispatcher } from "svelte"
 import { Input } from "$lib/components/ui/input"
@@ -9,8 +11,7 @@ import Button from "$lib/components/ui/button/button.svelte"
 import Textarea from "$lib/components/ui/textarea/textarea.svelte"
 
 const dispatch = createEventDispatcher()
-export let item
-export let submitText
+  let { item, submitText } = $props();
 
 const form = useForm({
   name: item.name || "",
@@ -25,7 +26,7 @@ const form = useForm({
 })
 </script>
 
-<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={dispatch('submit', { form: $form })}>
+<form class="flex flex-col gap-4 py-4" onsubmit={preventDefault(dispatch('submit', { form: $form }))}>
   <FormField>
     <Label for="name">Nama Barang</Label>
     <Input id="name" bind:value={$form.name} placeholder="Masukkan Nama Barang" />

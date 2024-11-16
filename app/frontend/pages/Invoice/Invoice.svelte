@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { onMount } from "svelte"
 import { createGrid } from "ag-grid-community"
 import "ag-grid-community/styles/ag-grid.css"
@@ -6,13 +6,12 @@ import "ag-grid-community/styles/ag-theme-quartz.css"
 import { cn } from "$lib/utils"
 import dayjs from "dayjs"
 import { formatIDR } from "$lib/utils"
-export let invoice
-export let items
+  let { invoice, items } = $props();
 
 // path /print
 const isPrint = window.location.pathname.endsWith("/print")
 
-let gridContainer
+let gridContainer = $state()
 const columnDefs = [
   { field: "name", flex: 1, headerName: "Nama Barang" },
   { field: "quantity", width: 135, headerName: "Jumlah Barang", wrapHeaderText: true },

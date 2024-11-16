@@ -1,11 +1,9 @@
-<script>
+<script lang="ts">
   import { formatIDR } from '$lib/utils'
   import dayjs from 'dayjs'
   import { onMount } from 'svelte'
 
-  export let invoice
-  export let items // max 11 items
-  export let customer
+  let { invoice, items, customer } = $props();
 
   const grandTotal = items.reduce(
     (acc, item) => acc + item.selling_price * item.quantity,

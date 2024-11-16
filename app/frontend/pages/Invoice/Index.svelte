@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -13,12 +13,11 @@
   import CustomerDetailLink from './components/CustomerDetailLink.svelte'
   import InvoiceDetailLink from './components/InvoiceDetailLink.svelte'
 
-  export let invoices
-  export let flash
+  let { invoices, flash } = $props();
 
   console.log(invoices)
 
-  let gridContainer
+  let gridContainer = $state()
   const columnDefs = [
     {
       field: 'code',

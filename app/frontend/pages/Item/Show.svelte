@@ -1,12 +1,11 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
   import { inertia, router } from '@inertiajs/svelte'
   import ItemDetail from './components/ItemDetail.svelte'
 
-  export let item
-  export let flash
+  let { item, flash } = $props();
 
   const onDestroy = (e) => {
     router.delete(`/items/${item.id}`)

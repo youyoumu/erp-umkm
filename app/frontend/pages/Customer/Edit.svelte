@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
   import { Link } from '@inertiajs/svelte'
   import Form from './Form.svelte'
 
-  export let customer
+  let { customer } = $props();
 
   const handleSubmit = (e) => {
     const { form } = e.detail

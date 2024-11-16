@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -12,10 +12,9 @@
   import { onMount } from 'svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
 
-  export let items
-  export let flash
+  let { items, flash } = $props();
 
-  let gridContainer
+  let gridContainer = $state()
   const columnDefs = [
     {
       field: 'name',

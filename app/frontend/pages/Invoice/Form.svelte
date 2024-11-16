@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run, preventDefault } from 'svelte/legacy';
+
 import * as AlertDialog from "$lib/components/ui/alert-dialog"
 import Button from "$lib/components/ui/button/button.svelte"
 import { Calendar } from "$lib/components/ui/calendar"
@@ -16,10 +18,19 @@ import { useForm } from "@inertiajs/svelte"
 import { DateFormatter, getLocalTimeZone, now } from "@internationalized/date"
 import { createEventDispatcher } from "svelte"
 
-export let invoice: Invoice
-export let submitText: string
-export let items: Item[]
-export let customers: Customer[]
+  interface Props {
+    invoice: Invoice;
+    submitText: string;
+    items: Item[];
+    customers: Customer[];
+  }
+
+  let {
+    invoice,
+    submitText,
+    items,
+    customers
+  }: Props = $props();
 
 const df = new DateFormatter("en-US", {
   dateStyle: "long",
@@ -80,33 +91,39 @@ if (window.location.pathname === "/invoices/new") {
   addItem()
 }
 
-let value = now(getLocalTimeZone())
-$: grandTotal = $form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
-$: if (value) $form.date = value.toString()
-$: $form.items = $form.items.filter((item: ItemWithLabelValue) => item != undefined)
+let value = $state(now(getLocalTimeZone()))
+let grandTotal = $derived($form.items.reduce((total, item) => total + item.selling_price * item.quantity, 0))
+run(() => {
+    if (value) $form.date = value.toString()
+  });
+run(() => {
+    $form.items = $form.items.filter((item: ItemWithLabelValue) => item != undefined)
+  });
 </script>
 
-<form class="flex flex-col gap-4 py-4" on:submit|preventDefault={() => {
+<form class="flex flex-col gap-4 py-4" onsubmit={preventDefault(() => {
   dispatch('submit', { form: $form })
-}}>
+})}>
   <div class="flex justify-between gap-4">
     <div class="flex w-96 flex-col items-center gap-2">
       <div class="items-tart flex w-full flex-col justify-between gap-2">
         <Label for="address">Tanggal</Label>
         <Popover.Root openFocus>
-          <Popover.Trigger asChild let:builder>
-            <Button
-              variant="outline"
-              class={cn(
-                "w-full justify-start text-left font-normal",
-                !value && "text-muted-foreground"
-              )}
-              builders={[builder]}
-            >
-              <CalendarIcon class="mr-2 h-4 w-4" />
-              {value ? df.format(value.toDate()) : "Select a date"}
-            </Button>
-          </Popover.Trigger>
+          <Popover.Trigger asChild >
+            {#snippet children({ builder })}
+                        <Button
+                variant="outline"
+                class={cn(
+                  "w-full justify-start text-left font-normal",
+                  !value && "text-muted-foreground"
+                )}
+                builders={[builder]}
+              >
+                <CalendarIcon class="mr-2 h-4 w-4" />
+                {value ? df.format(value.toDate()) : "Select a date"}
+              </Button>
+                                  {/snippet}
+                    </Popover.Trigger>
           <Popover.Content class="w-auto p-0">
             <Calendar bind:value={value} initialFocus />
           </Popover.Content>
@@ -195,7 +212,7 @@ $: $form.items = $form.items.filter((item: ItemWithLabelValue) => item != undefi
             ><button
               type="submit"
               disabled={$form.processing}
-              on:click={() => {
+              onclick={() => {
               dispatch('submit', { form: $form })
             }}
             >

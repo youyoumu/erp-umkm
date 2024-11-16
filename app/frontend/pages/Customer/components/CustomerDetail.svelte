@@ -1,6 +1,5 @@
-<script>
-export let label
-export let value
+<script lang="ts">
+  let { label, value } = $props();
 </script>
 
 <div class="flex justify-between">

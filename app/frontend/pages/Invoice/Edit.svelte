@@ -4,9 +4,13 @@ import { Link } from "@inertiajs/svelte"
 import type { Customer, Invoice, InvoiceWithItemLabelValue, Item, ItemWithLabelValue } from "../../lib/types"
 import Form from "./Form.svelte"
 
-export let invoice: Invoice
-export let items: Item[]
-export let customers: Customer[]
+  interface Props {
+    invoice: Invoice;
+    items: Item[];
+    customers: Customer[];
+  }
+
+  let { invoice, items, customers }: Props = $props();
 
 const handleSubmit = (
   e: CustomEvent<{ form: InertiaForm<{ date: string; code: string; address: string; customer: Customer; items: ItemWithLabelValue[] }> }>,

@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import { ExternalLink } from "lucide-svelte"
-export let item
+  let { item } = $props();
 </script>
 
 <a href="/items/{item.id}" class="flex size-full items-center gap-2" target="_blank">

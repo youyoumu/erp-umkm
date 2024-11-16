@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import Errors from '$lib/components/Errors.svelte'
   import FormField from '$lib/components/FormField.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -9,8 +11,7 @@
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()
-  export let customer
-  export let submitText
+  let { customer, submitText } = $props();
 
   const form = useForm({
     name: customer.name || '',
@@ -22,7 +23,7 @@
 
 <form
   class="flex flex-col gap-4 py-4"
-  on:submit|preventDefault={dispatch('submit', { form: $form })}
+  onsubmit={preventDefault(dispatch('submit', { form: $form }))}
 >
   <FormField>
     <Label for="name">Nama Pembeli</Label>

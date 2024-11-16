@@ -1,5 +1,5 @@
-<script>
-  export let errors
+<script lang="ts">
+  let { errors } = $props();
 </script>
 
 {#if errors}

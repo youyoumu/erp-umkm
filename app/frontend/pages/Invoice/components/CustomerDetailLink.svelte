@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { ExternalLink } from 'lucide-svelte'
-  export let customer
+  let { customer } = $props();
 </script>
 
 {#if customer}

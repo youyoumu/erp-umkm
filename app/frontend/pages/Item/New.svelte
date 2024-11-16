@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Form from './Form.svelte'
-  export let item
+  let { item } = $props();
 
   const handleSubmit = (e) => {
     const { form } = e.detail

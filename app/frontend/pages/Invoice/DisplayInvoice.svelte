@@ -1,8 +1,7 @@
-<script>
-  export let invoice_id
-  export let host_with_port
+<script lang="ts">
+  let { invoice_id, host_with_port } = $props();
 
-  let pdfContainer
+  let pdfContainer = $state()
 
   async function downloadInvoice() {
     const res = await fetch(

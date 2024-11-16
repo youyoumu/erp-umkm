@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -6,9 +6,7 @@
   import { Printer } from 'lucide-svelte'
   import Invoice from './Invoice.svelte'
 
-  export let invoice
-  export let items
-  export let flash
+  let { invoice, items, flash } = $props();
 
   const onDestroy = (e) => {
     router.delete(`/invoices/${invoice.id}`)
