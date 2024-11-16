@@ -63,3 +63,7 @@ gem "inertia_rails-contrib", "~> 0.3.0"
 gem "standard"
 
 gem "vite_rails", "~> 3.0"
+
+gem "faker"
+
+gem "grover"
