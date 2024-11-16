@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   # GET /items/1
   def show
     render inertia: "Item/Show", props: {
-      item: serialize_item(@item)
+      item: ItemSerializer.new(@item).to_h
     }
   end
 

@@ -67,3 +67,6 @@ gem "vite_rails", "~> 3.0"
 gem "faker"
 
 gem "grover"
+
+gem "alba"
+gem "oj"

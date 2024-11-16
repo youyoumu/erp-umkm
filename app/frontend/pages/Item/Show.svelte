@@ -7,6 +7,8 @@
 
   let { item, flash } = $props()
 
+  $inspect(item)
+
   const onDestroy = (e) => {
     router.delete(`/items/${item.id}`)
   }
