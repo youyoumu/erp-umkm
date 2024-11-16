@@ -2,7 +2,7 @@
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Form from './Form.svelte'
 
-  let { invoice, items, customers } = $props();
+  let { invoice, items, customers } = $props()
 
   const handleSubmit = (e) => {
     const { form } = e.detail

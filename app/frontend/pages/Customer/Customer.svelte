@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { customer } = $props();
+  let { customer } = $props()
 </script>
 
 <div>

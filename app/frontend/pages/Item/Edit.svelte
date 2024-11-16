@@ -4,7 +4,7 @@
   import { Link } from '@inertiajs/svelte'
   import Form from './Form.svelte'
 
-  let { item } = $props();
+  let { item } = $props()
 
   const handleSubmit = (e) => {
     const { form } = e.detail

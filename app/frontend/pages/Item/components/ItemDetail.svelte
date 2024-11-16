@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { label, value } = $props();
+  let { label, value } = $props()
 </script>
 
 <div class="flex justify-between">

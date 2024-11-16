@@ -6,7 +6,7 @@
   import { Printer } from 'lucide-svelte'
   import Invoice from './Invoice.svelte'
 
-  let { invoice, items, flash } = $props();
+  let { invoice, items, flash } = $props()
 
   const onDestroy = (e) => {
     router.delete(`/invoices/${invoice.id}`)

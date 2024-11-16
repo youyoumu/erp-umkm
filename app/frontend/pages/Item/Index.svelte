@@ -12,7 +12,7 @@
   import { onMount } from 'svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
 
-  let { items, flash } = $props();
+  let { items, flash } = $props()
 
   let gridContainer = $state()
   const columnDefs = [

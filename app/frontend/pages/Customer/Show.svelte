@@ -5,7 +5,7 @@
   import { inertia, router } from '@inertiajs/svelte'
   import CustomerDetail from './components/CustomerDetail.svelte'
 
-  let { customer, flash } = $props();
+  let { customer, flash } = $props()
 
   const onDestroy = (e) => {
     router.delete(`/customers/${customer.id}`)

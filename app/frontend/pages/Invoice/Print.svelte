@@ -3,7 +3,7 @@
   import dayjs from 'dayjs'
   import { onMount } from 'svelte'
 
-  let { invoice, items, customer } = $props();
+  let { invoice, items, customer } = $props()
 
   const grandTotal = items.reduce(
     (acc, item) => acc + item.selling_price * item.quantity,

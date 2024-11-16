@@ -13,7 +13,7 @@
   import CustomerDetailLink from './components/CustomerDetailLink.svelte'
   import InvoiceDetailLink from './components/InvoiceDetailLink.svelte'
 
-  let { invoices, flash } = $props();
+  let { invoices, flash } = $props()
 
   console.log(invoices)
 

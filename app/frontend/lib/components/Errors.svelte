@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { errors } = $props();
+  let { errors } = $props()
 </script>
 
 {#if errors}

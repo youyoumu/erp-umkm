@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { invoice_id, host_with_port } = $props();
+  let { invoice_id, host_with_port } = $props()
 
   let pdfContainer = $state()
 

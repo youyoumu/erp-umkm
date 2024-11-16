@@ -2,7 +2,7 @@
  * Base class for embedding a svelte component within an AGGrid call.
  * See: https://stackoverflow.com/a/72608215
  */
-import type { ICellRendererComp, ICellRendererParams } from "ag-grid-community"
+import type { ICellRendererComp, ICellRendererParams } from 'ag-grid-community'
 
 /**
  * Class for defining a cell renderer.
@@ -13,10 +13,10 @@ export abstract class AbstractCellRenderer implements ICellRendererComp {
   eGui: any
   protected value: any
 
-  constructor(parentElement = "div") {
+  constructor(parentElement = 'div') {
     // create empty span (or other element) to place svelte component in
     this.eGui = document.createElement(parentElement)
-    this.eGui.classList.add("size-full")
+    this.eGui.classList.add('size-full')
   }
 
   init(params: ICellRendererParams) {
@@ -30,7 +30,7 @@ export abstract class AbstractCellRenderer implements ICellRendererComp {
 
   refresh(params: ICellRendererParams) {
     this.value = params.value
-    this.eGui.innerHTML = ""
+    this.eGui.innerHTML = ''
 
     return true
   }
@@ -57,7 +57,12 @@ export abstract class AbstractCellRenderer implements ICellRendererComp {
  * @param svelteComponent function for how to create the svelte component
  * @returns
  */
-export function cellRendererFactory(svelteComponent: (cell: AbstractCellRenderer, params: ICellRendererParams) => void) {
+export function cellRendererFactory(
+  svelteComponent: (
+    cell: AbstractCellRenderer,
+    params: ICellRendererParams
+  ) => void
+) {
   class Renderer extends AbstractCellRenderer {
     createComponent(params: ICellRendererParams<any, any>): void {
       svelteComponent(this, params)

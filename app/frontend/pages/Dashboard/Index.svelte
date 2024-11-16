@@ -1,5 +1,8 @@
 <script module>
   export { default as layout } from '../../lib/components/LayoutNav.svelte'
+</script>
+
+<script>
   import { Construction } from 'lucide-svelte'
 </script>
 

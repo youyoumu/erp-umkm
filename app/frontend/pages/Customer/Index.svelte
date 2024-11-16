@@ -2,7 +2,7 @@
   // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
   import { Link, inertia } from '@inertiajs/svelte'
-  let { customers, flash } = $props();
+  let { customers, flash } = $props()
 
   const onDestroy = (e) => {
     if (!confirm('Are you sure you want to delete this customer?')) {

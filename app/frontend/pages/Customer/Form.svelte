@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import Errors from '$lib/components/Errors.svelte'
   import FormField from '$lib/components/FormField.svelte'
@@ -11,7 +11,7 @@
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()
-  let { customer, submitText } = $props();
+  let { customer, submitText } = $props()
 
   const form = useForm({
     name: customer.name || '',
