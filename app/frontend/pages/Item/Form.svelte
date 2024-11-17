@@ -1,19 +1,26 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { useForm } from '@inertiajs/svelte'
-  import { createEventDispatcher } from 'svelte'
-  import { Input } from '$lib/components/ui/input'
-  import Label from '$lib/components/ui/label/label.svelte'
   import Errors from '$lib/components/Errors.svelte'
   import FormField from '$lib/components/FormField.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
+  import { Input } from '$lib/components/ui/input'
+  import Label from '$lib/components/ui/label/label.svelte'
   import Textarea from '$lib/components/ui/textarea/textarea.svelte'
+  import type { ItemForm } from '$types/formTypes'
+  import type { Item } from '$types/typelizer'
+  import type { InertiaForm } from '@inertiajs/svelte'
+  import { useForm } from '@inertiajs/svelte'
 
-  const dispatch = createEventDispatcher()
-  let { item, submitText } = $props()
+  let {
+    item,
+    submitText,
+    onsubmit,
+  }: {
+    item: Item
+    submitText: string
+    onsubmit: (form: InertiaForm<ItemForm>) => void
+  } = $props()
 
-  const form = useForm({
+  const form = useForm<ItemForm>({
     name: item.name || '',
     notes: item.notes || '',
     cost_price: item.cost_price || '',
@@ -28,7 +35,10 @@
 
 <form
   class="flex flex-col gap-4 py-4"
-  onsubmit={preventDefault(dispatch('submit', { form: $form }))}
+  onsubmit={(e) => {
+    e.preventDefault()
+    onsubmit($form)
+  }}
 >
   <FormField>
     <Label for="name">Nama Barang</Label>
@@ -46,8 +56,8 @@
       id="cost_price"
       bind:value={$form.cost_price}
       type="number"
-      on:focus={(e) => {
-        e.target.select()
+      onfocus={(e) => {
+        e.currentTarget.select()
       }}
     />
     <Errors errors={$form.errors.cost_price} />
@@ -59,8 +69,8 @@
       id="selling_price"
       bind:value={$form.selling_price}
       type="number"
-      on:focus={(e) => {
-        e.target.select()
+      onfocus={(e) => {
+        e.currentTarget.select()
       }}
     />
     <Errors errors={$form.errors.selling_price} />

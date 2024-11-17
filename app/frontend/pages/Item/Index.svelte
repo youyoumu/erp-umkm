@@ -1,69 +1,75 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
   import Input from '$lib/components/ui/input/input.svelte'
   import { cn, formatIDR } from '$lib/utils'
-  import { Link, inertia } from '@inertiajs/svelte'
+  import type { Item } from '$types/typelizer'
+  import { Link } from '@inertiajs/svelte'
+  import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
   import 'ag-grid-community/styles/ag-grid.css'
   import 'ag-grid-community/styles/ag-theme-quartz.css'
   import dayjs from 'dayjs'
-  import { onMount } from 'svelte'
+  import { mount, onMount } from 'svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
 
-  let { items, flash } = $props()
+  let {
+    items,
+    flash,
+  }: {
+    items: Item[]
+    flash: any
+  } = $props()
 
-  let gridContainer = $state()
-  const columnDefs = [
-    {
-      field: 'name',
-      cellRenderer: cellRendererFactory((c, p) => {
-        // new ItemDetailLink({
-        //   target: c.eGui,
-        //   props: {
-        //     item: p.data,
-        //   },
-        // })
-      }),
-      headerName: 'Nama Barang',
-      flex: 1,
-      width: 70,
-    },
-    { field: 'stock', headerName: 'Stok', width: 85 },
-
-    { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
-    {
-      field: 'selling_price',
-      width: 125,
-      headerName: 'Harga Satuan',
-      wrapHeaderText: true,
-    },
-    {
-      field: 'updated_at',
-      width: 115,
-      headerName: 'Terakhir Diubah',
-      wrapHeaderText: true,
-    },
-  ]
-  const gridOptions = {
-    columnDefs: columnDefs,
+  const gridOptions: GridOptions<Item & { selling_price_IDR: string }> = {
+    columnDefs: [
+      {
+        field: 'name',
+        cellRenderer: cellRendererFactory((c, p) => {
+          mount(ItemDetailLink, {
+            target: c.getGui(),
+            props: { item: p.data },
+          })
+        }),
+        headerName: 'Nama Barang',
+        flex: 1,
+        width: 70,
+      },
+      { field: 'stock', headerName: 'Stok', width: 85 },
+      { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
+      {
+        field: 'selling_price_IDR',
+        width: 125,
+        headerName: 'Harga Satuan',
+        wrapHeaderText: true,
+      },
+      {
+        field: 'updated_at',
+        width: 115,
+        headerName: 'Terakhir Diubah',
+        wrapHeaderText: true,
+      },
+    ],
     rowData: items.map((item) => {
       return {
         ...item,
-        selling_price: formatIDR(item.selling_price),
+        selling_price_IDR: formatIDR(item.selling_price),
         updated_at: dayjs(item.updated_at).format('DD/MMM/YY'),
       }
     }),
   }
 
-  let gridApi
+  let gridContainer = $state<HTMLDivElement>()
+
+  let gridApi: ReturnType<
+    typeof createGrid<Item & { selling_price_IDR: string }>
+  >
   onMount(() => {
-    gridApi = createGrid(gridContainer, gridOptions)
+    gridApi = createGrid(gridContainer!, gridOptions)
   })
 
-  function handleSearch(e) {
-    gridApi.setGridOption('quickFilterText', e.target.value)
+  function handleSearch(text: string) {
+    gridApi.setGridOption('quickFilterText', text)
   }
 </script>
 
@@ -82,9 +88,13 @@
 
   <div class="mb-8 flex items-center justify-between">
     <h1 class="text-4xl font-bold">Daftar Barang</h1>
-    <a href="/items/new" use:inertia><Button>Barang Baru</Button></a>
+    <Link href="/items/new"><Button>Barang Baru</Button></Link>
   </div>
-  <Input on:input={handleSearch} placeholder="Cari Barang" class="mb-4" />
+  <Input
+    oninput={(e) => handleSearch(e.currentTarget.value)}
+    placeholder="Cari Barang"
+    class="mb-4"
+  />
   <div
     id="datagrid"
     class={cn('ag-theme-quartz h-[60svh] w-full')}

@@ -1,13 +1,14 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
+  import type { ItemForm } from '$types/formTypes'
+  import type { Item } from '$types/typelizer'
+  import type { InertiaForm } from '@inertiajs/svelte'
   import { Link } from '@inertiajs/svelte'
   import Form from './Form.svelte'
 
-  let { item } = $props()
+  let { item }: { item: Item } = $props()
 
-  const handleSubmit = (e) => {
-    const { form } = e.detail
+  const handleSubmit = (form: InertiaForm<ItemForm>) => {
     form.transform((data) => ({ item: data }))
     form.patch(`/items/${item.id}`)
   }
@@ -19,7 +20,7 @@
 
 <div class="mx-auto max-w-screen-sm p-8">
   <h1 class="text-4xl font-bold">Edit Barang</h1>
-  <Form {item} submitText="Update Barang" on:submit={handleSubmit} />
+  <Form {item} submitText="Update Barang" onsubmit={handleSubmit} />
   <Link href={`/items/${item.id}`}
     ><Button variant="secondary">Lihat Barang</Button></Link
   >

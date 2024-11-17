@@ -1,15 +1,19 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
+  import type { Item } from '$types/typelizer'
   import { inertia, router } from '@inertiajs/svelte'
   import ItemDetail from './components/ItemDetail.svelte'
 
-  let { item, flash } = $props()
+  let {
+    item,
+    flash,
+  }: {
+    item: Item
+    flash: any
+  } = $props()
 
-  $inspect(item)
-
-  const onDestroy = (e) => {
+  const onDestroy = () => {
     router.delete(`/items/${item.id}`)
   }
 </script>
@@ -67,7 +71,7 @@
           <AlertDialog.Footer>
             <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
             <AlertDialog.Action
-              on:click={onDestroy}
+              onclick={onDestroy}
               class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action
             >
           </AlertDialog.Footer>
