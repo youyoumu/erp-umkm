@@ -6,7 +6,7 @@
   import { Printer } from 'lucide-svelte'
   import Invoice from './Invoice.svelte'
 
-  let { invoice, items, flash } = $props()
+  let { invoice, flash } = $props()
 
   const onDestroy = (e) => {
     router.delete(`/invoices/${invoice.id}`)
@@ -59,5 +59,5 @@
       </AlertDialog.Content>
     </AlertDialog.Root>
   </div>
-  <Invoice {invoice} {items} />
+  <Invoice {invoice} items={invoice.items} />
 </div>

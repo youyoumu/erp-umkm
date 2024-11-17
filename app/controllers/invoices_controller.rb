@@ -18,11 +18,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   def show
     render inertia: "Invoice/Show", props: {
-      invoice: serialize_invoice(@invoice),
-      customer: serialize_customer(@invoice.customer),
-      items: @invoice.items.map do |item|
-        serialize_item(item)
-      end
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
     }
   end
 
