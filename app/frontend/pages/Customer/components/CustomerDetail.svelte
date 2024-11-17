@@ -1,5 +1,11 @@
 <script lang="ts">
-  let { label, value } = $props()
+  let {
+    label,
+    value,
+  }: {
+    label: string | null
+    value: string | null
+  } = $props()
 </script>
 
 <div class="flex justify-between">

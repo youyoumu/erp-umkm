@@ -1,10 +1,12 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
+  import type { CustomerForm } from '$types/formTypes'
+  import type { Customer } from '$types/typelizer'
+  import type { InertiaForm } from '@inertiajs/svelte'
   import Form from './Form.svelte'
-  let { customer } = $props()
 
-  const handleSubmit = (e) => {
-    const { form } = e.detail
+  let { customer }: { customer: Customer } = $props()
+
+  const handleSubmit = (form: InertiaForm<CustomerForm>) => {
     form.transform((data) => ({ customer: data }))
     form.post('/customers')
   }
@@ -16,5 +18,5 @@
 
 <div class="mx-auto max-w-screen-sm p-8">
   <h1 class="text-4xl font-bold">Pembeli Baru</h1>
-  <Form {customer} submitText="Tambah Pembeli" on:submit={handleSubmit} />
+  <Form {customer} submitText="Tambah Pembeli" onsubmit={handleSubmit} />
 </div>

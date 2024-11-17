@@ -1,14 +1,14 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
+  import type { Customer } from '$types/typelizer'
   import { Link, inertia } from '@inertiajs/svelte'
-  let { customers, flash } = $props()
-
-  const onDestroy = (e) => {
-    if (!confirm('Are you sure you want to delete this customer?')) {
-      e.preventDefault()
-    }
-  }
+  let {
+    customers,
+    flash,
+  }: {
+    customers: Customer[]
+    flash: any
+  } = $props()
 </script>
 
 <svelte:head>

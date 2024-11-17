@@ -9,3 +9,10 @@ export type ItemForm = {
   tag: string
   quantity_unit: string
 }
+
+export type CustomerForm = {
+  name: string
+  notes: string
+  address: string
+  contact: string
+}

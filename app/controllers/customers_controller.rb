@@ -6,26 +6,26 @@ class CustomersController < ApplicationController
   def index
     @customers = Customer.all
     render inertia: "Customer/Index", props: {
-      customers: CustomerSerializer.new(@customers).to_h
+      customers: CustomerSerializer.new(@customers, within: [:invoices]).to_h
     }
   end
 
   def show
     render inertia: "Customer/Show", props: {
-      customer: CustomerSerializer.new(@customer).to_h
+      customer: CustomerSerializer.new(@customer, within: [:invoices]).to_h
     }
   end
 
   def new
     @customer = Customer.new
     render inertia: "Customer/New", props: {
-      customer: CustomerSerializer.new(@customer).to_h
+      customer: CustomerSerializer.new(@customer, within: [:invoices]).to_h
     }
   end
 
   def edit
     render inertia: "Customer/Edit", props: {
-      customer: CustomerSerializer.new(@customer).to_h
+      customer: CustomerSerializer.new(@customer, within: [:invoices]).to_h
     }
   end
 

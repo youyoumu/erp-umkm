@@ -1,17 +1,24 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import Errors from '$lib/components/Errors.svelte'
   import FormField from '$lib/components/FormField.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
   import { Input } from '$lib/components/ui/input'
   import Label from '$lib/components/ui/label/label.svelte'
   import Textarea from '$lib/components/ui/textarea/textarea.svelte'
+  import type { CustomerForm } from '$types/formTypes'
+  import type { Customer } from '$types/typelizer'
+  import type { InertiaForm } from '@inertiajs/svelte'
   import { useForm } from '@inertiajs/svelte'
-  import { createEventDispatcher } from 'svelte'
 
-  const dispatch = createEventDispatcher()
-  let { customer, submitText } = $props()
+  let {
+    customer,
+    submitText,
+    onsubmit,
+  }: {
+    customer: Customer
+    submitText: string
+    onsubmit: (form: InertiaForm<CustomerForm>) => void
+  } = $props()
 
   const form = useForm({
     name: customer.name || '',
@@ -23,7 +30,10 @@
 
 <form
   class="flex flex-col gap-4 py-4"
-  onsubmit={preventDefault(dispatch('submit', { form: $form }))}
+  onsubmit={(e) => {
+    e.preventDefault()
+    onsubmit($form)
+  }}
 >
   <FormField>
     <Label for="name">Nama Pembeli</Label>
