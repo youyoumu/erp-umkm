@@ -70,3 +70,6 @@ gem "grover"
 
 gem "alba"
 gem "oj"
+
+# https://github.com/skryukov/typelizer/issues/15
+gem "typelizer", git: "https://github.com/skryukov/typelizer.git", branch: "main"

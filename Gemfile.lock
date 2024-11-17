@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/skryukov/typelizer.git
+  revision: aea764b4fc7f5c6a524f754a0eec572f9d17b8f6
+  branch: main
+  specs:
+    typelizer (0.1.5)
+      railties (>= 6.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -416,6 +424,7 @@ DEPENDENCIES
   sqlite3 (>= 2.1)
   standard
   thruster
+  typelizer!
   tzinfo-data
   vite_rails (~> 3.0)
   web-console

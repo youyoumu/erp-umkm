@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       $lib: path.resolve('./app/frontend/lib'),
+      $types: path.resolve('./app/frontend/types'),
     },
   },
 })

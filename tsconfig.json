@@ -18,7 +18,9 @@
     "outDir": "dist",
     "paths": {
       "$lib": ["./app/frontend/lib"],
-      "$lib/*": ["./app/frontend/lib/*"]
+      "$lib/*": ["./app/frontend/lib/*"],
+      "$types": ["./app/frontend/types"],
+      "$types/*": ["./app/frontend/types/*"]
     }
   },
   "include": [
