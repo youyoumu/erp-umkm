@@ -3,39 +3,32 @@ class CustomersController < ApplicationController
 
   inertia_share flash: -> { flash.to_hash }
 
-  # GET /customers
   def index
     @customers = Customer.all
     render inertia: "Customer/Index", props: {
-      customers: @customers.map do |customer|
-        serialize_customer(customer)
-      end
+      customers: CustomerSerializer.new(@customers).to_h
     }
   end
 
-  # GET /customers/1
   def show
     render inertia: "Customer/Show", props: {
-      customer: serialize_customer(@customer)
+      customer: CustomerSerializer.new(@customer).to_h
     }
   end
 
-  # GET /customers/new
   def new
     @customer = Customer.new
     render inertia: "Customer/New", props: {
-      customer: serialize_customer(@customer)
+      customer: CustomerSerializer.new(@customer).to_h
     }
   end
 
-  # GET /customers/1/edit
   def edit
     render inertia: "Customer/Edit", props: {
-      customer: serialize_customer(@customer)
+      customer: CustomerSerializer.new(@customer).to_h
     }
   end
 
-  # POST /customers
   def create
     @customer = Customer.new(customer_params)
 
@@ -46,7 +39,6 @@ class CustomersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /customers/1
   def update
     if @customer.update(customer_params)
       redirect_to @customer, notice: "Customer was successfully updated."
@@ -55,7 +47,6 @@ class CustomersController < ApplicationController
     end
   end
 
-  # DELETE /customers/1
   def destroy
     @customer.destroy!
     redirect_to customers_url, notice: "Customer was successfully destroyed."
@@ -63,19 +54,11 @@ class CustomersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_customer
     @customer = Customer.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def customer_params
     params.require(:customer).permit(:name, :notes, :address, :contact)
-  end
-
-  def serialize_customer(customer)
-    customer.as_json(only: [
-      :id, :name, :notes, :address, :contact
-    ])
   end
 end

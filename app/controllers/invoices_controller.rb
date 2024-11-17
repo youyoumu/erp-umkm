@@ -5,55 +5,36 @@ class InvoicesController < ApplicationController
 
   inertia_share flash: -> { flash.to_hash }
 
-  # GET /invoices
   def index
     @invoices = Invoice.all.includes(:customer, :items)
     render inertia: "Invoice/Index", props: {
-      invoices: @invoices.map do |invoice|
-        serialize_invoice(invoice)
-      end
+      invoices: InvoiceSerializer.new(@invoices, within: [:customer, :items]).to_h
     }
   end
 
-  # GET /invoices/1
   def show
     render inertia: "Invoice/Show", props: {
       invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
     }
   end
 
-  # GET /invoices/new
   def new
     @items = Item.all.where(is_snapshot: false || nil)
     @customers = Customer.all
     @invoice = Invoice.new
     render inertia: "Invoice/New", props: {
-      invoice: serialize_invoice(@invoice),
-      items: @items.map do |item|
-        serialize_item(item)
-      end,
-      customers: @customers.map do |customer|
-        serialize_customer(customer)
-      end
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
     }
   end
 
-  # GET /invoices/1/edit
   def edit
     @items = Item.all.where(is_snapshot: false || nil)
     @customers = Customer.all
     render inertia: "Invoice/Edit", props: {
-      invoice: serialize_invoice(@invoice),
-      items: @items.map do |item|
-        serialize_item(item)
-      end,
-      customers: @customers.map do |customer|
-        serialize_customer(customer)
-      end
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
     }
   end
 
-  # POST /invoices
   def create
     begin
       date = Time.parse(invoice_params[:date])
@@ -105,7 +86,6 @@ class InvoicesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /invoices/1
   def update
     if @invoice.update(invoice_params)
       redirect_to @invoice, notice: "Invoice was successfully updated."
@@ -114,7 +94,6 @@ class InvoicesController < ApplicationController
     end
   end
 
-  # DELETE /invoices/1
   def destroy
     @invoice.destroy!
     redirect_to invoices_url, notice: "Invoice was successfully destroyed."
@@ -122,11 +101,7 @@ class InvoicesController < ApplicationController
 
   def print
     render inertia: "Invoice/Print", props: {
-      invoice: serialize_invoice(@invoice),
-      customer: serialize_customer(@invoice.customer),
-      items: @invoice.items.map do |item|
-        serialize_item(item)
-      end
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
     }
   end
 
@@ -149,37 +124,12 @@ class InvoicesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_invoice
     @invoice = Invoice.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def invoice_params
     params.require(:invoice)
       .permit(:date, :address, :code, customer: [:id], items: [:id, :quantity, :quantity_unit, :selling_price])
-  end
-
-  def serialize_invoice(invoice)
-    invoice.as_json(only: [
-      :id, :date, :code, :address
-    ]).merge(
-      customer: serialize_customer(invoice.customer),
-      items: invoice.items.map do |item|
-        serialize_item(item)
-      end
-    )
-  end
-
-  def serialize_item(item)
-    item.as_json(only: [
-      :id, :name, :notes, :cost_price, :selling_price, :stock, :code, :category, :quantity, :quantity_unit, :tag
-    ])
-  end
-
-  def serialize_customer(customer)
-    customer.as_json(only: [
-      :id, :name, :notes, :address, :contact
-    ])
   end
 end
