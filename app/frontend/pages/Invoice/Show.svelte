@@ -1,14 +1,20 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
+  import type { Invoice } from '$types/typelizer'
   import { inertia, router } from '@inertiajs/svelte'
   import { Printer } from 'lucide-svelte'
-  import Invoice from './Invoice.svelte'
+  import InvoiceComponent from './Invoice.svelte'
 
-  let { invoice, flash } = $props()
+  let {
+    invoice,
+    flash,
+  }: {
+    invoice: Invoice
+    flash: any
+  } = $props()
 
-  const onDestroy = (e) => {
+  const onDestroy = () => {
     router.delete(`/invoices/${invoice.id}`)
   }
 </script>
@@ -52,12 +58,12 @@
         <AlertDialog.Footer>
           <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
           <AlertDialog.Action
-            on:click={onDestroy}
+            onclick={onDestroy}
             class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action
           >
         </AlertDialog.Footer>
       </AlertDialog.Content>
     </AlertDialog.Root>
   </div>
-  <Invoice {invoice} items={invoice.items} />
+  <InvoiceComponent {invoice} />
 </div>

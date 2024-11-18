@@ -1,52 +1,60 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import { cn, formatIDR } from '$lib/utils'
+  import type { Invoice, Item } from '$types/typelizer'
+  import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
   import 'ag-grid-community/styles/ag-grid.css'
   import 'ag-grid-community/styles/ag-theme-quartz.css'
-  import { cn } from '$lib/utils'
   import dayjs from 'dayjs'
-  import { formatIDR } from '$lib/utils'
-  let { invoice, items } = $props()
+  import { onMount } from 'svelte'
+  let {
+    invoice,
+  }: {
+    invoice: Invoice
+  } = $props()
 
-  // path /print
   const isPrint = window.location.pathname.endsWith('/print')
 
-  let gridContainer = $state()
-  const columnDefs = [
-    { field: 'name', flex: 1, headerName: 'Nama Barang' },
-    {
-      field: 'quantity',
-      width: 135,
-      headerName: 'Jumlah Barang',
-      wrapHeaderText: true,
-    },
-    { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
-    {
-      field: 'selling_price',
-      width: 125,
-      headerName: 'Harga Satuan',
-      wrapHeaderText: true,
-    },
-    { field: 'total', width: 125 },
-  ]
-  const gridOptions = {
-    columnDefs: columnDefs,
-    rowData: items.map((item) => {
+  const gridOptions: GridOptions<
+    Item & { total: string; selling_price_IDR: string }
+  > = {
+    columnDefs: [
+      { field: 'name', flex: 1, headerName: 'Nama Barang' },
+      {
+        field: 'quantity',
+        width: 135,
+        headerName: 'Jumlah Barang',
+        wrapHeaderText: true,
+      },
+      { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
+      {
+        field: 'selling_price',
+        width: 125,
+        headerName: 'Harga Satuan',
+        wrapHeaderText: true,
+      },
+      { field: 'total', width: 125 },
+    ],
+    rowData: invoice.items.map((item) => {
       return {
         ...item,
         total: formatIDR(item.quantity * item.selling_price),
-        selling_price: formatIDR(item.selling_price),
+        selling_price_IDR: formatIDR(item.selling_price),
       }
     }),
     domLayout: 'autoHeight',
   }
 
   const total = formatIDR(
-    items.reduce((total, item) => total + item.selling_price * item.quantity, 0)
+    invoice.items.reduce(
+      (total, item) => total + item.selling_price * item.quantity,
+      0
+    )
   )
 
+  let gridContainer = $state<HTMLDivElement>()
   onMount(() => {
-    new createGrid(gridContainer, gridOptions)
+    createGrid(gridContainer!, gridOptions)
     if (isPrint) window.print()
   })
 </script>
