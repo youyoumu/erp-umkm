@@ -23,7 +23,9 @@ class InvoicesController < ApplicationController
     @customers = Customer.all
     @invoice = Invoice.new
     render inertia: "Invoice/New", props: {
-      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h,
+      items: ItemSerializer.new(@items).to_h,
+      customers: CustomerSerializer.new(@customers, within: []).to_h
     }
   end
 

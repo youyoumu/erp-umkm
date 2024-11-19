@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   attribute :quantity, :float, default: 0
+  attribute :quantity_unit, :string, default: ""
   attribute :tag, :string, default: ""
 
   validates :name, presence: {message: "Nama barang harus diisi"}

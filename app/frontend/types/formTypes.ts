@@ -16,3 +16,18 @@ export type CustomerForm = {
   address: string
   contact: string
 }
+
+export type InvoiceForm = {
+  date: string
+  code: string
+  address: string
+  customer: {
+    id: number
+  }
+  items: {
+    id: number
+    quantity: number
+    quantity_unit: string
+    selling_price: number
+  }[]
+}

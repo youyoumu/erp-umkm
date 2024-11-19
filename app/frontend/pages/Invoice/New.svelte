@@ -1,11 +1,20 @@
 <script lang="ts">
-  // export { default as layout } from '../../lib/components/LayoutNav.svelte'
+  import type { InvoiceForm } from '$types/formTypes'
+  import type { Customer, Invoice, Item } from '$types/typelizer'
+  import type { InertiaForm } from '@inertiajs/svelte'
   import Form from './Form.svelte'
 
-  let { invoice, items, customers } = $props()
+  let {
+    invoice,
+    items,
+    customers,
+  }: {
+    invoice: Invoice
+    items: Item[]
+    customers: Customer[]
+  } = $props()
 
-  const handleSubmit = (e) => {
-    const { form } = e.detail
+  const handleSubmit = (form: InertiaForm<InvoiceForm>) => {
     form.transform((data) => ({ invoice: data }))
     form.post('/invoices')
   }
@@ -18,10 +27,10 @@
 <div class="mx-auto p-8">
   <h1 class="mb-4 text-4xl font-bold">Nota Baru</h1>
   <Form
-    {items}
     {invoice}
+    {items}
     {customers}
     submitText="Buat Nota"
-    on:submit={handleSubmit}
+    onsubmit={handleSubmit}
   />
 </div>

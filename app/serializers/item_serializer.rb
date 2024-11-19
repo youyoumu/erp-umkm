@@ -3,6 +3,7 @@ class ItemSerializer < ApplicationSerializer
     :code, :category, :tag, :quantity, :quantity_unit, :updated_at
 
   typelize quantity: :number,
+    quantity_unit: :string,
     cost_price: :number,
     selling_price: :number,
     tag: :string
