@@ -21,7 +21,8 @@
       "$lib/*": ["./app/frontend/lib/*"],
       "$types": ["./app/frontend/types"],
       "$types/*": ["./app/frontend/types/*"]
-    }
+    },
+    "jsx": "react-jsx"
   },
   "include": [
     "app/frontend/**/*.ts",
