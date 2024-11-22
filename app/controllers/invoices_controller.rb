@@ -32,8 +32,11 @@ class InvoicesController < ApplicationController
   def edit
     @items = Item.all.where(is_snapshot: false || nil)
     @customers = Customer.all
+    puts @customers
     render inertia: "Invoice/Edit", props: {
-      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h
+      invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h,
+      items: ItemSerializer.new(@items).to_h,
+      customers: CustomerSerializer.new(@customers, within: []).to_h
     }
   end
 

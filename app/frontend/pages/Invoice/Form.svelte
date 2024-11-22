@@ -6,6 +6,7 @@
     DateFormatter,
     getLocalTimeZone,
     now,
+    parseAbsoluteToLocal,
     parseZonedDateTime,
   } from '@internationalized/date'
   import CalendarIcon from 'lucide-svelte/icons/calendar'
@@ -65,7 +66,9 @@
   // }))
 
   const form = useForm<InvoiceForm>({
-    date: invoice.date || now(getLocalTimeZone()).toString(),
+    date: invoice.date
+      ? parseAbsoluteToLocal(invoice.date).toString()
+      : now(getLocalTimeZone()).toString(),
     code: invoice.code || '',
     address: invoice.address || '',
     customer: invoice.customer || {
@@ -157,7 +160,7 @@
           items={customers}
           label="name"
           itemId="id"
-          bind:value={$form.customer.id}
+          bind:value={$form.customer}
           class="svelte-select"
           on:change={(e) => updateAddress(e.detail.address)}
         />
