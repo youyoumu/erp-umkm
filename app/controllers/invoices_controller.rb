@@ -41,49 +41,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    begin
-      date = Time.parse(invoice_params[:date])
-    rescue ArgumentError
-      date = Time.now
-    end
-
-    code = invoice_params[:code]
-    if code.blank?
-      code = "INV-#{Time.now.strftime("%Y%m%d%H%M%S%L")}"
-    end
-
-    address = invoice_params[:address]
-
-    customer_id = invoice_params[:customer][:id]
-    customer_id ||= 0
-    @customer = Customer.find_by(id: customer_id)
-
-    items_detail = invoice_params[:items].map do |item|
-      {
-        id: item[:id],
-        quantity: item[:quantity],
-        quantity_unit: item[:quantity_unit],
-        selling_price: item[:selling_price]
-      }
-    end
-    @items = Item.where(id: items_detail.map { |item| item[:id] })
-
-    item_snapshot_ids = []
-    @items.each do |item|
-      item_snapshot = item.dup
-      item_snapshot.is_snapshot = true
-      item_snapshot.quantity = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity]
-      item_snapshot.quantity_unit = items_detail.find { |item_detail| item_detail[:id] == item.id }[:quantity_unit]
-      item_snapshot.selling_price = items_detail.find { |item_detail| item_detail[:id] == item.id }[:selling_price]
-      item_snapshot.save
-      item_snapshot_ids << item_snapshot.id
-    end
-
-    @items_snapshot = Item.where(id: item_snapshot_ids)
-    @invoice = Invoice.new(date: date, code: code, address: address)
-    @invoice.items << @items_snapshot
-    @invoice.customer = @customer
-
+    @invoice = Invoice.create_from_params(invoice_params)
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
     else

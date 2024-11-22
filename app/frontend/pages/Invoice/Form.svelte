@@ -26,6 +26,11 @@
   import type { InertiaForm } from '@inertiajs/svelte'
   import { page } from '@inertiajs/svelte'
 
+  const df = new DateFormatter('id-ID', {
+    dateStyle: 'long',
+  })
+  let formRef = $state<HTMLFormElement>()
+
   let {
     invoice,
     submitText,
@@ -77,6 +82,13 @@
     items: invoice.items,
   })
 
+  let grandTotal = $derived(
+    $form.items.reduce(
+      (total, item) => total + item.selling_price * item.quantity,
+      0
+    )
+  )
+
   function addItem() {
     $form.items = [
       ...$form.items,
@@ -97,21 +109,11 @@
     addItem()
   }
 
-  const df = new DateFormatter('id-ID', {
-    dateStyle: 'long',
-  })
-
-  let grandTotal = $derived(
-    $form.items.reduce(
-      (total, item) => total + item.selling_price * item.quantity,
-      0
-    )
-  )
-
   $inspect($form)
 </script>
 
 <form
+  bind:this={formRef}
   class="flex flex-col gap-4 py-4"
   onsubmit={(e) => {
     e.preventDefault()
@@ -271,7 +273,10 @@
         <AlertDialog.Footer>
           <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
           <AlertDialog.Action
-            ><button type="submit" disabled={$form.processing}>
+            ><button
+              disabled={$form.processing}
+              onclick={() => formRef?.requestSubmit()}
+            >
               {submitText}
             </button></AlertDialog.Action
           >
