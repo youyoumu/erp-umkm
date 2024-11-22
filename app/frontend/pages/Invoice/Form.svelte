@@ -1,22 +1,29 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
+  import { Calendar } from '$lib/components/ui/calendar/index.js'
+  import * as Popover from '$lib/components/ui/popover/index.js'
+  import { cn } from '$lib/utils.js'
+  import {
+    DateFormatter,
+    getLocalTimeZone,
+    now,
+    parseZonedDateTime,
+  } from '@internationalized/date'
+  import CalendarIcon from 'lucide-svelte/icons/calendar'
 
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
-  import { Calendar } from '$lib/components/ui/calendar'
   import { Input } from '$lib/components/ui/input'
   import Label from '$lib/components/ui/label/label.svelte'
-  import * as Popover from '$lib/components/ui/popover'
   import Textarea from '$lib/components/ui/textarea/textarea.svelte'
-  import CalendarIcon from 'lucide-svelte/icons/calendar'
   import Select from 'svelte-select'
 
-  import { cn, formatIDR } from '$lib/utils.js'
+  import { formatIDR } from '$lib/utils.js'
+  import { useForm } from '@inertiajs/svelte'
+
   import type { InvoiceForm } from '$types/formTypes'
   import type { Customer, Invoice, Item } from '$types/typelizer'
   import type { InertiaForm } from '@inertiajs/svelte'
-  import { useForm } from '@inertiajs/svelte'
-  import { DateFormatter, getLocalTimeZone, now } from '@internationalized/date'
+  import { page } from '@inertiajs/svelte'
 
   let {
     invoice,
@@ -32,115 +39,113 @@
     onsubmit: (form: InertiaForm<InvoiceForm>) => void
   } = $props()
 
-  const df = new DateFormatter('en-US', {
+  // TODO add tags and invoiceitems for edit
+  // const formattedInvoiceItems = invoice.items.map((item) => {
+  //   const tag = item.tag === '' ? '' : `#${item.tag}`
+  //   return { ...item, label: `${item.name}* ${tag}`, value: item.id }
+  // })
+
+  // const formattedItems = [
+  //   ...items.map((item) => {
+  //     const tag = item.tag === '' ? '' : `#${item.tag}`
+  //     return {
+  //       ...item,
+  //       label: `${item.name} ${tag}`,
+  //       value: item.id,
+  //       quantity: 0,
+  //     }
+  //   }),
+  //   ...formattedInvoiceItems,
+  // ]
+
+  // const formattedCustomers = customers.map((customer) => ({
+  //   ...customer,
+  //   label: customer.name,
+  //   value: customer.id,
+  // }))
+
+  const form = useForm<InvoiceForm>({
+    date: invoice.date || now(getLocalTimeZone()).toString(),
+    code: invoice.code || '',
+    address: invoice.address || '',
+    customer: invoice.customer || {
+      id: 0,
+    },
+    items: invoice.items,
+  })
+
+  function addItem() {
+    $form.items = [
+      ...$form.items,
+      {
+        id: 0,
+        quantity: 0,
+        quantity_unit: '',
+        selling_price: 0,
+      },
+    ]
+  }
+
+  function updateAddress(text: string) {
+    $form.address = text
+  }
+
+  if ($page.url === '/invoices/new') {
+    addItem()
+  }
+
+  const df = new DateFormatter('id-ID', {
     dateStyle: 'long',
   })
 
-  const formattedInvoiceItems = invoice.items.map((item) => {
-    const tag = item.tag === '' ? '' : `#${item.tag}`
-    return { ...item, label: `${item.name}* ${tag}`, value: item.id }
-  })
-
-  const formattedInvoiceCustomer = invoice.customer
-    ? {
-        ...invoice.customer,
-        label: invoice.customer.name,
-        value: invoice.customer.id,
-      }
-    : null
-
-  const formattedItems = [
-    ...items.map((item) => {
-      const tag = item.tag === '' ? '' : `#${item.tag}`
-      return {
-        ...item,
-        label: `${item.name} ${tag}`,
-        value: item.id,
-        quantity: 0,
-      }
-    }),
-    ...formattedInvoiceItems,
-  ]
-
-  const formattedCustomers = customers.map((customer) => ({
-    ...customer,
-    label: customer.name,
-    value: customer.id,
-  }))
-
-  const form = useForm<InvoiceForm>({
-    date: invoice.date || '',
-    code: invoice.code || '',
-    address: invoice.address || '',
-    customer: formattedInvoiceCustomer || {
-      ...formattedCustomers[0],
-      label: '',
-      value: 0,
-      id: 0,
-    },
-    items: formattedInvoiceItems,
-  })
-
-  // function addItem() {
-  //   $form.items = [
-  //     ...$form.items,
-  //     { ...formattedItems[0], label: '', value: 0, id: 0, selling_price: 0 },
-  //   ]
-  // }
-
-  function handleSelectCustomer(e: Event & { detail: { address: string } }) {
-    const address = e.detail.address
-    $form.address = address
-  }
-
-  // TODO use inertia
-  if (window.location.pathname === '/invoices/new') {
-    // addItem()
-  }
-
-  let value = $state(now(getLocalTimeZone()))
   let grandTotal = $derived(
     $form.items.reduce(
       (total, item) => total + item.selling_price * item.quantity,
       0
     )
   )
-  // run(() => {
-  //   if (value) $form.date = value.toString()
-  // })
-  // run(() => {
-  //   $form.items = $form.items.filter(
-  //     (item: ItemWithLabelValue) => item != undefined
-  //   )
-  // })
+
+  $inspect($form)
 </script>
 
-<!--  TODO submit -->
-<form class="flex flex-col gap-4 py-4">
+<form
+  class="flex flex-col gap-4 py-4"
+  onsubmit={(e) => {
+    e.preventDefault()
+    onsubmit($form)
+  }}
+>
   <div class="flex justify-between gap-4">
     <div class="flex w-96 flex-col items-center gap-2">
       <div class="items-tart flex w-full flex-col justify-between gap-2">
         <Label for="address">Tanggal</Label>
-        <!-- <Popover.Root openFocus>
-          <Popover.Trigger asChild>
-            {#snippet children({ builder })}
+        <Popover.Root>
+          <Popover.Trigger>
+            {#snippet child({ props })}
               <Button
                 variant="outline"
                 class={cn(
                   'w-full justify-start text-left font-normal',
-                  !value && 'text-muted-foreground'
+                  !$form.date && 'text-muted-foreground'
                 )}
-                builders={[builder]}
+                {...props}
               >
-                <CalendarIcon class="mr-2 h-4 w-4" />
-                {value ? df.format(value.toDate()) : 'Select a date'}
+                <CalendarIcon class="mr-2 size-4" />
+                {df.format(parseZonedDateTime($form.date).toDate())}
               </Button>
             {/snippet}
           </Popover.Trigger>
           <Popover.Content class="w-auto p-0">
-            <Calendar bind:value initialFocus />
+            <Calendar
+              value={parseZonedDateTime($form.date)}
+              onValueChange={(v) => {
+                $form.date = v!.toString()
+              }}
+              type="single"
+              initialFocus
+            />
           </Popover.Content>
-        </Popover.Root> -->
+        </Popover.Root>
       </div>
       <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="code">Kode Nota</Label>
@@ -149,10 +154,12 @@
       <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="customer">Pembeli</Label>
         <Select
-          items={formattedCustomers}
-          bind:value={$form.customer}
+          items={customers}
+          label="name"
+          itemId="id"
+          bind:value={$form.customer.id}
           class="svelte-select"
-          on:change={handleSelectCustomer}
+          on:change={(e) => updateAddress(e.detail.address)}
         />
       </div>
     </div>
@@ -177,9 +184,19 @@
               <Label for="item">Nama Barang</Label>
             {/if}
             <Select
-              items={formattedItems}
-              bind:value={$form.items[i]}
+              {items}
+              label="name"
+              itemId="id"
+              value={$form.items[i]}
+              on:change={(e) => {
+                $form.items[i] = e.detail
+              }}
               class="svelte-select"
+              on:clear={(e) => {
+                $form.items = $form.items.filter(
+                  (item) => item.id !== e.detail.id
+                )
+              }}
             />
           </div>
 
@@ -234,8 +251,7 @@
   </div>
 
   <div class="flex justify-end gap-4">
-    <!-- TODO onclick -->
-    <Button variant="secondary">Tambah Barang</Button>
+    <Button variant="secondary" onclick={addItem}>Tambah Barang</Button>
 
     <AlertDialog.Root>
       <AlertDialog.Trigger><Button>{submitText}</Button></AlertDialog.Trigger>
