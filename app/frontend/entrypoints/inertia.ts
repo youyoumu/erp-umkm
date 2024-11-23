@@ -19,7 +19,10 @@ createInertiaApp({
       eager: true,
     })
     const page = pages[`../pages/${name}.svelte`]
-    return { default: page.default, layout: page.layout || LayoutNav }
+    return {
+      default: page.default,
+      layout: name === 'Invoice/Print' ? undefined : page.layout || LayoutNav,
+    }
 
     // To use a default layout, import the Layout component
     // and use the following lines.

@@ -70,6 +70,7 @@ class InvoicesController < ApplicationController
 
   def download_invoice
     id = @invoice.id
+    puts "http://#{request.host_with_port}/invoices/#{id}/print"
     grover = Grover.new("http://#{request.host_with_port}/invoices/#{id}/print", width: 816, height: 528)
     pdf = grover.to_pdf
 

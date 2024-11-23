@@ -1,17 +1,17 @@
 <script lang="ts">
   import { formatIDR } from '$lib/utils'
+  import type { Item } from '$types/typelizer'
   import dayjs from 'dayjs'
-  import { onMount } from 'svelte'
 
-  let { invoice, items, customer } = $props()
+  let { invoice } = $props()
 
-  const grandTotal = items.reduce(
-    (acc, item) => acc + item.selling_price * item.quantity,
+  const grandTotal = invoice.items.reduce(
+    (acc: number, item: Item) => acc + item.selling_price * item.quantity,
     0
   )
 
-  onMount(() => {
-    // window.print()
+  $effect(() => {
+    window.print()
   })
 </script>
 
@@ -29,7 +29,9 @@
     <div class="mb-1">KEPADA Yth:</div>
     <div class="mb-4 flex justify-between gap-4 ps-4">
       <div class="w-full border-e border-black pe-4">
-        <div class="mb-1 underline">{customer ? customer.name : ''}</div>
+        <div class="mb-1 underline">
+          {invoice.customer ? invoice.customer.name : ''}
+        </div>
         <div>{invoice.address}</div>
       </div>
       <div class="flex w-[410px] flex-col">
@@ -55,7 +57,7 @@
           </tr>
         </thead>
         <tbody>
-          {#each items as item (item.id)}
+          {#each invoice.items as item (item.id)}
             <tr>
               <td class="border border-black ps-1">{item.name}</td>
               <td class="border border-black ps-1">{item.quantity}</td>
