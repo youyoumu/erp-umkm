@@ -49,7 +49,8 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    if @invoice.update(invoice_params)
+    @invoice.update_from_params(invoice_params)
+    if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully updated."
     else
       redirect_to edit_invoice_url(@invoice), inertia: {errors: @invoice.errors}
