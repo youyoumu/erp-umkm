@@ -92,7 +92,7 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice)
-      .permit(:date, :address, :code, customer: [:id], items: [:id, :quantity, :quantity_unit, :selling_price])
+    params.expect(invoice:
+    [:date, :address, :code, customer: [:id], items: [[:id, :quantity, :quantity_unit, :selling_price]]])
   end
 end
