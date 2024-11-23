@@ -29,5 +29,6 @@ export type InvoiceForm = {
     quantity: number
     quantity_unit: string
     selling_price: number
+    key?: string
   }[]
 }

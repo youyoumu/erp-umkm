@@ -8,6 +8,7 @@
     parseDate,
     today,
   } from '@internationalized/date'
+  import { X } from 'lucide-svelte'
   import CalendarIcon from 'lucide-svelte/icons/calendar'
 
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
@@ -24,6 +25,7 @@
   import type { Customer, Invoice, Item } from '$types/typelizer'
   import type { InertiaForm } from '@inertiajs/svelte'
   import { page } from '@inertiajs/svelte'
+  import { nanoid } from 'nanoid'
 
   const df = new DateFormatter('id-ID', {
     dateStyle: 'long',
@@ -96,6 +98,7 @@
         quantity: 0,
         quantity_unit: '',
         selling_price: 0,
+        key: nanoid(),
       },
     ]
   }
@@ -107,6 +110,8 @@
   if ($page.url === '/invoices/new') {
     addItem()
   }
+
+  $inspect($form.items)
 </script>
 
 <form
@@ -151,7 +156,7 @@
       </div>
       <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="code">Kode Nota</Label>
-        <Input id="code" bind:value={$form.code} />
+        <Input id="code" bind:value={$form.code} placeholder="Kode Nota" />
       </div>
       <div class="flex w-full flex-col items-start justify-between gap-2">
         <Label for="customer">Pembeli</Label>
@@ -159,10 +164,15 @@
           items={customers}
           label="name"
           itemId="id"
-          bind:value={$form.customer}
           class="svelte-select"
-          on:change={(e) => updateAddress(e.detail.address)}
-        />
+          on:change={(e) => {
+            $form.customer = e.detail
+            updateAddress(e.detail.address)
+          }}
+          placeholder="Pilih Pembeli"
+        >
+          <X slot="clear-icon" class="cursor-pointer" />
+        </Select>
       </div>
     </div>
 
@@ -178,28 +188,38 @@
   </div>
 
   <div class="flex flex-col gap-2 py-4">
-    {#each $form.items as item, i (i)}
+    {#each $form.items as item, i (item.key)}
       {#if $form.items[i]}
         <div class="flex gap-2">
           <div class="flex grow flex-col items-center justify-center gap-2">
             {#if i === 0}
               <Label for="item">Nama Barang</Label>
             {/if}
-            <Select
-              {items}
-              label="name"
-              itemId="id"
-              value={$form.items[i]}
-              on:change={(e) => {
-                $form.items[i] = e.detail
-              }}
-              class="svelte-select"
-              on:clear={(e) => {
-                $form.items = $form.items.filter(
-                  (item) => item.id !== e.detail.id
-                )
-              }}
-            />
+            <div class="w-full relative">
+              <Select
+                {items}
+                label="name"
+                itemId="id"
+                on:change={(e) => {
+                  e.detail.key = item.key
+                  $form.items[i] = e.detail
+                }}
+                class={'svelte-select '}
+                on:clear={() => {
+                  $form.items.splice(i, 1)
+                  $form.items = $form.items
+                }}
+                clearable={false}
+                placeholder="Pilih Barang"
+              />
+              <X
+                class="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"
+                onclick={() => {
+                  $form.items.splice(i, 1)
+                  $form.items = $form.items
+                }}
+              />
+            </div>
           </div>
 
           <div class="flex max-w-32 flex-col items-center justify-center gap-2">
