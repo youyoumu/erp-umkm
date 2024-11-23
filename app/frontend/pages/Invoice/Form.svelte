@@ -80,7 +80,9 @@
     customer: invoice.customer || {
       id: 0,
     },
-    items: invoice.items,
+    items: invoice.items.map((item) => {
+      return { ...item, key: nanoid() }
+    }),
   })
 
   let grandTotal = $derived(
@@ -165,6 +167,7 @@
           label="name"
           itemId="id"
           class="svelte-select"
+          value={$form.customer.id ? $form.customer : null}
           on:change={(e) => {
             $form.customer = e.detail
             updateAddress(e.detail.address)
@@ -207,10 +210,7 @@
                   $form.items[i] = e.detail
                 }}
                 class={'svelte-select '}
-                on:clear={() => {
-                  $form.items.splice(i, 1)
-                  $form.items = $form.items
-                }}
+                value={$form.items[i].id ? $form.items[i] : null}
                 clearable={false}
                 placeholder="Pilih Barang"
                 --font-size="14px"
