@@ -22,8 +22,6 @@
     flash: any
   } = $props()
 
-  $inspect(invoices)
-
   let gridContainer = $state<HTMLDivElement>()
   const gridOptions: GridOptions<Invoice & { total: string }> = {
     columnDefs: [

@@ -107,8 +107,6 @@
   if ($page.url === '/invoices/new') {
     addItem()
   }
-
-  $inspect($form)
 </script>
 
 <form
