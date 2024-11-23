@@ -33,9 +33,15 @@
   {/if}
 
   <a
+    href={`/invoices/${invoice.id}/print`}
+    target="_blank"
+    class="absolute right-12 top-8 cursor-pointer rounded-full border border-slate-300 bg-green-200 p-2 shadow-sm"
+    ><Printer /></a
+  >
+  <a
     href={`/invoices/${invoice.id}/display_invoice`}
     target="_blank"
-    class="absolute right-0 top-8 cursor-pointer rounded-full border border-slate-300 bg-slate-200 p-2 shadow-sm"
+    class="absolute right-0 top-8 cursor-pointer rounded-full border border-slate-300 bg-blue-200 p-2 shadow-sm"
     ><Printer /></a
   >
 
