@@ -1,8 +1,21 @@
 class Invoice < ApplicationRecord
-  attribute :address, :string, default: ""
   has_many :invoice_items, dependent: :destroy
   has_many :items, through: :invoice_items
   belongs_to :customer, optional: true
+
+  attribute :date, :date, default: Date.today
+  validates :date, presence: true
+  validates_each :date do |record, attr, value|
+    Time.parse(value.to_s) if value.present?
+  rescue ArgumentError
+    record.errors.add(attr, "must be a valid date")
+  end
+
+  attribute :code, :string, default: ""
+  validates :code, length: {maximum: 255}
+
+  attribute :address, :string, default: ""
+  validates :address, length: {maximum: 65535}, allow_blank: true
 
   def self.create_from_params(invoice_params)
     new.tap do |invoice|
@@ -22,8 +35,6 @@ class Invoice < ApplicationRecord
 
     def parse_date(date_string)
       Time.parse(date_string)
-    rescue ArgumentError
-      Time.now
     end
 
     def generate_code(code)
@@ -50,7 +61,6 @@ class Invoice < ApplicationRecord
         snapshot.quantity = details[:quantity]
         snapshot.quantity_unit = details[:quantity_unit]
         snapshot.selling_price = details[:selling_price]
-        snapshot.save!
       end
     end
   end

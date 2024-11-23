@@ -5,9 +5,8 @@
   import {
     DateFormatter,
     getLocalTimeZone,
-    now,
-    parseAbsoluteToLocal,
-    parseZonedDateTime,
+    parseDate,
+    today,
   } from '@internationalized/date'
   import CalendarIcon from 'lucide-svelte/icons/calendar'
 
@@ -72,8 +71,8 @@
 
   const form = useForm<InvoiceForm>({
     date: invoice.date
-      ? parseAbsoluteToLocal(invoice.date).toString()
-      : now(getLocalTimeZone()).toString(),
+      ? parseDate(invoice.date).toString()
+      : today(getLocalTimeZone()).toString(),
     code: invoice.code || '',
     address: invoice.address || '',
     customer: invoice.customer || {
@@ -136,13 +135,13 @@
                 {...props}
               >
                 <CalendarIcon class="mr-2 size-4" />
-                {df.format(parseZonedDateTime($form.date).toDate())}
+                {df.format(parseDate($form.date).toDate(getLocalTimeZone()))}
               </Button>
             {/snippet}
           </Popover.Trigger>
           <Popover.Content class="w-auto p-0">
             <Calendar
-              value={parseZonedDateTime($form.date)}
+              value={parseDate($form.date)}
               onValueChange={(v) => {
                 $form.date = v!.toString()
               }}
