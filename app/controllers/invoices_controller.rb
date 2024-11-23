@@ -40,7 +40,8 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.create_from_params(invoice_params)
+    @invoice = Invoice.new
+    @invoice.update_from_params(invoice_params)
     if @invoice.save
       redirect_to @invoice, notice: "Invoice was successfully created."
     else

@@ -17,24 +17,12 @@ class Invoice < ApplicationRecord
   attribute :address, :string, default: ""
   validates :address, length: {maximum: 65535}, allow_blank: true
 
-  def self.create_from_params(invoice_params)
-    new.tap do |invoice|
-      invoice.assign_attributes(
-        date: parse_date(invoice_params[:date]),
-        code: generate_code(invoice_params[:code]),
-        address: invoice_params[:address],
-        customer: find_customer(invoice_params[:customer])
-      )
-      invoice.items = create_item_snapshots(invoice_params[:items])
-    end
-  end
-
   def update_from_params(invoice_params)
     assign_attributes(
       date: parse_date(invoice_params[:date]),
       code: generate_code(invoice_params[:code]),
       address: invoice_params[:address],
-      customer: find_customer(invoice_params[:customer])
+      customer: find_customer(invoice_params[:customer][:id])
     )
     self.items = create_item_snapshots(invoice_params[:items])
   end

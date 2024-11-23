@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   inertia_share flash: -> { flash.to_hash }
 
   def index
-    @items = Item.all.where(is_snapshot: false || nil)
+    @items = Item.all.where(is_snapshot: false)
     render inertia: "Item/Index", props: {
       items: ItemSerializer.new(@items).to_h
     }

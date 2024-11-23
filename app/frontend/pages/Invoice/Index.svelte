@@ -51,10 +51,10 @@
           })
         }),
         getQuickFilterText: (params) => {
-          return params.data.customer.name ?? ''
+          return params.data.customer?.name ?? ''
         },
         valueGetter: (params) => {
-          return params.data ? params.data.customer.name : ''
+          return params.data ? params.data.customer?.name : ''
         },
       },
       { field: 'total', headerName: 'Total', width: 135 },
