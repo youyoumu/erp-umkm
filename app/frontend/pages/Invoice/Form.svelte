@@ -170,6 +170,8 @@
             updateAddress(e.detail.address)
           }}
           placeholder="Pilih Pembeli"
+          --font-size="14px"
+          --border="1px solid rgb(226, 232, 240)"
         >
           <X slot="clear-icon" class="cursor-pointer" />
         </Select>
@@ -211,6 +213,8 @@
                 }}
                 clearable={false}
                 placeholder="Pilih Barang"
+                --font-size="14px"
+                --border="1px solid rgb(226, 232, 240)"
               />
               <X
                 class="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"
@@ -302,9 +306,3 @@
     </AlertDialog.Root>
   </div>
 </form>
-
-<style>
-  :global(.svelte-select) {
-    border: 1px solid rgb(226, 232, 240) !important;
-  }
-</style>
