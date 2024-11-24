@@ -1,5 +1,6 @@
 <script>
   import { page } from "@inertiajs/svelte";
+
   import NavLink from "./NavLink.svelte";
 
   let { children } = $props();

@@ -1,4 +1,5 @@
 import pluginJs from '@eslint/js'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginSvelte from 'eslint-plugin-svelte'
 import globals from 'globals'
 import svelteParser from 'svelte-eslint-parser'
@@ -9,6 +10,11 @@ export default [
   { files: ['**/*.{js,mjs,cjs,ts}'] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
+  {
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+  },
   {
     files: ['**/*.svelte', '*.svelte'],
     languageOptions: {
@@ -23,6 +29,8 @@ export default [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
     },
   },
   {

@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { InertiaForm } from '@inertiajs/svelte'
+
   import type { CustomerForm } from '$types/formTypes'
   import type { Customer } from '$types/typelizer'
-  import type { InertiaForm } from '@inertiajs/svelte'
+
   import Form from './Form.svelte'
 
   let { customer }: { customer: Customer } = $props()

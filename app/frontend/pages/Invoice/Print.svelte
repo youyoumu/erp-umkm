@@ -1,7 +1,8 @@
 <script lang="ts">
+  import dayjs from 'dayjs'
+
   import { formatIDR } from '$lib/utils'
   import type { Item } from '$types/typelizer'
-  import dayjs from 'dayjs'
 
   let { invoice } = $props()
 

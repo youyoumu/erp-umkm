@@ -1,9 +1,11 @@
 <script lang="ts">
+  import type { InertiaForm } from '@inertiajs/svelte'
+  import { Link } from '@inertiajs/svelte'
+
   import Button from '$lib/components/ui/button/button.svelte'
   import type { CustomerForm } from '$types/formTypes'
   import type { Customer } from '$types/typelizer'
-  import type { InertiaForm } from '@inertiajs/svelte'
-  import { Link } from '@inertiajs/svelte'
+
   import Form from './Form.svelte'
 
   let {

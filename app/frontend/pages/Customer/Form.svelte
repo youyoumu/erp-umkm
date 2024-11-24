@@ -1,4 +1,7 @@
 <script lang="ts">
+  import type { InertiaForm } from '@inertiajs/svelte'
+  import { useForm } from '@inertiajs/svelte'
+
   import Errors from '$lib/components/Errors.svelte'
   import FormField from '$lib/components/FormField.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -7,8 +10,6 @@
   import Textarea from '$lib/components/ui/textarea/textarea.svelte'
   import type { CustomerForm } from '$types/formTypes'
   import type { Customer } from '$types/typelizer'
-  import type { InertiaForm } from '@inertiajs/svelte'
-  import { useForm } from '@inertiajs/svelte'
 
   let {
     customer,

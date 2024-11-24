@@ -1,6 +1,7 @@
-import LayoutNav from '$lib/components/LayoutNav.svelte'
 import { createInertiaApp, type ResolvedComponent } from '@inertiajs/svelte'
 import { hydrate, mount } from 'svelte'
+
+import LayoutNav from '$lib/components/LayoutNav.svelte'
 
 createInertiaApp({
   // Set default page title

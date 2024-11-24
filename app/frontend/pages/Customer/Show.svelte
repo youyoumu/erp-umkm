@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { inertia, router } from '@inertiajs/svelte'
+
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
   import type { Customer } from '$types/typelizer'
-  import { inertia, router } from '@inertiajs/svelte'
+
   import CustomerDetail from './components/CustomerDetail.svelte'
 
   let {

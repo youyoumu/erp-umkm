@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { inertia,Link } from '@inertiajs/svelte'
+
   import Button from '$lib/components/ui/button/button.svelte'
   import type { Customer } from '$types/typelizer'
-  import { Link, inertia } from '@inertiajs/svelte'
   let {
     customers,
     flash,

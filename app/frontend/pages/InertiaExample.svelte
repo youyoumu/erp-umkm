@@ -1,6 +1,6 @@
 <script lang="ts">
-  import svelteSvg from '/assets/svelte.svg'
   import inertiaSvg from '/assets/inertia.svg'
+  import svelteSvg from '/assets/svelte.svg'
   import viteRubySvg from '/assets/vite_ruby.svg'
 
   let { name }: { name: string } = $props()

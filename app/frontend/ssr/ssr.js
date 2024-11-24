@@ -1,7 +1,8 @@
-import LayoutNav from '$lib/components/LayoutNav.svelte'
 import { createInertiaApp } from '@inertiajs/svelte'
 import createServer from '@inertiajs/svelte/server'
 import { render } from 'svelte/server'
+
+import LayoutNav from '$lib/components/LayoutNav.svelte'
 
 createServer((page) =>
   createInertiaApp({
