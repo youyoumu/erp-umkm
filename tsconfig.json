@@ -22,7 +22,8 @@
       "$types": ["./app/frontend/types"],
       "$types/*": ["./app/frontend/types/*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowArbitraryExtensions": true
   },
   "include": [
     "app/frontend/**/*.ts",

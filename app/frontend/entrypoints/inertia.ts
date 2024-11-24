@@ -13,7 +13,7 @@ createInertiaApp({
   // see https://inertia-rails.netlify.app/guide/progress-indicators
   // progress: false,
 
-  // @ts-ignore https://github.com/inertiajs/inertia/issues/1770
+  // @ts-expect-error https://github.com/inertiajs/inertia/issues/1770
   resolve: (name) => {
     const pages = import.meta.glob<ResolvedComponent>('../pages/**/*.svelte', {
       eager: true,

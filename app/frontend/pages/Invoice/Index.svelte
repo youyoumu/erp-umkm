@@ -4,7 +4,7 @@
   import Input from '$lib/components/ui/input/input.svelte'
   import { cn, formatIDR } from '$lib/utils'
   import type { Invoice } from '$types/typelizer'
-  import { Link, inertia } from '@inertiajs/svelte'
+  import { inertia } from '@inertiajs/svelte'
   import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
   import 'ag-grid-community/styles/ag-grid.css'
