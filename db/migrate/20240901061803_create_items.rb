@@ -9,6 +9,7 @@ class CreateItems < ActiveRecord::Migration[7.2]
       t.string :code
       t.string :category
       t.boolean :is_snapshot
+      t.integer :source_id
       t.float :quantity
       t.string :quantity_unit
       t.string :tag

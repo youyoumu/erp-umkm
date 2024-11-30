@@ -47,6 +47,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_09_01_090601) do
     t.string "code"
     t.string "category"
     t.boolean "is_snapshot"
+    t.integer "source_id"
     t.float "quantity"
     t.string "quantity_unit"
     t.string "tag"
