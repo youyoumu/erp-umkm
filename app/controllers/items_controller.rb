@@ -12,7 +12,8 @@ class ItemsController < ApplicationController
 
   def show
     render inertia: "Item/Show", props: {
-      item: ItemSerializer.new(@item).to_h
+      item: ItemSerializer.new(@item).to_h,
+      sold_snapshots_grouped_by_quantity_unit: @item.sold_snapshots_grouped_by_quantity_unit
     }
   end
 

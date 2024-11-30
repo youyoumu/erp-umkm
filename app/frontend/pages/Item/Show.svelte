@@ -10,10 +10,14 @@
   let {
     item,
     flash,
+    sold_snapshots_grouped_by_quantity_unit,
   }: {
     item: Item
     flash: any
+    sold_snapshots_grouped_by_quantity_unit: Record<string, Item[]>
   } = $props()
+
+  $inspect(sold_snapshots_grouped_by_quantity_unit)
 
   const onDestroy = () => {
     router.delete(`/items/${item.id}`)
