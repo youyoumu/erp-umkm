@@ -35,8 +35,8 @@ end
   puts "customer: #{customer.name}"
 end
 
+quantity_unit_options = ["kg", "pcs"]
 10.times do
-  quantity_unit_options = ["kg", "pcs"]
   items = []
   8.times do
     item = {id: rand(1..10), quantity: rand(1..2),

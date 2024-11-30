@@ -37,8 +37,8 @@ class Item < ApplicationRecord
   attribute :source_id, :integer, default: 0
   validates :source_id, numericality: {greater_than_or_equal_to: 0}
 
-  def get_snapshots_grouped_by_quantity_unit
-    snapshots = Item.where(is_snapshot: true, source_id: id)
+  def get_active_snapshots_grouped_by_quantity_unit
+    snapshots = Invoice.all.map(&:items).flatten.select { |item| item.source_id == id }
     snapshots.group_by(&:quantity_unit)
   end
 end
