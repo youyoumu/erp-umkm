@@ -19,13 +19,8 @@
           from_line: 2,
         },
         (err, data) => {
-          try {
-            if (err) throw err
-            importCSVItems(data)
-          } catch (error) {
-            // TODO: show toast
-            console.log(error, err)
-          }
+          if (err) return console.log(err)
+          importCSVItems(data)
         }
       )
     }

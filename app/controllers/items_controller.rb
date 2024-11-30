@@ -5,9 +5,14 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.where(is_snapshot: false)
-    render inertia: "Item/Index", props: {
-      items: ItemSerializer.new(@items).to_h
-    }
+    respond_to do |format|
+      format.html {
+        render inertia: "Item/Index", props: {
+          items: ItemSerializer.new(@items).to_h
+        }
+      }
+      format.json { render json: @items }
+    end
   end
 
   def show
@@ -32,10 +37,14 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    if @item.save
-      redirect_to @item, notice: "Item was successfully created."
-    else
-      redirect_to new_item_url, inertia: {errors: @item.errors}
+    respond_to do |format|
+      if @item.save
+        format.html { redirect_to @item, notice: "Item was successfully created." }
+        format.json { render json: @item }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
     end
   end
 

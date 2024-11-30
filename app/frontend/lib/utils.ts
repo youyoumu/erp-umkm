@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
+import Cookies from 'js-cookie'
 import { twMerge } from 'tailwind-merge'
+import wretch from 'wretch'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -14,3 +16,11 @@ export function formatIDR(amount: number | null) {
     maximumFractionDigits: 0,
   }).format(amount)
 }
+
+const w = wretch().headers({
+  'X-CSRF-TOKEN': Cookies.get('XSRF-TOKEN') || '',
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+})
+
+export { w }
