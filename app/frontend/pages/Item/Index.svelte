@@ -14,6 +14,7 @@
   import { cn, formatIDR } from '$lib/utils'
   import type { Item } from '$types/typelizer'
 
+  import CsvInputButton from './components/CSVInputButton.svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
 
   let {
@@ -91,7 +92,10 @@
 
   <div class="mb-8 flex items-center justify-between">
     <h1 class="text-4xl font-bold">Daftar Barang</h1>
-    <Link href="/items/new"><Button>Barang Baru</Button></Link>
+    <div class="flex gap-2">
+      <CsvInputButton />
+      <Link href="/items/new"><Button>Barang Baru</Button></Link>
+    </div>
   </div>
   <Input
     oninput={(e) => handleSearch(e.currentTarget.value)}
