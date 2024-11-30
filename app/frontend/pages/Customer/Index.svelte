@@ -5,6 +5,7 @@
   import { Link } from '@inertiajs/svelte'
   import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
+  import dayjs from 'dayjs'
   import { mount } from 'svelte'
 
   import { cellRendererFactory } from '$lib/cellRendererFactory'
@@ -53,12 +54,17 @@
         },
         {
           field: 'updated_at',
-          width: 150,
+          width: 115,
           headerName: 'Terakhir Diubah',
           wrapHeaderText: true,
         },
       ],
-      rowData: customers,
+      rowData: customers.map((customer) => {
+        return {
+          ...customer,
+          updated_at: dayjs(customer.updated_at).format('DD MMM YY'),
+        }
+      }),
     }
 
     gridApi = createGrid(el, gridOptions)

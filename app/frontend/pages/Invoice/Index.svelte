@@ -71,7 +71,7 @@
       }, 0)
       return {
         ...invoice,
-        date: dayjs(invoice.date).format('DD/MMM/YY'),
+        date: dayjs(invoice.date).format('DD MMM YY'),
         total: formatIDR(total),
       }
     }),

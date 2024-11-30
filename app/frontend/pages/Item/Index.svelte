@@ -57,7 +57,7 @@
       return {
         ...item,
         selling_price_IDR: formatIDR(item.selling_price),
-        updated_at: dayjs(item.updated_at).format('DD/MMM/YY'),
+        updated_at: dayjs(item.updated_at).format('DD MMM YY'),
       }
     }),
   }
