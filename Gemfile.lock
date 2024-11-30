@@ -131,7 +131,7 @@ GEM
       nokogiri (~> 1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    inertia_rails (3.4.0)
+    inertia_rails (3.5.0)
       railties (>= 6)
     inertia_rails-contrib (0.3.0)
       inertia_rails
@@ -169,7 +169,7 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.2)
     msgpack (1.7.5)
     net-imap (0.5.1)
       date
@@ -258,10 +258,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.7.0)
+    rdoc (6.8.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
-    reline (0.5.11)
+    reline (0.5.12)
       io-console (~> 0.5)
     rexml (3.3.9)
     rubocop (1.68.0)
@@ -403,7 +403,7 @@ DEPENDENCIES
   debug
   faker
   grover
-  inertia_rails (~> 3.4)
+  inertia_rails (~> 3.5)
   inertia_rails-contrib (~> 0.3.0)
   jbuilder
   kamal
