@@ -2,6 +2,8 @@
   import { parse } from 'csv-parse/browser/esm'
   import { Table } from 'lucide-svelte'
 
+  import importCSVItems from '../utils/importCSVItems'
+
   function handleFileInput(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0]
     if (!file) return
@@ -17,7 +19,13 @@
           from_line: 2,
         },
         (err, data) => {
-          console.log(data)
+          try {
+            if (err) throw err
+            importCSVItems(data)
+          } catch (error) {
+            // TODO: show toast
+            console.log(error, err)
+          }
         }
       )
     }
