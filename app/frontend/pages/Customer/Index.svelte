@@ -9,6 +9,7 @@
 
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
+  import Input from '$lib/components/ui/input/input.svelte'
   import type { Customer } from '$types/typelizer'
 
   import CustomerDetailLink from './components/CustomerDetailLink.svelte'
@@ -20,6 +21,8 @@
     customers: Customer[]
     flash: any
   } = $props()
+
+  let gridApi: ReturnType<typeof createGrid<Customer>>
 
   function agGrid(el: HTMLElement) {
     const gridOptions: GridOptions<Customer> = {
@@ -58,7 +61,11 @@
       rowData: customers,
     }
 
-    createGrid(el, gridOptions)
+    gridApi = createGrid(el, gridOptions)
+  }
+
+  function handleAgGridSearch(text: string) {
+    gridApi.setGridOption('quickFilterText', text)
   }
 </script>
 
@@ -80,5 +87,10 @@
     <Link href="/customers/new"><Button>Pembeli Baru</Button></Link>
   </div>
 
+  <Input
+    oninput={(e) => handleAgGridSearch(e.currentTarget.value)}
+    placeholder="Cari Pembeli"
+    class="mb-4"
+  />
   <div use:agGrid class="h-[60svh] w-full ag-theme-quartz"></div>
 </div>
