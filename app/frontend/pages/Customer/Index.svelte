@@ -5,9 +5,13 @@
   import { Link } from '@inertiajs/svelte'
   import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
+  import { mount } from 'svelte'
 
+  import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
   import type { Customer } from '$types/typelizer'
+
+  import CustomerDetailLink from './components/CustomerDetailLink.svelte'
 
   let {
     customers,
@@ -25,6 +29,30 @@
           headerName: 'Nama',
           flex: 1,
           width: 70,
+          cellRenderer: cellRendererFactory((c, p) => {
+            mount(CustomerDetailLink, {
+              target: c.getGui(),
+              props: { customer: p.data },
+            })
+          }),
+        },
+        {
+          field: 'contact',
+          width: 150,
+          headerName: 'Kontak',
+          wrapHeaderText: true,
+        },
+        {
+          field: 'address',
+          width: 200,
+          headerName: 'Alamat',
+          wrapHeaderText: true,
+        },
+        {
+          field: 'updated_at',
+          width: 150,
+          headerName: 'Terakhir Diubah',
+          wrapHeaderText: true,
         },
       ],
       rowData: customers,
