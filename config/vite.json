@@ -1,0 +1,24 @@
+{
+  "all": {
+    "sourceCodeDir": "app/frontend",
+    "watchAdditionalPaths": []
+  },
+  "development": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-dev",
+    "port": 3036,
+    "ssrBuildEnabled": true
+  },
+  "test": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-test",
+    "ssrBuildEnabled": true,
+    "port": 3037
+  },
+  "production": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-production",
+    "port": 3038,
+    "ssrBuildEnabled": true
+  }
+}
