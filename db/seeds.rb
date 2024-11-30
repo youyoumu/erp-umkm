@@ -9,11 +9,11 @@
 #   end
 require "faker"
 
-50.times do
+10.times do
   item = Item.create!(
     name: Faker::Commerce.product_name,
-    cost_price: Faker::Commerce.price(range: 10000..100000),
-    selling_price: Faker::Commerce.price(range: 10000..100000),
+    cost_price: Faker::Commerce.price(range: 1..10),
+    selling_price: Faker::Commerce.price(range: 1..10),
     stock: Faker::Number.between(from: 1, to: 500),
     code: Faker::Code.asin,
     category: Faker::Commerce.department,
@@ -35,10 +35,13 @@ end
   puts "customer: #{customer.name}"
 end
 
-50.times do
+10.times do
+  quantity_unit_options = ["kg", "pcs"]
   items = []
   8.times do
-    item = {id: rand(1..50), quantity: rand(1..10), quantity_unit: "pcs", selling_price: rand(10000..100000)}
+    item = {id: rand(1..10), quantity: rand(1..2),
+            quantity_unit: quantity_unit_options[rand(0..1)],
+            selling_price: rand(1..10)}
     items << item
   end
 

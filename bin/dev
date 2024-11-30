@@ -4,7 +4,7 @@ export PORT="${PORT:-3000}"
 
 if command -v overmind 1> /dev/null 2>&1
 then
-  overmind start -D -f Procfile.dev "$@"
+  overmind start -f Procfile.dev "$@"
   exit $?
 fi
 
