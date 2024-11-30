@@ -30,6 +30,9 @@ class Invoice < ApplicationRecord
   private
 
   def parse_date(date_string)
+    unless date_string.present?
+      return Time.now
+    end
     Time.parse(date_string)
   end
 
