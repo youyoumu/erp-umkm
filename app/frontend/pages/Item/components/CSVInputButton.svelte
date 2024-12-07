@@ -3,7 +3,6 @@
   import { Table } from 'lucide-svelte'
 
   import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
-  import Button from '$lib/components/ui/button/button.svelte'
 
   import importCSVItems from '../utils/importCSVItems'
 
@@ -11,7 +10,7 @@
   let alertTitle = $state('')
   let alertDescription = $state('')
   let csvData = $state<Record<string, string>[]>([])
-  let isError = $state(false)
+  let isShowOk = $state(false)
 
   function handleFileInput(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0]
@@ -31,7 +30,7 @@
           if (err) {
             alertTitle = 'Tidak dapat membaca CSV'
             alertDescription = err.message.slice(0, 100)
-            isError = true
+            isShowOk = true
             isOpen = true
             return
           }
@@ -39,7 +38,7 @@
           alertTitle = 'Import CSV?'
           alertDescription = ''
           csvData = data
-          isError = false
+          isShowOk = false
           isOpen = true
         }
       )
@@ -87,13 +86,30 @@
       </AlertDialog.Description>
     </AlertDialog.Header>
     <AlertDialog.Footer>
-      {#if isError}
+      {#if isShowOk}
         <AlertDialog.Cancel class="bg-primary text-primary-foreground">
           Ok
         </AlertDialog.Cancel>
       {:else}
         <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
-        <AlertDialog.Action>Import</AlertDialog.Action>
+        <AlertDialog.Action
+          onclick={async () => {
+            try {
+              isOpen = false
+              // @ts-expect-error the template might be wrong
+              await importCSVItems(csvData)
+              alertTitle = 'Import selesai'
+              csvData = []
+              isShowOk = true
+              isOpen = true
+            } catch (error) {
+              console.log(error)
+              isOpen = true
+              alertTitle = 'Import bermasalah'
+              isShowOk = true
+            }
+          }}>Import</AlertDialog.Action
+        >
       {/if}
     </AlertDialog.Footer>
   </AlertDialog.Content>
