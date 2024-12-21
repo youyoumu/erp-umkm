@@ -1,7 +1,7 @@
 <script lang="ts">
   import { inertia, router } from '@inertiajs/svelte'
 
-  import * as AlertDialog from '$lib/components/ui/alert-dialog'
+  import DeleteItemDialog from '$lib/components/DeleteItemDialog.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
   import type { Item } from '$types/typelizer'
 
@@ -31,6 +31,10 @@
     {items.reduce((total, item) => total + item.quantity, 0)}
     {quantity_unit}
   </div>
+{/snippet}
+
+{#snippet trigger()}
+  <Button variant="destructive">Hapus</Button>
 {/snippet}
 
 <div class="mx-auto max-w-screen-sm p-8">
@@ -71,28 +75,7 @@
       <a href={`/items/${item.id}/edit`} use:inertia
         ><Button variant="secondary">Edit</Button></a
       >
-      <AlertDialog.Root>
-        <AlertDialog.Trigger
-          ><Button variant="destructive">Hapus</Button></AlertDialog.Trigger
-        >
-        <AlertDialog.Content>
-          <AlertDialog.Header>
-            <AlertDialog.Title
-              >Apakah kamu yakin ingin menghapus barang ini?</AlertDialog.Title
-            >
-            <AlertDialog.Description>
-              <!-- This action cannot be undone. This will permanently delete your account and remove your data from our servers. -->
-            </AlertDialog.Description>
-          </AlertDialog.Header>
-          <AlertDialog.Footer>
-            <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
-            <AlertDialog.Action
-              onclick={onDestroy}
-              class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action
-            >
-          </AlertDialog.Footer>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
+      <DeleteItemDialog {item} {trigger} />
     </div>
   </div>
 </div>

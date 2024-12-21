@@ -28,6 +28,7 @@ export default [
   ...eslintPluginSvelte.configs['flat/recommended'],
   {
     rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
