@@ -1,8 +1,12 @@
 <script lang="ts">
+  import { generate } from 'csv-generate/browser/esm'
   import { Table } from 'lucide-svelte'
 
   import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
   import { Button } from '$lib/components/ui/button'
+  import type { Item } from '$types/typelizer'
+
+  let { items } = $props<{ items: Item[] }>()
 </script>
 
 <AlertDialog.Root>
