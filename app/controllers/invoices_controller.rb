@@ -19,7 +19,7 @@ class InvoicesController < ApplicationController
   end
 
   def new
-    @items = Item.all.where(is_snapshot: false || nil)
+    @items = Item.all.where(is_snapshot: false)
     @customers = Customer.all
     @invoice = Invoice.new
     render inertia: "Invoice/New", props: {
