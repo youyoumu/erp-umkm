@@ -33,7 +33,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      redirect_to @customer, notice: "Customer was successfully created."
+      redirect_to @customer, notice: "Pembeli berhasil dibuat."
     else
       redirect_to new_customer_url, inertia: {errors: @customer.errors}
     end
@@ -41,7 +41,7 @@ class CustomersController < ApplicationController
 
   def update
     if @customer.update(customer_params)
-      redirect_to @customer, notice: "Customer was successfully updated."
+      redirect_to @customer, notice: "Pembeli berhasil diperbarui."
     else
       redirect_to edit_customer_url(@customer), inertia: {errors: @customer.errors}
     end
@@ -49,7 +49,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer.destroy!
-    redirect_to customers_url, notice: "Customer was successfully destroyed."
+    redirect_to customers_url, notice: "Pembeli berhasil dihapus."
   end
 
   private

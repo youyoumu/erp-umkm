@@ -43,7 +43,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new
     @invoice.update_from_params(invoice_params)
     if @invoice.save
-      redirect_to @invoice, notice: "Invoice was successfully created."
+      redirect_to @invoice, notice: "Nota berhasil dibuat."
     else
       redirect_to new_invoice_url, inertia: {errors: @invoice.errors}
     end
@@ -52,7 +52,7 @@ class InvoicesController < ApplicationController
   def update
     @invoice.update_from_params(invoice_params)
     if @invoice.save
-      redirect_to @invoice, notice: "Invoice was successfully updated."
+      redirect_to @invoice, notice: "Nota berhasil diperbarui."
     else
       redirect_to edit_invoice_url(@invoice), inertia: {errors: @invoice.errors}
     end
@@ -60,7 +60,7 @@ class InvoicesController < ApplicationController
 
   def destroy
     @invoice.destroy!
-    redirect_to invoices_url, notice: "Invoice was successfully destroyed."
+    redirect_to invoices_url, notice: "Nota berhasil dihapus."
   end
 
   def print

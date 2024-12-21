@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: "Item was successfully created." }
+        format.html { redirect_to @item, notice: "Barang berhasil dibuat." }
         format.json { render json: @item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      redirect_to @item, notice: "Item was successfully updated."
+      redirect_to @item, notice: "Barang berhasil diperbarui."
     else
       redirect_to edit_item_url(@item), inertia: {errors: @item.errors}
     end
@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy!
-    redirect_to items_url, notice: "Item was successfully destroyed."
+    redirect_to items_url, notice: "Barang berhasil dihapus."
   end
 
   private
