@@ -23,7 +23,7 @@
 <div class="mx-auto max-w-screen-sm p-8">
   <h1 class="text-4xl font-bold">Edit Barang</h1>
   <Form {item} submitText="Update Barang" onsubmit={handleSubmit} />
-  <Link href={`/items/${item.id}`}
-    ><Button variant="secondary">Lihat Barang</Button></Link
+  <Link href={`/items/${item.id}`} class="w-full block"
+    ><Button variant="secondary" class="w-full">Lihat Barang</Button></Link
   >
 </div>

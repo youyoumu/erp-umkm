@@ -29,7 +29,7 @@
 
   <Form {customer} submitText="Update Pembeli" onsubmit={handleSubmit} />
 
-  <Link href={`/customers/${customer.id}`}
-    ><Button variant="secondary">Lihat Pembeli</Button></Link
+  <Link href={`/customers/${customer.id}`} class="w-full block"
+    ><Button variant="secondary" class="w-full">Lihat Pembeli</Button></Link
   >
 </div>
