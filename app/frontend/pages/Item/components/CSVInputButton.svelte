@@ -6,11 +6,14 @@
 
   import importCSVItems from '../utils/importCSVItems'
 
-  let isOpen = $state(false)
-  let alertTitle = $state('')
-  let alertDescription = $state('')
+  let alertState = $state({
+    title: '',
+    description: '',
+    open: false,
+    onlyConfirm: false,
+  })
   let csvData = $state<Record<string, string>[]>([])
-  let isShowOk = $state(false)
+  let fileInput: HTMLInputElement
 
   function handleFileInput(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0]
@@ -28,24 +31,23 @@
         },
         (err, data) => {
           if (err) {
-            alertTitle = 'Tidak dapat membaca CSV'
-            alertDescription = err.message.slice(0, 100)
-            isShowOk = true
-            isOpen = true
+            alertState.title = 'Tidak dapat membaca CSV'
+            alertState.description = err.message.slice(0, 100)
+            alertState.open = true
+            alertState.onlyConfirm = true
             return
           }
 
-          alertTitle = 'Import CSV?'
-          alertDescription = ''
+          alertState.title = 'Import CSV?'
+          alertState.description = ''
+          alertState.open = true
+          alertState.onlyConfirm = false
+
           csvData = data
-          isShowOk = false
-          isOpen = true
         }
       )
     }
   }
-
-  $inspect(isOpen)
 </script>
 
 <label
@@ -61,19 +63,21 @@
   accept=".csv"
   class="hidden"
   onchange={handleFileInput}
+  bind:this={fileInput}
 />
 <AlertDialog.Root
-  open={isOpen}
+  open={alertState.open}
   onOpenChange={(open) => {
-    isOpen = open
+    alertState.open = open
     if (!open) csvData = []
+    fileInput.value = ''
   }}
 >
   <AlertDialog.Content>
     <AlertDialog.Header>
-      <AlertDialog.Title>{alertTitle}</AlertDialog.Title>
+      <AlertDialog.Title>{alertState.title}</AlertDialog.Title>
       <AlertDialog.Description>
-        <div>{alertDescription}</div>
+        <div>{alertState.description}</div>
         <div class="flex flex-col gap-2">
           {#each csvData.slice(0, 3) as row}
             <div>
@@ -86,7 +90,7 @@
       </AlertDialog.Description>
     </AlertDialog.Header>
     <AlertDialog.Footer>
-      {#if isShowOk}
+      {#if alertState.onlyConfirm}
         <AlertDialog.Cancel class="bg-primary text-primary-foreground">
           Ok
         </AlertDialog.Cancel>
@@ -95,18 +99,19 @@
         <AlertDialog.Action
           onclick={async () => {
             try {
-              isOpen = false
+              alertState.onlyConfirm = false
               // @ts-expect-error the template might be wrong
               await importCSVItems(csvData)
-              alertTitle = 'Import selesai'
+              alertState.title = 'Import selesai'
+              alertState.onlyConfirm = true
+              alertState.open = true
+
               csvData = []
-              isShowOk = true
-              isOpen = true
             } catch (error) {
-              console.log(error)
-              isOpen = true
-              alertTitle = 'Import bermasalah'
-              isShowOk = true
+              console.error(error)
+              alertState.title = 'Import bermasalah'
+              alertState.open = true
+              alertState.onlyConfirm = true
             }
           }}>Import</AlertDialog.Action
         >
