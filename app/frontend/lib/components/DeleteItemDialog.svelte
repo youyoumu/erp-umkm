@@ -27,7 +27,7 @@
       <AlertDialog.Cancel>Batal</AlertDialog.Cancel>
       <AlertDialog.Action
         onclick={onDestroy}
-        class="bg-red-600 hover:bg-red-700">Hapus</AlertDialog.Action
+        class="bg-destructive hover:bg-destructive/90">Hapus</AlertDialog.Action
       >
     </AlertDialog.Footer>
   </AlertDialog.Content>

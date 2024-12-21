@@ -15,6 +15,7 @@
   import type { Item } from '$types/typelizer'
 
   import CsvInputButton from './components/CSVInputButton.svelte'
+  import DeleteItemButton from './components/DeleteItemButton.svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
 
   let {
@@ -52,6 +53,17 @@
         width: 115,
         headerName: 'Terakhir Diubah',
         wrapHeaderText: true,
+      },
+      {
+        width: 80,
+        headerName: 'Hapus',
+        wrapHeaderText: true,
+        cellRenderer: cellRendererFactory((c, p) => {
+          mount(DeleteItemButton, {
+            target: c.getGui(),
+            props: { item: p.data },
+          })
+        }),
       },
     ],
     rowData: items.map((item) => {
