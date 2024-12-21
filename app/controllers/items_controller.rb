@@ -5,14 +5,9 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.where(is_snapshot: false)
-    respond_to do |format|
-      format.html {
-        render inertia: "Item/Index", props: {
-          items: ItemSerializer.new(@items).to_h
-        }
-      }
-      format.json { render json: @items }
-    end
+    render inertia: "Item/Index", props: {
+      items: ItemSerializer.new(@items).to_h
+    }
   end
 
   def show

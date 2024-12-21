@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { router } from '@inertiajs/svelte'
   import { parse } from 'csv-parse/browser/esm'
   import { Table } from 'lucide-svelte'
 
@@ -107,6 +108,9 @@
               alertState.open = true
 
               csvData = []
+              router.reload({
+                only: ['items'],
+              })
             } catch (error) {
               console.error(error)
               alertState.title = 'Import bermasalah'

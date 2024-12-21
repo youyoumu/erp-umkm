@@ -6,7 +6,7 @@
   import type { GridOptions } from 'ag-grid-community'
   import { createGrid } from 'ag-grid-community'
   import dayjs from 'dayjs'
-  import { mount, onMount } from 'svelte'
+  import { mount } from 'svelte'
 
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Button from '$lib/components/ui/button/button.svelte'
@@ -26,62 +26,66 @@
     flash: any
   } = $props()
 
-  const gridOptions: GridOptions<Item & { selling_price_IDR: string }> = {
-    columnDefs: [
-      {
-        field: 'name',
-        cellRenderer: cellRendererFactory((c, p) => {
-          mount(ItemDetailLink, {
-            target: c.getGui(),
-            props: { item: p.data },
-          })
-        }),
-        headerName: 'Nama Barang',
-        flex: 1,
-        width: 70,
-      },
-      { field: 'stock', headerName: 'Stok', width: 85 },
-      { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
-      {
-        field: 'selling_price_IDR',
-        width: 125,
-        headerName: 'Harga Satuan',
-        wrapHeaderText: true,
-      },
-      {
-        field: 'updated_at',
-        width: 115,
-        headerName: 'Terakhir Diubah',
-        wrapHeaderText: true,
-      },
-      {
-        width: 80,
-        headerName: 'Hapus',
-        wrapHeaderText: true,
-        cellRenderer: cellRendererFactory((c, p) => {
-          mount(DeleteItemButton, {
-            target: c.getGui(),
-            props: { item: p.data },
-          })
-        }),
-      },
-    ],
-    rowData: items.map((item) => {
-      return {
-        ...item,
-        selling_price_IDR: formatIDR(item.selling_price),
-        updated_at: dayjs(item.updated_at).format('DD MMM YY'),
-      }
-    }),
-  }
+  const gridOptions: GridOptions<Item & { selling_price_IDR: string }> =
+    $derived({
+      columnDefs: [
+        {
+          field: 'name',
+          cellRenderer: cellRendererFactory((c, p) => {
+            mount(ItemDetailLink, {
+              target: c.getGui(),
+              props: { item: p.data },
+            })
+          }),
+          headerName: 'Nama Barang',
+          flex: 1,
+          width: 70,
+        },
+        { field: 'stock', headerName: 'Stok', width: 85 },
+        { field: 'quantity_unit', width: 85, headerName: 'Satuan' },
+        {
+          field: 'selling_price_IDR',
+          width: 125,
+          headerName: 'Harga Satuan',
+          wrapHeaderText: true,
+        },
+        {
+          field: 'updated_at',
+          width: 115,
+          headerName: 'Terakhir Diubah',
+          wrapHeaderText: true,
+        },
+        {
+          width: 80,
+          headerName: 'Hapus',
+          wrapHeaderText: true,
+          cellRenderer: cellRendererFactory((c, p) => {
+            mount(DeleteItemButton, {
+              target: c.getGui(),
+              props: { item: p.data },
+            })
+          }),
+        },
+      ],
+      rowData: items.map((item) => {
+        return {
+          ...item,
+          selling_price_IDR: formatIDR(item.selling_price),
+          updated_at: dayjs(item.updated_at).format('DD MMM YY'),
+        }
+      }),
+    })
 
   let gridContainer = $state<HTMLDivElement>()
 
   let gridApi: ReturnType<
     typeof createGrid<Item & { selling_price_IDR: string }>
   >
-  onMount(() => {
+  $effect(() => {
     gridApi = createGrid(gridContainer!, gridOptions)
+    return () => {
+      gridApi.destroy()
+    }
   })
 
   function handleSearch(text: string) {

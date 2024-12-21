@@ -6,13 +6,15 @@
   import type { Item } from '$types/typelizer'
 
   let { item, trigger } = $props<{ item: Item; trigger: Snippet }>()
+  let open = $state(false)
 
   const onDestroy = () => {
     router.delete(`/items/${item.id}`)
+    open = false
   }
 </script>
 
-<AlertDialog.Root>
+<AlertDialog.Root bind:open>
   <AlertDialog.Trigger>{@render trigger()}</AlertDialog.Trigger>
   <AlertDialog.Content>
     <AlertDialog.Header>
