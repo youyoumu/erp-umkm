@@ -3,6 +3,7 @@
 
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import Button from '$lib/components/ui/button/button.svelte'
+  import { Textarea } from '$lib/components/ui/textarea'
   import type { Customer } from '$types/typelizer'
 
   import CustomerDetail from './components/CustomerDetail.svelte'
@@ -43,9 +44,7 @@
     </div>
     <div class="my-4">
       <div class="mb-2 font-bold">Catatan:</div>
-      <div class="min-h-32 rounded-sm border border-slate-300 p-2">
-        {customer.notes}
-      </div>
+      <Textarea bind:value={customer.notes} readonly></Textarea>
     </div>
 
     <div class="flex gap-2">

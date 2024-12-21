@@ -3,6 +3,7 @@
 
   import DeleteItemDialog from '$lib/components/DeleteItemDialog.svelte'
   import Button from '$lib/components/ui/button/button.svelte'
+  import { Textarea } from '$lib/components/ui/textarea'
   import type { Item } from '$types/typelizer'
 
   import ItemDetail from './components/ItemDetail.svelte'
@@ -61,9 +62,9 @@
     </div>
     <div class="pb-4">
       <div class="mb-2 font-bold">Catatan:</div>
-      <div class="min-h-32 rounded-sm border border-slate-300 p-2">
-        {item.notes}
-      </div>
+      <!-- <div class="min-h-32 rounded-sm border border-slate-300 p-2">
+      </div> -->
+      <Textarea bind:value={item.notes} readonly />
     </div>
 
     <div class="font-bold">Total Terjual:</div>
