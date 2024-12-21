@@ -57,10 +57,15 @@ class Invoice < ApplicationRecord
   def create_snapshot(item, details)
     item.dup.tap do |snapshot|
       snapshot.is_snapshot = true
-      snapshot.source_id = item.id
+      snapshot.source_id = (item.source_id == 0) ? item.id : item.source_id
       snapshot.quantity = details[:quantity]
       snapshot.quantity_unit = details[:quantity_unit]
       snapshot.selling_price = details[:selling_price]
+
+      if item.source_id != 0
+        item.source_id = 0
+        item.save!
+      end
     end
   end
 end
