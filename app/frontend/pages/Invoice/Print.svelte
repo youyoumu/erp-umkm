@@ -17,7 +17,7 @@
 </script>
 
 <main
-  class="mt-8 flex h-[528px] w-[912px] flex-col border border-dashed border-red-400 px-[48px] text-sm print:border-0"
+  class="mt-8 h-[528px] w-[912px] flex-col border border-dashed border-red-400 px-[48px] text-sm print:border-0 hidden"
 >
   <div
     class="flex grow flex-col border-x border-dashed border-red-400 bg-white p-4 print:border-x-0"
@@ -89,3 +89,11 @@
     </div>
   </div>
 </main>
+
+<style>
+  @media print {
+    main {
+      display: flex;
+    }
+  }
+</style>
