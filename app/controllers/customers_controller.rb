@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
   inertia_share flash: -> { flash.to_hash }
 
   def index
-    @customers = Customer.all
+    @customers = Customer.all.includes(:invoices)
     render inertia: "Customer/Index", props: {
       customers: CustomerSerializer.new(@customers, within: [:invoices]).to_h
     }
