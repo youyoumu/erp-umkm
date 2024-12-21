@@ -44,30 +44,10 @@
     onsubmit: (form: InertiaForm<InvoiceForm>) => void
   } = $props()
 
-  // TODO add tags and invoiceitems for edit
-  // const formattedInvoiceItems = invoice.items.map((item) => {
-  //   const tag = item.tag === '' ? '' : `#${item.tag}`
-  //   return { ...item, label: `${item.name}* ${tag}`, value: item.id }
-  // })
-
-  // const formattedItems = [
-  //   ...items.map((item) => {
-  //     const tag = item.tag === '' ? '' : `#${item.tag}`
-  //     return {
-  //       ...item,
-  //       label: `${item.name} ${tag}`,
-  //       value: item.id,
-  //       quantity: 0,
-  //     }
-  //   }),
-  //   ...formattedInvoiceItems,
-  // ]
-
-  // const formattedCustomers = customers.map((customer) => ({
-  //   ...customer,
-  //   label: customer.name,
-  //   value: customer.id,
-  // }))
+  const itemsWithTag = items.map((item) => {
+    const tag = item.tag ? `#${item.tag}` : ''
+    return { ...item, name: `${item.name} ${tag}` }
+  })
 
   const form = useForm<InvoiceForm>({
     date: invoice.date
@@ -200,7 +180,7 @@
             {/if}
             <div class="w-full relative">
               <Select
-                {items}
+                items={itemsWithTag}
                 label="name"
                 itemId="id"
                 on:change={(e) => {

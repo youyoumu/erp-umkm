@@ -30,7 +30,7 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    @items = Item.all.where(is_snapshot: false || nil)
+    @items = Item.all.where(is_snapshot: false)
     @customers = Customer.all
     render inertia: "Invoice/Edit", props: {
       invoice: InvoiceSerializer.new(@invoice, within: [:customer, :items]).to_h,
