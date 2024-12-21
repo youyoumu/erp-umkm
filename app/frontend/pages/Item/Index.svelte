@@ -14,6 +14,7 @@
   import { cn, formatIDR } from '$lib/utils'
   import type { Item } from '$types/typelizer'
 
+  import CsvExportButton from './components/CSVExportButton.svelte'
   import CsvInputButton from './components/CSVInputButton.svelte'
   import DeleteItemButton from './components/DeleteItemButton.svelte'
   import ItemDetailLink from './components/ItemDetailLink.svelte'
@@ -109,6 +110,7 @@
   <div class="mb-8 flex items-center justify-between">
     <h1 class="text-4xl font-bold">Daftar Barang</h1>
     <div class="flex gap-2">
+      <CsvExportButton />
       <CsvInputButton />
       <Link href="/items/new"><Button>Barang Baru</Button></Link>
     </div>

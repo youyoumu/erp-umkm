@@ -55,7 +55,7 @@
   for="import-csv"
   class="bg-secondary text-secondary-foreground text-sm px-4 flex items-center rounded-md hover:bg-secondary/80 cursor-pointer gap-1.5 font-medium transition-colors"
 >
-  <Table size="20" />
+  <Table size="16" />
   Import CSV
 </label>
 <input
