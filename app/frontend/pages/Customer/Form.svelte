@@ -37,11 +37,11 @@
   }}
 >
   <FormField>
-    <Label for="name">Nama Pembeli</Label>
+    <Label for="name">Nama Pelanggan</Label>
     <Input
       id="name"
       bind:value={$form.name}
-      placeholder="Masukkan Nama Pembeli"
+      placeholder="Masukkan Nama Pelanggan"
     />
     <Errors errors={$form.errors.name} />
   </FormField>

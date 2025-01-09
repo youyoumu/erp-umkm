@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-  <title>Pembeli #{customer.id}</title>
+  <title>Pelanggan #{customer.id}</title>
 </svelte:head>
 
 <div class="mx-auto max-w-screen-sm p-8">
@@ -35,7 +35,7 @@
       </p>
     {/if}
 
-    <h1 class="mb-4 text-4xl font-bold">Pembeli #{customer.id}</h1>
+    <h1 class="mb-4 text-4xl font-bold">Pelanggan #{customer.id}</h1>
 
     <div class="flex flex-col gap-1">
       <CustomerDetail label="Nama" value={customer.name} />
@@ -58,7 +58,7 @@
         <AlertDialog.Content>
           <AlertDialog.Header>
             <AlertDialog.Title
-              >Apakah kamu yakin ingin menghapus pembeli ini?</AlertDialog.Title
+              >Apakah kamu yakin ingin menghapus pelanggan ini?</AlertDialog.Title
             >
             <AlertDialog.Description>
               <!-- This action cannot be undone. This will permanently delete your account and remove your data from our servers. -->

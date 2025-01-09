@@ -21,15 +21,15 @@
 </script>
 
 <svelte:head>
-  <title>Edit Pembeli</title>
+  <title>Edit Pelanggan</title>
 </svelte:head>
 
 <div class="mx-auto max-w-screen-sm p-8">
-  <h1 class="text-4xl font-bold">Edit Pembeli</h1>
+  <h1 class="text-4xl font-bold">Edit Pelanggan</h1>
 
-  <Form {customer} submitText="Update Pembeli" onsubmit={handleSubmit} />
+  <Form {customer} submitText="Update Pelanggan" onsubmit={handleSubmit} />
 
   <Link href={`/customers/${customer.id}`} class="w-full block"
-    ><Button variant="secondary" class="w-full">Lihat Pembeli</Button></Link
+    ><Button variant="secondary" class="w-full">Lihat Pelanggan</Button></Link
   >
 </div>

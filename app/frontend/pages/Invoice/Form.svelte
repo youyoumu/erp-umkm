@@ -139,7 +139,7 @@
         <Input id="code" bind:value={$form.code} placeholder="Kode Nota" />
       </div>
       <div class="flex w-full flex-col items-start justify-between gap-2">
-        <Label for="customer">Pembeli</Label>
+        <Label for="customer">Pelanggan</Label>
         <Select
           items={customers}
           label="name"
@@ -150,7 +150,7 @@
             $form.customer = e.detail
             updateAddress(e.detail.address)
           }}
-          placeholder="Pilih Pembeli"
+          placeholder="Pilih Pelanggan"
           --font-size="14px"
           --border="1px solid rgb(226, 232, 240)"
         >

@@ -43,7 +43,7 @@
       },
       {
         field: 'customer',
-        headerName: 'Pembeli',
+        headerName: 'Pelanggan',
         width: 160,
         cellRenderer: cellRendererFactory((c, p) => {
           mount(CustomerDetailLink, {

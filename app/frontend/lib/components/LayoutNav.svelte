@@ -25,7 +25,7 @@
         <NavLink
           href="/customers"
           active={url.startsWith('/customers/') || url === '/customers'}
-          >Pembeli</NavLink
+          >Pelanggan</NavLink
         >
         <NavLink
           href="/invoices"

@@ -89,13 +89,13 @@
   {/if}
 
   <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-4xl font-bold">Daftar Pembeli</h1>
-    <Link href="/customers/new"><Button>Pembeli Baru</Button></Link>
+    <h1 class="text-4xl font-bold">Daftar Pelanggan</h1>
+    <Link href="/customers/new"><Button>Pelanggan Baru</Button></Link>
   </div>
 
   <Input
     oninput={(e) => handleAgGridSearch(e.currentTarget.value)}
-    placeholder="Cari Pembeli"
+    placeholder="Cari Pelanggan"
     class="mb-4"
   />
   <div use:agGrid class="h-[60svh] w-full ag-theme-quartz"></div>
