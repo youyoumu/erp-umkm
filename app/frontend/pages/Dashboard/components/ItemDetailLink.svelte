@@ -4,7 +4,7 @@
 </script>
 
 <a
-  href="/items/{item.id}"
+  href="/items/{item.source ? item.source.id : item.id}"
   class="flex size-full items-center gap-2"
   target="_blank"
 >

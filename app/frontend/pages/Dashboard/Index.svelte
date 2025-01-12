@@ -13,7 +13,7 @@
     customers: Customer[]
   } = $props()
 
-  let items = $derived.by(() => invoices.flatMap((invoice) => invoice.items))
+  let items = $derived.by(() => invoices?.flatMap((invoice) => invoice.items))
 </script>
 
 <div class="flex size-full flex-col items-center py-8 gap-4">
