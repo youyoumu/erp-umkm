@@ -19,8 +19,6 @@
     customers: Customer[]
   } = $props()
 
-  $inspect(customers)
-
   let gridApi: ReturnType<
     typeof createGrid<Customer & { today_total_invoices: string }>
   >
