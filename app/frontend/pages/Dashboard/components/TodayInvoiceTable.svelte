@@ -82,15 +82,14 @@
   }
 </script>
 
-<div class="flex flex-col gap-2 size-full">
+<div class="flex flex-col gap-2 h-[40svh] size-full">
   <Input
     oninput={(e) => handleSearch(e.currentTarget.value)}
     placeholder="Cari Nota"
-    class="mb-4"
   />
   <div
     id="datagrid"
-    class={cn('ag-theme-quartz h-[40svh] w-full')}
+    class={cn('ag-theme-quartz  w-full h-full')}
     bind:this={gridContainer}
   ></div>
 </div>
