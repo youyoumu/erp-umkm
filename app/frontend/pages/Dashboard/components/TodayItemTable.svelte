@@ -21,6 +21,28 @@
   } = $props()
 
   $inspect(items)
+  const deduplicatedItems = $derived.by(() => {
+    const deduplicatedItems: Item[] = []
+    for (const item of items) {
+      const duplicateItem = deduplicatedItems.find(
+        (i) => i.source.id === item.source.id
+      )
+      if (duplicateItem) {
+        if (
+          duplicateItem.selling_price === item.selling_price &&
+          duplicateItem.quantity_unit === item.quantity_unit
+        ) {
+          const index = deduplicatedItems.findIndex(
+            (item) => item.id === duplicateItem.id
+          )
+          deduplicatedItems[index].quantity += item.quantity
+          continue
+        }
+      }
+      deduplicatedItems.push(item)
+    }
+    return deduplicatedItems
+  })
 
   const gridOptions: GridOptions<
     Item & { selling_price_IDR: string; total: string }
@@ -64,7 +86,7 @@
         wrapHeaderText: true,
       },
     ],
-    rowData: items.map((item) => {
+    rowData: deduplicatedItems.map((item) => {
       return {
         ...item,
         selling_price_IDR: formatIDR(item.selling_price),
