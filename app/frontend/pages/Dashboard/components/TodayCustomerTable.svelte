@@ -9,6 +9,7 @@
 
   import { cellRendererFactory } from '$lib/cellRendererFactory'
   import Input from '$lib/components/ui/input/input.svelte'
+  import { formatIDR, sum } from '$lib/utils'
   import type { Customer } from '$types/typelizer'
 
   import CustomerDetailLink from './CustomerDetailLink.svelte'
@@ -18,10 +19,16 @@
     customers: Customer[]
   } = $props()
 
-  let gridApi: ReturnType<typeof createGrid<Customer>>
+  $inspect(customers)
+
+  let gridApi: ReturnType<
+    typeof createGrid<Customer & { today_total_invoices: string }>
+  >
 
   function agGrid(el: HTMLElement) {
-    const gridOptions: GridOptions<Customer> = {
+    const gridOptions: GridOptions<
+      Customer & { today_total_invoices: string }
+    > = {
       columnDefs: [
         {
           field: 'name',
@@ -34,6 +41,12 @@
               props: { customer: p.data },
             })
           }),
+        },
+        {
+          field: 'today_total_invoices',
+          width: 140,
+          headerName: 'Total Belanja Hari Ini',
+          wrapHeaderText: true,
         },
         {
           field: 'contact',
@@ -58,6 +71,17 @@
         return {
           ...customer,
           updated_at: dayjs(customer.updated_at).format('DD MMM YY'),
+          today_total_invoices: formatIDR(
+            sum(
+              customer.today_invoices.map((invoice) =>
+                sum(
+                  invoice.items.map(
+                    (item) => item.quantity * item.selling_price
+                  )
+                )
+              )
+            )
+          ),
         }
       }),
     }

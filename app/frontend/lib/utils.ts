@@ -17,6 +17,12 @@ export function formatIDR(amount: number | null) {
   }).format(amount)
 }
 
+export function sum(arr: number[]) {
+  return arr.reduce(function (a, b) {
+    return a + b
+  }, 0)
+}
+
 const w = wretch().headers({
   'X-CSRF-TOKEN': Cookies.get('XSRF-TOKEN') || '',
   'Content-Type': 'application/json',

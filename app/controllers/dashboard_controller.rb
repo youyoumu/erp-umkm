@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
       .order(id: :desc)
     render inertia: "Dashboard/Index", props: {
       invoices: InvoiceSerializer.new(invoices, within: [:customer, :items]).to_h,
-      customers: CustomerSerializer.new(customers, within: [:invoices, :today_invoices]).to_h
+      customers: CustomerSerializer.new(customers, within: {today_invoices: :items, invoices: :""}).to_h
     }
   end
 end
