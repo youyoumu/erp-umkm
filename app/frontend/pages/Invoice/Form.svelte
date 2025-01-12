@@ -258,7 +258,9 @@
     <Button variant="secondary" onclick={addItem}>Tambah Barang</Button>
 
     <AlertDialog.Root>
-      <AlertDialog.Trigger><Button>{submitText}</Button></AlertDialog.Trigger>
+      <AlertDialog.Trigger type="button"
+        ><Button>{submitText}</Button></AlertDialog.Trigger
+      >
       <AlertDialog.Content>
         <AlertDialog.Header>
           <AlertDialog.Title
